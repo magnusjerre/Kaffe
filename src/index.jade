@@ -1,0 +1,60 @@
+doctype html
+html
+	head
+		link(rel="stylesheet", type="text/css", href="kaffe.css")
+	body.container
+		h1 Den store kaffesiden
+		nav
+			a(href="") Home
+			a(href="") Away
+			a(href="") All Coffee
+		if model.hardagenskaffe
+			div.rectangle.dagenskaffe
+				h2 Dagens kaffe
+				table
+					tr
+						th Kaffenavn
+						th Liter
+						th Skjeer
+						th Kaffemaker
+					tr
+						td#kaffenavnid Papua Ny Guinea
+						td#kaffeliter 1.2
+						td#kaffeskjeer 5.5
+						td#kaffemaker Jerre
+		if !model.hardagenskaffe
+			div.rectangle.nydagenskaffe#nydagenskaffe
+				h2 Ny dagens kaffe
+				form(action="registrerNyDagensKaffe", method="POST")
+					label(for="kaffe_navn") Kaffenavn
+					input(type="text", id="kaffe_navn", name="kaffe_navn", hint="Papua Ny Guinea...")
+					br
+					br
+					label(for="kaffe_maker") Kaffemaker
+					input(type="text", id="kaffe_maker", name="kaffe_maker", hint="jerre...")
+					br
+					br
+					label(for="liter") Liter
+					input(type="number", id="skjeer", name="liter", min="0.1", step="0.1")
+					br
+					br
+					label(for="skjeer") Skjeer
+					input(type="number", id="skjeer", name="skjeer", min="0.25", step="0.25")
+					br
+					br
+					input(type="submit", value="Submit")
+		if model.hardagenskaffe
+			div.rectangle.nydagenskaffe
+				h2 Ny karakter
+				form(action="giKarakter", method="POST")
+					label(for="bruker_navn") Brukernavn
+					input(type="text", id="bruker_navn", name="bruker_navn", hint="jerre...")
+					br
+					br
+					label(for="karakter") Karakter
+					input(type="number", id="karakter", name="karakter", min="0.5", step="0.5")
+					br
+					br
+					label(for="gjetting") Gjett kaffenavn
+					input(type="text", id="gjetting", name="gjetting", hint="Papua Ny Guinea") 
+					input(type="submit", value="Submit")
