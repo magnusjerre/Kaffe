@@ -1,0 +1,22 @@
+{
+  "name": "kaffe",
+  "version": "1.0.0",
+  "description": "Simple web app that allows the users to register today's coffee and rate it",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/magnusjerre/Kaffe.git"
+  },
+  "keywords": [
+    "coffe"
+  ],
+  "author": "Magnus Jerre",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/magnusjerre/Kaffe/issues"
+  },
+  "homepage": "https://github.com/magnusjerre/Kaffe#readme"
+}
