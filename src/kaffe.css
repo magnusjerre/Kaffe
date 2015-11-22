@@ -5,6 +5,7 @@ body, h1, h2, h3, ul, li, img, label, input, div, a, p {
 	font-weight: normal;
 	color: black;
 	text-decoration: none;
+	list-style-type: none;
 }
 
 html {
@@ -102,4 +103,24 @@ submit {
 	
 	flex-grow: 8;
 	flex-shrink: 2;
+}
+
+.smallrectangle {
+	padding: 0.25em;
+	margin: 0.25em;
+	border-radius: 1em;
+	border: 0.2em solid darkturquoise;
+	background-color: darkcyan;
+	width: 24em;
+	text-align: center;
+}
+
+.karakterikon {	
+	align-self: flex-end;
+	width: 2em;
+	height: 2em;
+}
+
+.karakterer {
+	display: none
 }

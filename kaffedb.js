@@ -38,6 +38,12 @@ exports.getDagensKaffe = function(callback) {
 	);
 }
 
+exports.listDagensKaffe = function(callback) {
+	dagensKaffe().find({}).toArray(function(error, docs){
+		callback(error, docs);
+	});
+}
+
 exports.listDagenskaffe = function() {
 	var coll = mongo.DB.collection('dagenskaffe');
 	console.log("coll: " + coll.collectionName);
