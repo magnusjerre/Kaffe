@@ -26,11 +26,22 @@ app.get('/', function(req, res){
 				hardagenskaffe : true,
 				model : result
 			});
+			res.end();
 		} else {
 			console.log("Did not find today's coffe");
-			res.write(fn({ model : { hardagenskaffe : false}}));
+			kaffedb.listKaffeNavn(function(error, docs){
+				var obj = {
+					hardagenskaffe : false,
+					kaffenavn : docs
+				}
+				console.log(JSON.stringify(obj, null, 2));
+				
+				res.write(fn(obj));
+				res.end();	
+			});
+			
 		}
-		res.end();
+		
 	});
 });
 

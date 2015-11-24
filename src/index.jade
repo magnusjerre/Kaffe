@@ -28,7 +28,9 @@ html
 				h2 Ny dagens kaffe
 				form(action="registrerNyDagensKaffe", method="POST")
 					label(for="kaffe_navn") Kaffenavn
-					input(type="text", id="kaffe_navn", name="kaffe_navn", hint="Papua Ny Guinea...")
+					select#kaffe_navn(name="kaffe_navn")
+						each element in kaffenavn
+							option(value="#{element.navn}") #{element.navn} 
 					br
 					br
 					label(for="kaffe_maker") Kaffemaker

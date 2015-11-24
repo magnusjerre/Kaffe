@@ -92,6 +92,23 @@ exports.insertDagenskaffe = function(args, cb) {
 	});
 }
 
+exports.listKaffeNavn = function(cb) {
+	kaffer().aggregate(
+		[
+			{ $project : { navn : 1, "_id" : 0 } },
+			{ $sort : { navn : 1 } }
+		], 
+		{}, 
+		function(err, result) {
+			cb(err, result); 
+		}
+	);
+}
+
+var kaffer = function() {
+	return mongo.DB.collection('kaffe');
+}
+
 var dagensKaffe = function () {
 	return mongo.DB.collection('dagenskaffe');
 }
