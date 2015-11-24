@@ -39,30 +39,17 @@ exports.getDagensKaffe = function(callback) {
 }
 
 exports.listDagensKaffe = function(callback) {
-	dagensKaffe().find({}).toArray(function(error, docs){
-		callback(error, docs);
+	dagensKaffe().find({}).sort({ "_id" : -1 }).toArray(function(error, docs){
+		callback(error, docs);	
 	});
 }
-
-exports.listDagenskaffe = function() {
-	var coll = mongo.DB.collection('dagenskaffe');
-	console.log("coll: " + coll.collectionName);
-	coll.find().toArray(function(error, docs){
-		JSON.stringify(docs, null, 2);
-		for (var i in docs) {
-			console.log(JSON.stringify(docs[i], null, 2) + ",");
-		}
-	});
-};
 
 exports.insertDagensKarakter = function(args, cb) {
 	var collection = dagensKaffe();
 	
 	var idagstart = iDagStart();
-	console.log("idagStart: " + idagstart);
 	
 	var idagslutt = iDagSlutt();
-	console.log("idagSlutt: " + idagslutt);
 	
 	collection.findOneAndUpdate(
 		{
