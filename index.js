@@ -18,7 +18,14 @@ app.get('/', function(req, res){
 	kaffedb.getDagensKaffe(function(error, result){
 		if (result) {
 			console.log("Found today's coffe");
-			res.write(fn({ model : { hardagenskaffe : true }}));
+			res.write(fn({ 
+				hardagenskaffe : true,
+				model : result
+			}));
+			console.log({ 
+				hardagenskaffe : true,
+				model : result
+			});
 		} else {
 			console.log("Did not find today's coffe");
 			res.write(fn({ model : { hardagenskaffe : false}}));
