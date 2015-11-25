@@ -18,15 +18,15 @@ app.get('/', function(req, res){
 	kaffedb.getDagensKaffe(function(error, result){
 		if (result) {
 			console.log("Found today's coffe");
-			res.write(fn({ 
-				hardagenskaffe : true,
-				model : result
-			}));
-			console.log({ 
-				hardagenskaffe : true,
-				model : result
+			kaffedb.listKaffeNavn(function(err, docs) {
+				var obj = {
+					hardagenskaffe : true,
+					model : result,
+					kaffenavn : docs
+				}
+				res.write(fn(obj));
+				res.end();
 			});
-			res.end();
 		} else {
 			console.log("Did not find today's coffe");
 			kaffedb.listKaffeNavn(function(error, docs){
@@ -34,8 +34,6 @@ app.get('/', function(req, res){
 					hardagenskaffe : false,
 					kaffenavn : docs
 				}
-				console.log(JSON.stringify(obj, null, 2));
-				
 				res.write(fn(obj));
 				res.end();	
 			});
@@ -56,18 +54,6 @@ app.get('/listDagensKaffe', function(req, res){
 	var fn = jadeCompile('listDagensKaffe.jade');
 	res.writeHead(200, { 'Content-Type' : 'text/html' });
 	kaffedb.listDagensKaffe(function(error, docs){
-		/*if (error) {
-			console.log("---error---");
-			console.log(error);
-		}
-		console.log("---docs---");
-		console.log(docs);
-		console.log("---stringify---");
-		console.log(JSON.stringify(m, null, 2));*/
-		/*var m = { model : docs };
-		console.log("m.model.length: " + m.model.length);
-		console.log("docs.length: " + docs.length);
-		console.log("m.model: " + m.model);*/
 		var html = fn({ model : docs});
 		res.write(html);
 		res.end();

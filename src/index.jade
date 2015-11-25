@@ -59,5 +59,7 @@ html
 					br
 					br
 					label(for="gjetting") Gjett kaffenavn
-					input(type="text", id="gjetting", name="gjetting", hint="Papua Ny Guinea") 
+					select#kaffe_navn(name="gjetting")
+						each element in kaffenavn
+							option(value="#{element.navn}") #{element.navn} 
 					input(type="submit", value="Submit")
