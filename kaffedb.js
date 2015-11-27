@@ -6,7 +6,7 @@ exports.connect = function() {
 		return mongo.DB;
 	}
 	
-	var url = 'mongodb://jerre:Qwerty123@ds059654.mongolab.com:59654/kaffedb'
+	var url = process.env.connectionString;
 	
 	module.exports.connect = mongoClient.connect(url, function(err, db){
 		if (err) {
