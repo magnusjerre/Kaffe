@@ -43,7 +43,12 @@ app.get('/', function(req, res){
 	});
 });
 
-
+app.get('/about', function(req, res){
+	var fn = jadeCompile('about.jade');
+	res.writeHead(200, { 'Content-Type' : 'text/html' });
+	res.write(fn());
+	res.end();
+});
 
 app.get('/kaffe.css', function(req, res){
 	var readStream = fs.createReadStream(path.join(__dirname, 'src/', 'kaffe.css'));
@@ -75,7 +80,8 @@ app.post('/giKarakter', function(req, res){
 });
 
 function jadeCompile(filename) {
-	return jade.compile(fs.readFileSync(path.join(__dirname, 'src/', filename)), { pretty: true });	
+	var filename = path.join(__dirname, 'src/', filename);
+	return jade.compile(fs.readFileSync(filename), { filename : filename, pretty : true });	
 }
 
 app.post('/registrerNyDagensKaffe', function(req, res){
@@ -130,7 +136,7 @@ function isFile(str) {
 	return false;
 }
 
-//app.listen(3000, '0.0.0.0');
-app.listen(process.env.PORT || 8080, function(){
-	console.log("Running on port something");
+var port = process.env.PORT || 8080;
+app.listen(port, function(){
+	console.log("Running on port: " + port);
 });

@@ -5,10 +5,7 @@ html
 		link(rel="stylesheet", type="text/css", href="kaffe.css")
 	body.container
 		h1 Den store kaffesiden
-		nav
-			a(href="") Home
-			a(href="") Away
-			a(href="/listDagensKaffe") All Coffee
+		include nav.jade
 		if hardagenskaffe
 			div.rectangle.dagenskaffe
 				h2 Dagens kaffe

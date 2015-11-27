@@ -8,10 +8,7 @@ html
 		script(src="listdagenskaffe.js", type="text/javascript")
 	body.container
 		h1 Liste over tidligere dagenskaffe
-		nav
-			a(href="/") Home
-			a(href="") Away
-			a(href="/listDagensKaffe") All Coffee
+		include nav.jade
 		ul(id="allkaffe")
 			each val in model 
 				li.rectangle.dagenskaffe.container

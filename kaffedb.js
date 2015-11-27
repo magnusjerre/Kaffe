@@ -5,7 +5,7 @@ exports.connect = function() {
 	if (mongo.DB) {
 		return mongo.DB;
 	}
-	//var url = 'mongodb://localhost:27017/kaffedb';
+	
 	var url = 'mongodb://jerre:Qwerty123@ds059654.mongolab.com:59654/kaffedb'
 	
 	module.exports.connect = mongoClient.connect(url, function(err, db){
