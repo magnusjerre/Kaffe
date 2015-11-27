@@ -130,4 +130,7 @@ function isFile(str) {
 	return false;
 }
 
-app.listen(3000, '0.0.0.0');
+//app.listen(3000, '0.0.0.0');
+app.listen(process.env.PORT || 8080, functino(){
+	console.log("Running on port something");
+});
