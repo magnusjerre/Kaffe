@@ -93,6 +93,27 @@ exports.listKaffeNavn = function(cb) {
 	);
 }
 
+exports.listKaffeLand = function(cb) {
+	kaffer().aggregate(
+		[
+			{ $group : { "_id" : { land : "$land", "lat" : "$lat", "lgt" : "$lgt"}}}
+		],
+		function(err, result){
+			var output =[];
+			for (var i = 0; i < result.length; i++) {
+				output.push({
+					"land" : result[i]["_id"]["land"],
+					"position" : {
+						"lat" : result[i]["_id"]["lat"],
+						"lng" : result[i]["_id"]["lgt"]
+					}
+				});
+			}
+			
+			cb(err, output);
+		}
+	);
+}
 var kaffer = function() {
 	return mongo.DB.collection('kaffe');
 }

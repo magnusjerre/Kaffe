@@ -10,6 +10,21 @@ var jade = require('jade');
 
 kaffedb.connect();
 
+app.get('/kaffeKartJson', function(req, res){
+	res.writeHead(200, { 'Content-Type' : 'application/json'});
+	kaffedb.listKaffeLand(function(err, result){
+		res.write(JSON.stringify(result, null, 2));
+		res.end();	
+	});
+});
+
+app.get('/kaffeKart', function(req, res){
+	var fn = jadeCompile('kaffeKart.jade');
+	res.writeHead(200, { 'Content-Type' : 'text/html'});
+	res.write(fn());
+	res.end();
+});
+
 app.get('/', function(req, res){
 	var fn = jadeCompile('index.jade');
 	kaffedb.list	
