@@ -16,7 +16,7 @@ html
 						th Skjeer
 						th Kaffemaker
 					tr
-						td#kaffenavnid #{model.kaffe_navn}
+						td#kaffenavnid #{dagensKaffe.produsent} - #{dagensKaffe.navn} (#{dagensKaffe.type})
 						td#kaffeliter #{model.liter}
 						td#kaffeskjeer #{model.skjeer}
 						td#kaffemaker #{model.brygger}
@@ -26,8 +26,8 @@ html
 				form(action="registrerNyDagensKaffe", method="POST")
 					label(for="kaffe_navn") Kaffenavn
 					select#kaffe_navn(name="kaffe_navn")
-						each element in kaffenavn
-							option(value="#{element.navn}") #{element.navn} 
+						each element in kaffer
+							option(value="#{element.navn}") #{element.produsent} - #{element.navn} (#{element.type}) 
 					br
 					br
 					label(for="kaffe_maker") Kaffemaker
@@ -57,6 +57,6 @@ html
 					br
 					label(for="gjetting") Gjett kaffenavn
 					select#kaffe_navn(name="gjetting")
-						each element in kaffenavn
-							option(value="#{element.navn}") #{element.navn} 
+						each element in kaffer
+							option(value="#{element.navn}") #{element.produsent} - #{element.navn} (#{element.type}) 
 					input(type="submit", value="Submit")

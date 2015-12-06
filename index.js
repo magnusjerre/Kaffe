@@ -33,21 +33,24 @@ app.get('/', function(req, res){
 	kaffedb.getDagensKaffe(function(error, result){
 		if (result) {
 			console.log("Found today's coffe");
-			kaffedb.listKaffeNavn(function(err, docs) {
-				var obj = {
-					hardagenskaffe : true,
-					model : result,
-					kaffenavn : docs
-				}
-				res.write(fn(obj));
-				res.end();
+			kaffedb.getKaffeMedNavn(result.kaffe_navn, function(err, doc){
+				kaffedb.listKaffer(function(err, docs) {
+					var obj = {
+						hardagenskaffe : true,
+						model : result,
+						dagensKaffe : doc,
+						kaffer : docs
+					}
+					res.write(fn(obj));
+					res.end();
+				});	
 			});
 		} else {
 			console.log("Did not find today's coffe");
-			kaffedb.listKaffeNavn(function(error, docs){
+			kaffedb.listKaffer(function(error, docs){
 				var obj = {
 					hardagenskaffe : false,
-					kaffenavn : docs
+					kaffer : docs
 				}
 				res.write(fn(obj));
 				res.end();	

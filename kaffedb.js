@@ -26,6 +26,16 @@ exports.close = function() {
 	}
 }
 
+exports.getKaffeMedNavn = function(navn, cb) {
+	kaffer().findOne(
+		{"navn" : navn},
+		{},
+		function(err, res){
+			cb(err, res);			
+		}
+	);
+}
+
 exports.getDagensKaffe = function(callback) {
 	var idagstart = iDagStart();
 	var idagslutt = iDagSlutt();
@@ -77,6 +87,12 @@ exports.insertDagenskaffe = function(args, cb) {
 		if (!error) {
 			cb(result);
 		}
+	});
+}
+
+exports.listKaffer = function(cb) {
+	kaffer().find({}).toArray(function(err, res) {
+		cb(err, res);
 	});
 }
 
