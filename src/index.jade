@@ -2,6 +2,9 @@ doctype html
 html
 	head
 		meta(charset="UTF-8")
+		script(src="jquery-2.1.4.min.js", type="text/javascript")
+		script(src="jQueryRotate.js", type="text/javascript")
+		script(src="listdagenskaffe.js", type="text/javascript")
 		link(rel="stylesheet", type="text/css", href="kaffe.css")
 	body.container
 		h1 Den store kaffesiden
@@ -9,17 +12,21 @@ html
 		if hardagenskaffe
 			div.rectangle.dagenskaffe
 				h2 Dagens kaffe
-				table
-					tr
-						th Kaffenavn
-						th Liter
-						th Skjeer
-						th Kaffemaker
-					tr
-						td#kaffenavnid #{dagensKaffe.produsent} - #{dagensKaffe.navn} (#{dagensKaffe.type})
-						td#kaffeliter #{model.liter}
-						td#kaffeskjeer #{model.skjeer}
-						td#kaffemaker #{model.brygger}
+				img.karakterikon(src="arrow.png", alt="Arrow")
+				//Table ligger i en ul slik at nedtrekksanimasjonen blir jevn. Kalles karakterer for å kunne bruke eksisterende script
+				ul.karakterer  
+					li 
+						table
+							tr
+								th Kaffenavn
+								th Liter
+								th Skjeer
+								th Kaffemaker
+							tr
+								td#kaffenavnid #{dagensKaffe.produsent} - #{dagensKaffe.navn} (#{dagensKaffe.type})
+								td#kaffeliter #{model.liter}
+								td#kaffeskjeer #{model.skjeer}
+								td#kaffemaker #{model.brygger}
 		if !hardagenskaffe
 			div.rectangle.nydagenskaffe#nydagenskaffe
 				h2 Ny dagens kaffe
