@@ -1,0 +1,41 @@
+doctype html
+html
+	head
+		meta(charset="UTF-8")
+		link(rel="stylesheet", type="text/css", href="kaffe.css")
+		script(src="jquery-2.1.4.min.js", type="text/javascript")
+	body.container
+		h1 Den store kaffesiden
+		include nav.jade
+		div.rectangle.nydagenskaffe
+			h2 Legg til ny kaffesort
+			form(action="registrerNyKaffeSort", method="POST")
+				label(for="kaffe_navn") Kaffenavn
+				input#kaffe_navn(type="text", name="kaffe_navn", placeholder="Frokostkaffe Original") 
+				br
+				br
+				label(for="kaffe_type") Kaffe type
+				input#kaffe_type(type="text", name="kaffe_type", placeholder="Bønner, Malt...")
+				br
+				br
+				label(for="produsent") Produsent
+				input#produsent(type="text", name="produsent", placeholder="Friele")
+				br
+				br
+				label(for="land") Land
+				input#land(type="text", name="land", placeholder="Brasil")
+				br
+				br
+				label(for="lat") Latitude
+				input#lat(type="number", name="lat", placeholder="-8.61", step="0.01")
+				br
+				br
+				label(for="land") Longitude
+				input#lgt(type="number", name="lgt", placeholder="-50.35", step="0.01")
+				br
+				br
+				label(for="url") Url
+				input#url(type="text", name="url", placeholder="http://shop.friele.no/epages/Frieleshop.sf/no_NO/?ObjectPath=/Shops/Friele/Products/012324")
+				br
+				br
+				input(type="submit", value="Submit")

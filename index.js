@@ -84,6 +84,13 @@ app.get('/listDagensKaffe', function(req, res){
 	
 });
 
+app.get('/nyKaffe', function(req, res){
+	var fn = jadeCompile('nykaffe.jade');
+	res.writeHead(200, {'Content-Type' : 'text/html'});
+	res.write(fn());
+	res.end();
+});
+
 app.post('/giKarakter', function(req, res){
 	var doc = {
 		bruker_navn : req.body.bruker_navn,
@@ -94,6 +101,24 @@ app.post('/giKarakter', function(req, res){
 		
 	});
 	
+	res.redirect('/');
+});
+
+app.post('/registrerNyKaffeSort', function(req, res){
+	var doc = {
+		"navn": req.body.kaffe_navn,
+		"type": req.body.kaffe_type,
+		"land": req.body.land,
+		"produsent": req.body.produsent,
+		"kaffeurl": req.body.url,
+		"lat": req.body.lat,
+		"lgt": req.body.lgt
+	}
+	kaffedb.insertNyKaffe(doc, function(error, result){
+		if (!error) {
+			console.log("inserted new kaffe");
+		}
+	});
 	res.redirect('/');
 });
 

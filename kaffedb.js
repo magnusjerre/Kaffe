@@ -130,6 +130,13 @@ exports.listKaffeLand = function(cb) {
 		}
 	);
 }
+
+exports.insertNyKaffe = function(doc, cb){
+	kaffer().insertOne(doc, {}, function(error, result) {
+		cb(error, result);
+	});
+}
+
 var kaffer = function() {
 	return mongo.DB.collection('kaffe');
 }

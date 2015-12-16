@@ -38,15 +38,15 @@ html
 					br
 					br
 					label(for="kaffe_maker") Kaffemaker
-					input(type="text", id="kaffe_maker", name="kaffe_maker", hint="jerre...")
+					input(type="text", id="kaffe_maker", placeholder="kaffe_maker", hint="jerre...")
 					br
 					br
 					label(for="liter") Liter
-					input(type="number", id="skjeer", name="liter", min="0.1", step="0.05")
+					input(type="number", id="skjeer", placeholder="liter", min="0.1", step="0.05")
 					br
 					br
 					label(for="skjeer") Skjeer
-					input(type="number", id="skjeer", name="skjeer", min="0.25", step="0.25")
+					input(type="number", id="skjeer", placeholder="skjeer", min="0.25", step="0.25")
 					br
 					br
 					input(type="submit", value="Submit")
@@ -55,7 +55,7 @@ html
 				h2 Ny karakter
 				form(action="giKarakter", method="POST")
 					label(for="bruker_navn") Brukernavn
-					input(type="text", id="bruker_navn", name="bruker_navn", hint="jerre...")
+					input(type="text", id="bruker_navn", name="bruker_navn", placeholder="jerre...")
 					br
 					br
 					label(for="karakter") Karakter
