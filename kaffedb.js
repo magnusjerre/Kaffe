@@ -91,7 +91,7 @@ exports.insertDagenskaffe = function(args, cb) {
 }
 
 exports.listKaffer = function(cb) {
-	kaffer().find({}).toArray(function(err, res) {
+	kaffer().find({}).sort({produsent : 1, navn : 1}).toArray(function(err, res) {
 		cb(err, res);
 	});
 }
