@@ -36,7 +36,7 @@ exports.getKaffeMedNavn = function(navn, cb) {
 	);
 }
 
-exports.getDagensKaffe = function(callback) {
+var getDagensKaffe = function(callback) {
 	var idagstart = iDagStart();
 	var idagslutt = iDagSlutt();
 	dagensKaffe().findOne(
@@ -48,6 +48,7 @@ exports.getDagensKaffe = function(callback) {
 		function(error, result) {callback(error, result)}
 	);
 }
+exports.getDagensKaffe = getDagensKaffe;
 
 exports.listDagensKaffe = function(callback) {
 	dagensKaffe().find({}).sort({ "_id" : -1 }).toArray(function(error, docs){
@@ -62,30 +63,84 @@ exports.insertDagensKarakter = function(args, cb) {
 	
 	var idagslutt = iDagSlutt();
 	
-	collection.findOneAndUpdate(
-		{
-			"_id" : { $gte : idagstart, $lte : idagslutt}
-		}, 
-		{
-			 $push : { karakterer : args}
-		}, 
-		{}, 
-		function(error, result){
-			if (error) {
-				console.log("error in inserting dagens karakter. ");
-				console.log("error: " + error);
-			} else {
-				console.log("successfully inserted new karakter");
-				printJSON(result);
+	getDagensKaffe(function(error, result){
+		if (error) {
+			
+		} else if (result == null) {
+			doc = {
+				"_id" : new Date(),
+				kaffe_navn : "Ukjent",
+				brygger : "Ukjent",
+				liter : 0,
+				skjeer : 0,
+				karakterer : [args]
 			}
-		});
+			collection.insertOne(doc, {}, function(error2, result2){
+			});
+		} else {
+			collection.findOneAndUpdate(
+				{
+					"_id" : { $gte : idagstart, $lte : idagslutt}
+				}, 
+				{
+					$push : { karakterer : args}
+				}, 
+				{}, 
+				function(error, result){
+					if (error) {
+						console.log("error in inserting dagens karakter. ");
+						console.log("error: " + error);
+					} else {
+						console.log("successfully inserted new karakter");
+						printJSON(result);
+					}
+				}
+			);		
+		}
+	});
+	
+	
+	
 }
 
 exports.insertDagenskaffe = function(args, cb) {
 	var collection = dagensKaffe();
-	collection.insertOne(args, {}, function(error, result) {
-		if (!error) {
-			cb(result);
+	
+	getDagensKaffe(function(error, result){
+		if (error) {
+			cb(error, result);
+		} else if (result == null) {
+			console.log("result == null");
+			console.log("args");
+			printJSON(args);
+			collection.insertOne(args, {}, function(error2, result2){
+				if (!error) {
+					cb(result2);
+				}
+			});
+		} else {
+			console.log("result == else");
+			var idagstart = iDagStart();
+	
+			var idagslutt = iDagSlutt();
+			collection.findOneAndUpdate(
+				{
+					"_id" : { $gte : idagstart, $lte : idagslutt}
+				}, 
+				{
+					$set : {
+						"kaffe_navn" : args.kaffe_navn,
+						"brygger" : args.brygger,
+						"liter" : args.liter,
+						"skjeer" : args.skjeer
+					}
+				},
+				{
+				}, 
+				function(error2, result2){
+					console.log("finished with findOneAndUpdate inside insertDagensKaffe");
+					cb(error2, result2);
+			});
 		}
 	});
 }

@@ -33,18 +33,39 @@ app.get('/', function(req, res){
 	kaffedb.getDagensKaffe(function(error, result){
 		if (result) {
 			console.log("Found today's coffe");
-			kaffedb.getKaffeMedNavn(result.kaffe_navn, function(err, doc){
+			console.log("result");
+			console.log(result);
+			if (result.kaffe_navn == "Ukjent") {
+				console.log("ukjent kaffe i dag");
 				kaffedb.listKaffer(function(err, docs) {
 					var obj = {
-						hardagenskaffe : true,
+						hardagenskaffe : false,
 						model : result,
-						dagensKaffe : doc,
+						dagensKaffe : {
+							navn : "Ukjent",
+							type : "Ukjent",
+							produsent : "Ukjent"	
+						},
 						kaffer : docs
 					}
 					res.write(fn(obj));
 					res.end();
+				});
+			} else {
+				kaffedb.getKaffeMedNavn(result.kaffe_navn, function(err, doc){
+					kaffedb.listKaffer(function(err, docs) {
+						var obj = {
+							hardagenskaffe : true,
+							model : result,
+							dagensKaffe : doc,
+							kaffer : docs
+						}
+						res.write(fn(obj));
+						res.end();
+					});	
 				});	
-			});
+			}
+			
 		} else {
 			console.log("Did not find today's coffe");
 			kaffedb.listKaffer(function(error, docs){
@@ -136,22 +157,8 @@ app.post('/registrerNyDagensKaffe', function(req, res){
 		skjeer : req.body.skjeer,
 		karakterer : []
 	}
-	
-	kaffedb.getDagensKaffe(function(error, result){
-		if (result) {
-			console.log("Found today's coffe, can't insert another until tomorrow");
-		} else {
-			console.log("Did not find today's coffe, can insert now");
-			kaffedb.dagensKaffe().insertOne(doc, {}, function(error, result) {
-				if (error) {
-					console.log("failed to insert...");
-					console.log(doc);
-				} else {
-					console.log("successfully insterted!");
-					console.log(doc);
-				}
-			});
-		}
+	kaffedb.insertDagenskaffe(doc, function(error, result){
+		console.log("redirecting to main page");
 		res.redirect('/');
 	});
 });

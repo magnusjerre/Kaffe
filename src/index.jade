@@ -38,32 +38,32 @@ html
 					br
 					br
 					label(for="kaffe_maker") Kaffemaker
-					input(type="text", id="kaffe_maker", placeholder="kaffe_maker", hint="jerre...", required)
+					input(type="text", id="kaffe_maker", name="kaffe_maker", placeholder="jerre...", required)
 					br
 					br
 					label(for="liter") Liter
-					input(type="number", id="skjeer", placeholder="liter", min="0.1", step="0.05", required)
+					input(type="number", id="liter", name="liter", min="0.1", step="0.05", required)
 					br
 					br
 					label(for="skjeer") Skjeer
-					input(type="number", id="skjeer", placeholder="skjeer", min="0.25", step="0.25", required)
+					input(type="number", id="skjeer", name="skjeer", min="0.25", step="0.25", required)
 					br
 					br
 					input(type="submit", value="Submit")
-		if hardagenskaffe
-			div.rectangle.nydagenskaffe
-				h2 Ny karakter
-				form(action="giKarakter", method="POST")
-					label(for="bruker_navn") Brukernavn
-					input(type="text", id="bruker_navn", name="bruker_navn", placeholder="jerre...", required)
-					br
-					br
-					label(for="karakter") Karakter
-					input(type="number", id="karakter", name="karakter", min="0.5", step="0.5", required)
-					br
-					br
-					label(for="gjetting") Gjett kaffenavn
-					select#kaffe_navn(name="gjetting")
-						each element in kaffer
-							option(value="#{element.navn}") #{element.produsent} - #{element.navn} (#{element.type}) 
-					input(type="submit", value="Submit")
+		//if hardagenskaffe
+		div.rectangle.nydagenskaffe
+			h2 Ny karakter
+			form(action="giKarakter", method="POST")
+				label(for="bruker_navn") Brukernavn
+				input(type="text", id="bruker_navn", name="bruker_navn", placeholder="jerre...", required)
+				br
+				br
+				label(for="karakter") Karakter
+				input(type="number", id="karakter", name="karakter", min="0.5", step="0.5", required)
+				br
+				br
+				label(for="gjetting") Gjett kaffenavn
+				select#kaffe_navn(name="gjetting")
+					each element in kaffer
+						option(value="#{element.navn}") #{element.produsent} - #{element.navn} (#{element.type}) 
+				input(type="submit", value="Submit")
