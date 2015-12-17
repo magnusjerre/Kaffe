@@ -1,5 +1,6 @@
 var mongo = require('mongodb');
 var mongoClient = mongo.MongoClient;
+var ObjectId = mongo.ObjectId;
 
 exports.connect = function() {
 	if (mongo.DB) {
@@ -51,7 +52,7 @@ var getDagensKaffe = function(callback) {
 exports.getDagensKaffe = getDagensKaffe;
 
 exports.listDagensKaffe = function(callback) {
-	dagensKaffe().find({}).sort({ "_id" : -1 }).toArray(function(error, docs){
+	dagensKaffe().find().sort({ "_id" : -1 }).toArray(function(error, docs){
 		callback(error, docs);	
 	});
 }
@@ -145,6 +146,23 @@ exports.insertDagenskaffe = function(args, cb) {
 	});
 }
 
+exports.listKafferPaProdusenter = function(cb) {
+	kaffer().aggregate(
+		[
+			{ $group : {"_id" : "$produsent",	"kaffe" : {$push : "$$ROOT"}}},
+			{ $sort : { "_id" : 1} }
+		],
+		function(error, result){
+			cb(error, result);
+	});
+}
+
+exports.listKafferDropdown = function(cb) {
+	kaffer().find({ vis : true}).sort({produsent : 1, navn : 1}).toArray(function(err, res) {
+		cb(err, res);
+	});
+}
+
 exports.listKaffer = function(cb) {
 	kaffer().find({}).sort({produsent : 1, navn : 1}).toArray(function(err, res) {
 		cb(err, res);
@@ -190,6 +208,22 @@ exports.insertNyKaffe = function(doc, cb){
 	kaffer().insertOne(doc, {}, function(error, result) {
 		cb(error, result);
 	});
+}
+
+exports.endreVisVerdiForKaffe = function(id, cb){
+	kaffer().findOneAndUpdate(
+		{
+			"_id" : new ObjectId(id)
+		}, 
+		{
+			$set : { vis : !'$vis'}
+		}, 
+		{
+			
+		},
+		function(error, result){
+			cb(error, result);
+		});
 }
 
 var kaffer = function() {

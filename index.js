@@ -25,6 +25,16 @@ app.get('/kaffeKart', function(req, res){
 	res.end();
 });
 
+app.get('/kaffeliste', function(req, res){
+	var fn = jadeCompile('kaffeliste.jade');
+	kaffedb.listKafferPaProdusenter(function(error, docs){
+		res.writeHead(200, { 'Content-Type' : 'text/html'});
+		res.write(fn({produsenter : docs}));
+		res.end();
+		
+	});
+});
+
 app.get('/', function(req, res){
 	var fn = jadeCompile('index.jade');
 	kaffedb.list	
@@ -37,7 +47,7 @@ app.get('/', function(req, res){
 			console.log(result);
 			if (result.kaffe_navn == "Ukjent") {
 				console.log("ukjent kaffe i dag");
-				kaffedb.listKaffer(function(err, docs) {
+				kaffedb.listKafferDropdown(function(err, docs) {
 					var obj = {
 						hardagenskaffe : false,
 						model : result,
@@ -53,7 +63,7 @@ app.get('/', function(req, res){
 				});
 			} else {
 				kaffedb.getKaffeMedNavn(result.kaffe_navn, function(err, doc){
-					kaffedb.listKaffer(function(err, docs) {
+					kaffedb.listKafferDropdown(function(err, docs) {
 						var obj = {
 							hardagenskaffe : true,
 							model : result,
@@ -123,6 +133,16 @@ app.post('/giKarakter', function(req, res){
 	});
 	
 	res.redirect('/');
+});
+
+app.post('/visskjulkaffe', function(req, res){
+	var data = req.body;
+	console.log("data");
+	console.log(data);
+	kaffedb.endreVisVerdiForKaffe(data.id, function(error, result){
+		
+		res.redirect('/kaffeliste');
+	});
 });
 
 app.post('/registrerNyKaffeSort', function(req, res){

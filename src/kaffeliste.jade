@@ -1,0 +1,31 @@
+doctype html
+html
+	head
+		meta(charset="UTF-8")
+		link(rel="stylesheet", type="text/css", href="kaffe.css")
+		script(src="jquery-2.1.4.min.js", type="text/javascript")
+		script(src="kaffeliste.js", type="text/javascript")
+	body.container
+		h1 Den store kaffesiden
+		include nav.jade
+		each produsent in produsenter
+			div.rectangle.dagenskaffe
+				h2 #{produsent["_id"]} 
+				ul#kaffeliste
+					each kaffe in produsent.kaffe
+						li.smallrectangle.container
+							p#kaffeid(style="display: none") #{kaffe["_id"]}
+							table
+								tr
+									th Kaffenavn
+									th Type
+									th Land
+									th Vis
+								tr
+									td #{kaffe.navn}
+									td #{kaffe.type}
+									td #{kaffe.land}
+									if kaffe.vis
+										td #[input#viskaffe(type="checkbox", checked)]
+									else
+										td #[input(type="checkbox")]
