@@ -213,7 +213,7 @@ exports.insertNyKaffe = function(doc, cb){
 exports.endreVisVerdiForKaffe = function(id, cb){
 	kaffer().findOneAndUpdate(
 		{
-			"_id" : new ObjectId(id)
+			"_id" : new ObjectId(id.toString())
 		}, 
 		{
 			$set : { vis : !'$vis'}
