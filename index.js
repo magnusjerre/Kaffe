@@ -7,8 +7,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 var fs = require('fs');
 var jade = require('jade');
+var favicon = require('serve-favicon');
 
 kaffedb.connect();
+
+app.use(favicon(__dirname + '/favicon.ico'));
 
 app.get('/kaffeKartJson', function(req, res){
 	res.writeHead(200, { 'Content-Type' : 'application/json'});
@@ -37,59 +40,48 @@ app.get('/kaffeliste', function(req, res){
 
 app.get('/', function(req, res){
 	var fn = jadeCompile('index.jade');
-	kaffedb.list	
-	res.writeHead(200, { 'Content-Type' : 'text/html'});
-	
-	kaffedb.getDagensKaffe(function(error, result){
-		if (result) {
-			console.log("Found today's coffe");
-			console.log("result");
-			console.log(result);
-			if (result.kaffe_navn == "Ukjent") {
-				console.log("ukjent kaffe i dag");
-				kaffedb.listKafferDropdown(function(err, docs) {
-					var obj = {
-						hardagenskaffe : false,
-						model : result,
-						dagensKaffe : {
-							navn : "Ukjent",
-							type : "Ukjent",
-							produsent : "Ukjent"	
-						},
-						kaffer : docs
-					}
-					res.write(fn(obj));
-					res.end();
-				});
-			} else {
-				kaffedb.getKaffeMedNavn(result.kaffe_navn, function(err, doc){
-					kaffedb.listKafferDropdown(function(err, docs) {
-						var obj = {
-							hardagenskaffe : true,
-							model : result,
-							dagensKaffe : doc,
-							kaffer : docs
-						}
-						res.write(fn(obj));
-						res.end();
-					});	
-				});	
-			}
-			
-		} else {
-			console.log("Did not find today's coffe");
-			kaffedb.listKafferDropdown(function(error, docs){
-				var obj = {
-					hardagenskaffe : false,
-					kaffer : docs
-				}
-				res.write(fn(obj));
-				res.end();	
-			});
-			
-		}
-		
-	});
+    kaffedb.getDagensKaffe(function(dkError, dkResult){ //dk = dagenskaffe
+        console.log("getDagensKAffe");
+        kaffedb.listKafferDropdown(function(kdErr, kdRes){
+            console.log("listKafferDropdown");
+            if (dkError) {
+                console.log("ERROR: There was a problem retrieving 'dagenskaffe': " + dkError);
+                return;
+            }
+            if (kdErr) {
+                console.log("ERROR: There was a problem retrieving the list of possible coffes: " + kdErr);
+                return;
+            }
+            
+            var model = {
+                "dagensbrygg" : dkResult,
+                "dropdownkaffer" : kdRes,
+                "gjetting" : null
+            }
+            
+            if (req.query.brukernavn && req.query.karakter && req.query.kaffe) {
+                model.gjetting = {
+                    "brukernavn" : req.query.brukernavn,
+                    "karakter" : req.query.karakter,
+                    "kaffe" : req.query.kaffe
+                }
+            }
+            
+            if (model.dagensbrygg == null) {
+                console.log("har ikke registrert noen kaffe for i dag og det er heller ikke registrert noen karakterer");
+            } else {
+                if (model.dagensbrygg.kaffe_navn == "Ukjent") {
+                    console.log("Ingen kaffe har blitt registrert i dag, men en eller flere karakterer har det");
+                } else {
+                    console.log("Dagens kaffe har blitt registrert i dag");
+                }
+            }
+            
+            res.writeHead(200, { 'Content-Type' : 'text/html'});
+            res.write(fn(model));
+            res.end();
+        });
+    });    
 });
 
 app.get('/about', function(req, res){
@@ -123,11 +115,9 @@ app.post('/giKarakter', function(req, res){
 		karakter : req.body.karakter,
 		gjetting : req.body.gjetting
 	}
-	kaffedb.insertDagensKarakter(doc, function(){
-		
+	kaffedb.insertDagensKarakter(doc, function(){     
+        res.redirect('/?brukernavn=' + doc.bruker_navn + '&karakter=' + doc.karakter + '&kaffe=' + doc.gjetting);
 	});
-	
-	res.redirect('/');
 });
 
 app.post('/visskjulkaffe', function(req, res){
@@ -194,7 +184,7 @@ function isFile(str) {
 		return true;
 	} else if (str.match(/.js/)) {
 		return true;
-	}
+    }
 	return false;
 }
 

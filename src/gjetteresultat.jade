@@ -1,0 +1,7 @@
+div#gjetteresultat.container.rectangle.nydagenskaffe
+	if gjetting.kaffe == dagensbrygg.kaffe_navn
+		h2 Riktig!
+	else
+		h2 Feil...
+	p Dagens kaffe var #{dagensbrygg.kaffe_navn}
+	button#lukkgjettriktig(type="button", ) Lukk

@@ -77,6 +77,7 @@ exports.insertDagensKarakter = function(args, cb) {
 				karakterer : [args]
 			}
 			collection.insertOne(doc, {}, function(error2, result2){
+                cb(error, result);
 			});
 		} else {
 			collection.findOneAndUpdate(
@@ -95,6 +96,7 @@ exports.insertDagensKarakter = function(args, cb) {
 						console.log("successfully inserted new karakter");
 						printJSON(result);
 					}
+                    cb(error, result);
 				}
 			);		
 		}
