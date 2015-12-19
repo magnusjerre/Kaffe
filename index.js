@@ -99,11 +99,6 @@ app.get('/about', function(req, res){
 	res.end();
 });
 
-app.get('/kaffe.css', function(req, res){
-	var readStream = fs.createReadStream(path.join(__dirname, 'src/', 'kaffe.css'));
-	readStream.pipe(res);
-});
-
 app.get('/listDagensKaffe', function(req, res){
 	var fn = jadeCompile('listDagensKaffe.jade');
 	res.writeHead(200, { 'Content-Type' : 'text/html' });
@@ -181,7 +176,7 @@ app.post('/registrerNyDagensKaffe', function(req, res){
 });
 
 app.get('/*', function(req, res){
-	var end = req.originalUrl.substring(1, req.originalUrl.length);
+	var end = req.originalUrl.substring(1, req.originalUrl.length); 
 	if (isFile(end)) {
 		var readStream = fs.createReadStream(path.join(__dirname, 'src/', end));
 		readStream.pipe(res);
