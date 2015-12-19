@@ -14,7 +14,6 @@ html
 				ul#kaffeliste
 					each kaffe in produsent.kaffe
 						li.smallrectangle.container
-							p#kaffeid(style="display: none") #{kaffe["_id"]}
 							table
 								tr
 									th Kaffenavn
@@ -25,7 +24,6 @@ html
 									td #{kaffe.navn}
 									td #{kaffe.type}
 									td #{kaffe.land}
-									if kaffe.vis
-										td #[input#viskaffe(type="checkbox", checked)]
-									else
-										td #[input(type="checkbox")]
+									td #[input(id=kaffe._id, type="checkbox", checked=kaffe.vis)]
+									
+									

@@ -78,7 +78,7 @@ app.get('/', function(req, res){
 			
 		} else {
 			console.log("Did not find today's coffe");
-			kaffedb.listKaffer(function(error, docs){
+			kaffedb.listKafferDropdown(function(error, docs){
 				var obj = {
 					hardagenskaffe : false,
 					kaffer : docs
@@ -136,11 +136,8 @@ app.post('/giKarakter', function(req, res){
 });
 
 app.post('/visskjulkaffe', function(req, res){
-	var data = req.body;
-	console.log("data");
-	console.log(data);
+	var data = req.body;	//example: { id : '566a8327b2446e033056f20b' }
 	kaffedb.endreVisVerdiForKaffe(data.id, function(error, result){
-		
 		res.redirect('/kaffeliste');
 	});
 });

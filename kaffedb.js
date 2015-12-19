@@ -210,21 +210,51 @@ exports.insertNyKaffe = function(doc, cb){
 	});
 }
 
-exports.endreVisVerdiForKaffe = function(id, cb){
-	kaffer().findOneAndUpdate(
-		{
-			"_id" : new ObjectId(id.toString())
-		}, 
-		{
-			$set : { vis : !'$vis'}
-		}, 
-		{
-			
-		},
-		function(error, result){
-			cb(error, result);
-		});
+var finnKaffe = function(query, callback) {
+	kaffer().findOne(query, function(error, result){	//returnerer det ene kaffe.json objektet
+		if (error) {
+			console.log("ERROR: Couldn't find a doument for method finnKaffe for query: " + jsonStrOneline(query));
+		} else {
+			console.log("Foud a document for method finnKaffe for query: " + jsonStrOneline(query));
+		}
+		callback(error, result);
+	});
 }
+exports.finnKaffe = finnKaffe;
+
+var finnKaffeMedId = function(idString, callback) {
+	var query = { "_id" : ObjectId(idString) }	//må omringe id-strengen med ObjectId
+	finnKaffe(query, function(error, result){
+		callback(error, result);
+	});
+}
+exports.finnKaffeMedId = finnKaffe;
+
+var endreVerdiForKaffe = function(query, update, options, callback){
+	kaffer().findOneAndUpdate(query, update, options, function(error, result){
+		if (error) {
+			console.log("ERROR: Couldn't find a document to update for method endreVerdiForKaffe for query: " + jsonStrOneline(query));
+		} else {
+			console.log("Found a document with to update for method endreVerdiForKaffe for query: " + jsonStrOneline(query));
+		}
+		callback(error, result);
+	});
+}
+exports.endreVerdiForKaffe = endreVerdiForKaffe;
+
+var endreVisVerdiForKaffe = function(idString, callback) {
+	finnKaffeMedId(idString, function(error, result){	//result skal være en kaffe.json json
+		endreVerdiForKaffe(
+			{ "_id" : ObjectId(idString) }, 
+			{ $set : { "vis" : !result.vis}}, 
+			{}, 
+			function(error, result){
+				callback(error, result);
+			}
+		);
+	});
+}
+exports.endreVisVerdiForKaffe = endreVisVerdiForKaffe;
 
 var kaffer = function() {
 	return mongo.DB.collection('kaffe');
@@ -256,4 +286,13 @@ function printProps(obj) {
 	for (var k in obj) {
 		console.log(k + " : " + obj[k]);
 	}
+}
+
+function jsonStrOneline(obj) {
+	var str = "";
+	for (var k in obj) {
+		strtemp = k + " : " + obj[k] + ", ";
+		str += strtemp;
+	}
+	return str;
 }
