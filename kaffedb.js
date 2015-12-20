@@ -52,8 +52,6 @@ var getDagensKaffe = function(callback) {
 exports.getDagensKaffe = getDagensKaffe;
 
 var listDagensKaffeForMonth = function(year, month, callback){
-	var now = new Date();
-	
 	var first = new Date(year, month	,	1, 	0, 	0, 	0, 	0);
 	var last = 	new Date(year, month + 1,	0,  23, 59, 59, 99);
 	

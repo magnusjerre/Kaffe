@@ -38,20 +38,45 @@ app.get('/kaffeliste', function(req, res){
 	});
 });
 
-app.get('/kalendervisning', function(req, res){
-	var fn = jadeCompile('kalendervisning.jade');
-	res.writeHead({ 'Content-Type' : 'text/html'});
+app.get('/kalenderelement', function(req, res){
 	var date = new Date();
-	var model = {
-		"dager" : getDays(date.getFullYear(), date.getMonth()),
-		"dagensbrygg" : getDagensBryggForMonth(date.getFullYear(), date.getMonth());
-	}
-	res.write(fn(model));
-	res.end();
+	kaffedb.listDagensKaffeForMonth(date.getFullYear(), date.getMonth(), function(error, docs){
+		res.json({ "dagensbrygg" : convertToCalendar(docs) })	
+	});
 });
 
-var getDagensBryggForMonth = function(year, month) {
+app.get('/kalendervisning', function(req, res){
+	var fn = jadeCompile('kalendervisning.jade');
+	var date = new Date();
+	kaffedb.listDagensKaffeForMonth(date.getFullYear(), date.getMonth(), function(error, docs){
+		var arr = convertToCalendar(docs);
+		var model = {
+			"dager" : getDays(date.getFullYear(), date.getMonth()),
+			"dagensbrygg" : arr
+		}
+		res.writeHead({ 'Content-Type' : 'text/html'});
+		res.write(fn(model));
+		res.end();	
+	});
+});
+
+function convertToCalendar(dagenskaffer) {
+	var array = new Array(42);
+	var firstDay = new Date();
+	firstDay = new Date(firstDay.getFullYear(), firstDay.getMonth(), 1);
+	var posInArray = firstDay.getDay() - 1;
+	if (posInArray == -1) {	// 0 == søndag, kalenderen starter på mandag
+		posInArray = 6; 
+	}
 	
+	for (var i = 0; i < dagenskaffer.length; i++) {
+		var dagens = dagenskaffer[i];
+		var dag = dagens._id.getDate();
+		var pos = posInArray + dag - 1;	//trekker fra 1 for å satt til riktig posisjon i kalender tabellen, hvis dag 1 er på mandag, må pos være 0
+		array[pos] = dagens;
+	}
+	
+	return array;
 }
 
 var getDays = function(year, month) {
