@@ -129,3 +129,15 @@ submit {
 .karakterer {
 	display: none
 }
+
+.kalender {
+	border : 0.1em solid darkturquoise;
+}
+
+table.kalender tr td, table.kalender tr th {
+	border : 0.1em solid darkcyan;
+}
+table.kalender tr td {
+	height : 2.5em;
+	width: 3em;
+}

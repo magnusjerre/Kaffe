@@ -38,6 +38,74 @@ app.get('/kaffeliste', function(req, res){
 	});
 });
 
+app.get('/kalendervisning', function(req, res){
+	var fn = jadeCompile('kalendervisning.jade');
+	res.writeHead({ 'Content-Type' : 'text/html'});
+	var date = new Date();
+	var model = {
+		"dager" : getDays(date.getFullYear(), date.getMonth()),
+		"dagensbrygg" : getDagensBryggForMonth(date.getFullYear(), date.getMonth());
+	}
+	res.write(fn(model));
+	res.end();
+});
+
+var getDagensBryggForMonth = function(year, month) {
+	
+}
+
+var getDays = function(year, month) {
+	var firstDay = new Date(year, month, 1);
+	var posInArray = firstDay.getDay() - 1;
+	if (posInArray == -1) {	// 0 == søndag, kalenderen starter på mandag
+		posInArray = 6; 
+	}
+	
+	var lastDay = new Date(year, month + 1, 0).getDate();
+	
+	var array = new Array(42);
+	var dayCounter = 1;
+	for (var i = 0; i < 42; i++) {
+		if (i >= posInArray && dayCounter <= lastDay) {
+			array[i] = dayCounter++;
+		}
+	}
+	
+	return array;
+}
+
+
+var getNameOfFirstDayOfMonth = function(year, month) {
+	var weekday = new Array(7);
+    weekday[0] = "Søndag";
+    weekday[1] = "Mandag";
+    weekday[2] = "Tirsdag";
+    weekday[3] = "Onsdag";
+    weekday[4] = "Torsdag";
+    weekday[5] = "Fredag";
+    weekday[6] = "Lørdag";
+	
+	var firstDay = new Date(year, month, 1);
+	var dag = weekday[firstDay.getDay()];
+	console.log("dag: " + dag);
+}
+
+var getKalender = function(year, month) {
+	var weekday = new Array(7);
+    weekday[0] = "Søndag";
+    weekday[1] = "Mandag";
+    weekday[2] = "Tirsdag";
+    weekday[3] = "Onsdag";
+    weekday[4] = "Torsdag";
+    weekday[5] = "Fredag";
+    weekday[6] = "Lørdag";
+	
+	var firstDay = new Date(year, month, 1);
+	var dag = weekday[firstDay.getDay()];
+	console.log("dag: " + dag);
+	var lastDay = new Date(year, month + 1, 0);	
+}
+
 app.get('/', function(req, res){
 	var fn = jadeCompile('index.jade');
     kaffedb.getDagensKaffe(function(dkError, dkResult){ //dk = dagenskaffe
