@@ -41,7 +41,8 @@ app.get('/kaffeliste', function(req, res){
 app.get('/kalenderelement', function(req, res){
 	var date = new Date();
 	kaffedb.listDagensKaffeForMonth(date.getFullYear(), date.getMonth(), function(error, docs){
-		res.json({ "dagensbrygg" : convertToCalendar(docs) })	
+		var model = { "dagensbrygg" : convertToCalendar(docs) }
+		res.json(model);	
 	});
 });
 
