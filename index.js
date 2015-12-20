@@ -55,7 +55,7 @@ app.get('/kalendervisning', function(req, res){
 			"dager" : getDays(date.getFullYear(), date.getMonth()),
 			"dagensbrygg" : arr
 		}
-		res.writeHead({ 'Content-Type' : 'text/html'});
+		res.writeHead(200, { 'Content-Type' : 'text/html'});
 		res.write(fn(model));
 		res.end();	
 	});
