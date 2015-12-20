@@ -1,18 +1,16 @@
 $(document).ready(function(){
 	var array = null;
 	
+	$.get('/kalenderelement', function(data, textStatus, jqXHR){
+		array = data.dagensbrygg;
+	});
+			
 	$('p').click(function(){
 		console.log("clicked p#" + $(this).attr("id"));
 		var clicked = $(this).attr("id");
 		if (array) {
 			setBrygg(array[clicked]);
 			setKarakterer(array[clicked].karakterer);
-		} else {
-			$.get('/kalenderelement', function(data, textStatus, jqXHR){
-				array = data.dagensbrygg;
-				setBrygg(array[clicked]);
-				setKarakterer(array[clicked].karakterer);
-			});		
 		}
 	});
 });
