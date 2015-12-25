@@ -12,6 +12,7 @@ var favicon = require('serve-favicon');
 kaffedb.connect();
 
 app.use(favicon(__dirname + '/favicon.ico'));
+app.use(express.static('public'));
 
 app.get('/kaffeKartJson', function(req, res){
 	res.writeHead(200, { 'Content-Type' : 'application/json'});
@@ -240,7 +241,7 @@ app.post('/registrerNyKaffeSort', function(req, res){
 });
 
 function jadeCompile(filename) {
-	var filename = path.join(__dirname, 'src/', filename);
+	var filename = path.join(__dirname, 'views/', filename);
 	return jade.compile(fs.readFileSync(filename), { filename : filename, pretty : true });	
 }
 
@@ -259,6 +260,7 @@ app.post('/registrerNyDagensKaffe', function(req, res){
 	});
 });
 
+/*
 app.get('/*', function(req, res){
 	var end = req.originalUrl.substring(1, req.originalUrl.length); 
 	if (isFile(end)) {
@@ -280,7 +282,7 @@ function isFile(str) {
 		return true;
     }
 	return false;
-}
+}*/
 
 var port = process.env.PORT || 8080;
 app.listen(port, function(){
