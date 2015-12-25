@@ -6,11 +6,10 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 var fs = require('fs');
-var jade = require('jade');
 var favicon = require('serve-favicon');
 
 //Setup express app
-app.use(favicon(__dirname + '/favicon.ico')); 
+app.use(favicon(path.join(__dirname + '/public/images/favicon.ico'))); 
 app.use(express.static('public'));
 
 app.set('view engine', 'jade');
