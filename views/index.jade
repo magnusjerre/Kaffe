@@ -33,15 +33,16 @@ html
 		if dagensbrygg == null || dagensbrygg.kaffe_navn == "Ukjent"
 			div.rectangle.nydagenskaffe#nydagenskaffe
 				h2 Ny dagens kaffe
-				form(action="registrerNyDagensKaffe", method="POST")
-					label(for="kaffe_navn") Kaffenavn
-					select#kaffe_navn(name="kaffe_navn")
+				form(id="nyDagenskaffeForm", action="registrerNyDagensKaffe", method="POST")
+					input(type="text", id="kaffeNavn", name="kaffeNavn", style="display:none")
+					label(for="kaffeId") Kaffe
+					select#kaffeId(name="kaffeId")
 						each element in dropdownkaffer
-							option(value="#{element.navn}") #{element.produsent} - #{element.navn} (#{element.type}) 
+							option(value="#{element._id}") #{element.produsent} - #{element.navn} (#{element.type}) 
 					br
 					br
-					label(for="kaffe_maker") Kaffemaker
-					input(type="text", id="kaffe_maker", name="kaffe_maker", placeholder="jerre...", required)
+					label(for="brygger") Kaffemaker
+					input(type="text", id="brygger", name="brygger", placeholder="jerre...", required)
 					br
 					br
 					label(for="liter") Liter
@@ -52,10 +53,10 @@ html
 					input(type="number", id="skjeer", name="skjeer", min="0.25", step="0.25", required)
 					br
 					br
-					input(type="submit", value="Submit")
+					input(id="submitNyDagenskaffe", type="submit", value="Submit")
 		div.rectangle.nydagenskaffe
 			h2 Ny karakter
-			form(action="giKarakter", method="POST")
+			form(id="nyKarakterForm", action="giKarakter", method="POST")
 				label(for="bruker_navn") Brukernavn
 				input(type="text", id="bruker_navn", name="bruker_navn", placeholder="jerre...", required)
 				br
@@ -63,9 +64,10 @@ html
 				label(for="karakter") Karakter
 				input(type="number", id="karakter", name="karakter", min="0.5", step="0.5", required)
 				br
+				input(id="kaffeNavn", type="text", name="kaffeNavn", style="display: none")
 				br
-				label(for="gjetting") Gjett kaffenavn
-				select#kaffe_navn(name="gjetting")
+				label(for="kaffeId") Gjett kaffenavn
+				select#kaffeId(name="kaffeId")
 					each element in dropdownkaffer
-						option(value="#{element.navn}") #{element.produsent} - #{element.navn} (#{element.type}) 
-				input(type="submit", value="Submit")
+						option(value="#{element._id}") #{element.produsent} - #{element.navn} (#{element.type}) 
+				input(id="submitNyKarakter", type="submit", value="Submit")

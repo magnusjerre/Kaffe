@@ -23,11 +23,12 @@ exports.index = function(req, res){
                 "gjetting" : null
             }
             
-            if (req.query.brukernavn && req.query.karakter && req.query.kaffe) {
+            if (req.query.brukernavn && req.query.karakter && req.query.kaffeNavn && req.query.kaffeId) {
                 model.gjetting = {
                     "brukernavn" : req.query.brukernavn,
                     "karakter" : req.query.karakter,
-                    "kaffe" : req.query.kaffe
+                    "kaffeSammendrag" : req.query.kaffeNavn,
+					"kaffeId" : req.query.kaffeId
                 }
             }
             
@@ -50,18 +51,20 @@ exports.giKarakter = function(req, res){
 	var doc = {
 		bruker_navn : req.body.bruker_navn,
 		karakter : req.body.karakter,
-		gjetting : req.body.gjetting
+		gjetting : req.body.kaffeNavn,
+		kaffeId : req.body.kaffeId
 	}
 	kaffedb.insertDagensKarakter(doc, function(){     
-        res.redirect('/?brukernavn=' + doc.bruker_navn + '&karakter=' + doc.karakter + '&kaffe=' + doc.gjetting);
+        res.redirect('/?brukernavn=' + doc.bruker_navn + '&karakter=' + doc.karakter + '&kaffeNavn=' + doc.gjetting + '&kaffeId=' + doc.kaffeId);
 	});
 }
 
 exports.registrerNyDagensKaffe = function(req, res){
 	var doc = {
 		"_id" : new Date(),
-		kaffe_navn : req.body.kaffe_navn,
-		brygger : req.body.kaffe_maker,
+		kaffeId : req.body.kaffeId,
+		kaffe_navn : req.body.kaffeNavn,
+		brygger : req.body.brygger,
 		liter : req.body.liter,
 		skjeer : req.body.skjeer,
 		karakterer : []
