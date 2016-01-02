@@ -1,5 +1,8 @@
 $(document).ready(function(){
 	
+	$('#navlistDagensKaffe').css('background-color', 'saddlebrown');
+	$('#navlistDagensKaffe').css('color', 'sandybrown');
+	
 	$('.karakterer').slideUp();
 	$('.karakterikon').rotate(90);
 	

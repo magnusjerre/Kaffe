@@ -1,4 +1,8 @@
 $(document).ready(function(){
+	
+	$('#navkalendervisning').css('background-color', 'saddlebrown');
+	$('#navkalendervisning').css('color', 'sandybrown');
+	
 	var array = null;
 	
 	$.get('/kalenderelement', function(data, textStatus, jqXHR){

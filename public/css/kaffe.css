@@ -6,21 +6,32 @@ body, h1, h2, h3, ul, li, img, label, input, div, a, p {
 	color: black;
 	text-decoration: none;
 	list-style-type: none;
+	font-family: "Comic Sans MS","Courier New";
+	font-style: italic;
+}
+
+.inlineblock {
+	display: inline-block;
 }
 
 html {
 	height: 100vh;
-	background: linear-gradient(to bottom, lightgray, lightslategray);
+	/*background-color: #FFF4DE;*/
+	background-color: #FEDBA0;
 	background-attachment: fixed;
 }
 
 nav {
-	margin: 1em;
+	margin: 1em 1em 0 1em;
 }
 nav a {
 	margin: 0;
-	padding: 0.5em;
-	background-color: coral;
+	padding: 0.5em 0.5em 0.5em 0.5em;
+	background-color: transparent;
+}
+
+nav a:hover {
+	background-color: sandybrown;
 }
 
 h1 {
@@ -31,6 +42,7 @@ h1 {
 }
 
 h2 {
+	padding: 0.5em;
 	font-size: 1.5em;
 	font-weight: bold;	
 }
@@ -56,20 +68,40 @@ td {
 }
 
 label {
-	display: block;
-	text-align: center;
+	display: inline;
+	margin: 1em 1em 1em 1em;
 }
 
 input {
-	margin:0 auto 0 auto;
-	border-radius: 0.5em;
-	border:0.1 solid green;
-	text-align: center;
-	width: 100%;
+	margin: 0.6em auto 0 auto;
+	border: 3px solid saddlebrown;
+	background-color: #FEDBA0;
+	border-radius: 0;
+	align-content: flex-end;
+	box-shadow: none;
+	padding-left: 0.25em;
+	padding-right: 0.25em;
+	width: 10em;
+}
+
+input:focus {
+	outline-color: darkred;
+}
+
+div.selectSquaredCorners {
+	display: inline;
+	background-color: #FEDBA0;
+	border: 3px solid saddlebrown;
 }
 
 select {
-	width: 100%;
+	border: none;
+	background-color: transparent;
+	font-family: "Comic Sans MS";
+}
+
+select:focus {
+	outline: none;
 }
 
 submit {
@@ -81,6 +113,12 @@ submit {
 	flex-direction: column;
 	justify-content: flex-start;
 	align-items: center;
+}
+
+.subcontainer {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
 }
 
 .title {
@@ -140,4 +178,143 @@ table.kalender tr td, table.kalender tr th {
 table.kalender tr td {
 	height : 2.5em;
 	width: 3em;
+}
+
+.verticalLineLeft {
+	border-left: 3px solid saddlebrown;
+	margin-left: 10px;
+	padding-right: 10px;
+}
+
+.verticalLineRight {
+	border-right: 3px solid saddlebrown;
+	margin-right: 10px;
+	padding-right: 10px; 
+}
+
+.horizontalLine {
+	text-align: center;
+	border-top: 3px solid saddlebrown;
+}
+
+.rightAligned {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	text-align: right;
+}
+
+.leftAligned {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	text-align: left;
+}
+
+.emptyHeight {
+	height: 1em;
+}
+
+.numberInput {
+	width: 20em;
+}
+
+.submitButton {
+	background-color: saddlebrown;
+	color: sandybrown;
+	text-align: center;
+	margin: 1em auto 0 auto;
+	padding: 4px;
+}
+
+.submitButton:hover {
+	background-color: sandybrown;
+	color: saddlebrown;
+}
+
+input.rightAlign {
+	text-align: right;
+}
+
+.halfWidth {
+	width: 25em;
+}
+
+.mediumWidth {
+	width: 6em;
+}
+
+.maxWidth {
+	width: 45em;
+}
+
+.clamp {
+	margin-top: 0.5em;
+	width: 45em;
+	height: 1em;
+	
+	border-right: 3px solid saddlebrown;
+	margin-right: 10px;
+	padding-right: 10px; 
+	
+	border-left: 3px solid saddlebrown;
+	margin-left: 10px;
+	padding-right: 10px;
+	
+	text-align: center;
+	border-top: 3px solid saddlebrown;
+}
+
+.karakterSkala {
+	vertical-align: sub;
+	display: inline-block;
+	margin: 0.6em auto 0 auto;
+	padding-right: 0.5em;
+	border-right: 6px solid transparent;
+	height: 1em;
+}
+
+.bean {
+	display: inline-block;
+	position: relative;
+	margin: 0 auto 0 auto;
+	padding: 2px 0 2px 0;
+	transform: rotate(15deg);
+	-webkit-transform: rotate(15deg);
+}
+
+.beanHalf {
+	margin: 0 auto 0 auto;
+	padding: 0;
+	width: 0.6em;
+	height: 1.2em;
+}
+
+.beanSelected {
+	-webkit-filter: invert(100%);
+}
+
+.dagensresultat {	
+	margin: 0.6em auto 0 auto;
+	padding-left: 0.25em;
+	padding-right: 0.25em;
+	border: 3px solid transparent;	
+}
+
+.dagensresultat:hover {
+	text-shadow: 0px 0px 8px saddlebrown;
+}
+
+.kaffeselect {
+	width: 15.3em; 
+}
+
+.resultatKaffe {
+	width: 15.3em;
+	padding-left: 0.25em;
+	padding-right: 0.25em;
+}
+
+.resultatKaffe:hover {
+	text-shadow: 0px 0px 8px saddlebrown;
 }
