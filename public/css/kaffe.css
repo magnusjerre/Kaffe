@@ -7,7 +7,6 @@ body, h1, h2, h3, ul, li, img, label, input, div, a, p {
 	text-decoration: none;
 	list-style-type: none;
 	font-family: "Comic Sans MS","Courier New";
-	font-style: italic;
 }
 
 .inlineblock {
@@ -16,9 +15,12 @@ body, h1, h2, h3, ul, li, img, label, input, div, a, p {
 
 html {
 	height: 100vh;
-	/*background-color: #FFF4DE;*/
 	background-color: #FEDBA0;
 	background-attachment: fixed;
+}
+
+p {
+	margin: 0;
 }
 
 nav {
@@ -45,6 +47,7 @@ h2 {
 	padding: 0.5em;
 	font-size: 1.5em;
 	font-weight: bold;	
+	color: saddlebrown;
 }
 
 nav {
@@ -68,36 +71,44 @@ td {
 }
 
 label {
-	display: inline;
-	margin: 1em 1em 1em 1em;
+	display: block;
+	margin: 1em 0.5em 0 0.5em;
+	font-weight: bold;
+	color: saddlebrown;
 }
 
 input {
-	margin: 0.6em auto 0 auto;
-	border: 3px solid saddlebrown;
+	border: none;
 	background-color: #FEDBA0;
 	border-radius: 0;
 	align-content: flex-end;
 	box-shadow: none;
 	padding-left: 0.25em;
 	padding-right: 0.25em;
-	width: 10em;
+	font-style: normal;
 }
 
 input:focus {
-	outline-color: darkred;
+	outline: none;
+	border: none;
+	background-color: #EDCA90;
 }
 
-div.selectSquaredCorners {
-	display: inline;
-	background-color: #FEDBA0;
-	border: 3px solid saddlebrown;
+::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin-left: 0.25em;
+}
+
+::-webkit-input-placeholder {
+	color: gray;
 }
 
 select {
-	border: none;
+	border: 0 solid transparent;
 	background-color: transparent;
 	font-family: "Comic Sans MS";
+	font-size: 1em;
+	color: gray;
 }
 
 select:focus {
@@ -232,7 +243,7 @@ table.kalender tr td {
 	color: saddlebrown;
 }
 
-input.rightAlign {
+.rightAlign {
 	text-align: right;
 }
 
@@ -240,8 +251,20 @@ input.rightAlign {
 	width: 25em;
 }
 
+.largeWidth {
+	width: 10em;
+}
+
 .mediumWidth {
 	width: 6em;
+}
+
+.mediumsmallWidth {
+	width: 4em;
+}
+
+.smallWidth {
+	width: 4em;
 }
 
 .maxWidth {
@@ -268,7 +291,6 @@ input.rightAlign {
 .karakterSkala {
 	vertical-align: sub;
 	display: inline-block;
-	margin: 0.6em auto 0 auto;
 	padding-right: 0.5em;
 	border-right: 6px solid transparent;
 	height: 1em;
@@ -288,17 +310,16 @@ input.rightAlign {
 	padding: 0;
 	width: 0.6em;
 	height: 1.2em;
+	-webkit-filter: grayscale() brightness(2);
 }
 
 .beanSelected {
-	-webkit-filter: invert(100%);
+	-webkit-filter: grayscale(0%);
 }
 
 .dagensresultat {	
-	margin: 0.6em auto 0 auto;
 	padding-left: 0.25em;
 	padding-right: 0.25em;
-	border: 3px solid transparent;	
 }
 
 .dagensresultat:hover {
@@ -307,12 +328,6 @@ input.rightAlign {
 
 .kaffeselect {
 	width: 15.3em; 
-}
-
-.resultatKaffe {
-	width: 15.3em;
-	padding-left: 0.25em;
-	padding-right: 0.25em;
 }
 
 .resultatKaffe:hover {
