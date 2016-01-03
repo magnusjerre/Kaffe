@@ -5,8 +5,12 @@ exports.setKaffedb = function(db) {
 
 exports.kalenderElementer = function(req, res){
 	var date = new Date();
+	if (req.query.month && req.query.year) {
+		date = new Date(parseInt(req.query.year), parseInt(req.query.month));
+	}
 	kaffedb.listDagensKaffeForMonth(date.getFullYear(), date.getMonth(), function(error, docs){
-		var model = { "dagensbrygg" : convertToCalendar(docs) }
+		var calendar = getCalendar(date.getFullYear(), date.getMonth());
+		var model = { "dagensbrygg" : convertToCalendar2(docs, calendar) }
 		res.json(model);	
 	});
 }

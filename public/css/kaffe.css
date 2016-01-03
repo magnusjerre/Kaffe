@@ -360,7 +360,7 @@ table.kalender tr td {
 	align-content: flex-start;
 	
 	width: 6em;
-	height: 5em;
+	height: 4.5em;
 	margin: 1px;
 	padding: 2px;
 	background-color: #ffefbe;
@@ -375,8 +375,8 @@ table.kalender tr td {
 }
 
 .calendarIcon {
-	width: 24px;
-	height: 24px;
+	width: 18px;
+	height: 18px;
 	margin: 0 auto 0 auto;
 	transform: rotate(30deg);
 }
@@ -431,3 +431,45 @@ table.kalender tr td {
 	display: none;
 }
 
+
+.popup {
+	position: absolute;
+	left: 0;
+	right: 0;
+	margin: auto;
+	z-index: 1;
+}
+
+.popuprectangle {
+	width: 25em;
+	padding: 2em;
+	background-color: #FEDBA0;
+	box-shadow: 0 0 20px saddlebrown;
+}
+
+.relative {
+	position: relative;
+}
+
+.kaffeboks {
+	margin: 0.5em auto 0 auto;
+	padding: 0.5em;
+}
+
+.karakterboks {
+	margin: 0.5em auto 0 auto;
+	padding: 0.5em;
+	background-color: #ffefbe;
+}
+
+.karakterliste {
+	max-height: 18em;
+	/*height: 18em;*/
+	overflow: scroll;
+}
+
+.closeIcon {
+	width: 16px;
+	height: 16px;
+	align-self: flex-end;
+}

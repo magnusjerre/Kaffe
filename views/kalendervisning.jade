@@ -19,6 +19,7 @@ html
 			img#nextMonth.calendarIcon.navbutton(src="images/arrow_left.png", alt="Next month", style="transform : rotate(180deg)")
 		p#yearP(style="display: none") #{fullYear}
 		p#monthP(style="display: none") #{fullMonth}
+		include dagenskaffeboks.jade
 		div.calendar
 			mixin calendarDayColumn(weekdayNr, weekdayName)
 				- var pos = weekdayNr 
@@ -43,4 +44,3 @@ html
 			+calendarDayColumn(4, 'Fredag')
 			+calendarDayColumn(5, 'Lørdag')
 			+calendarDayColumn(6, 'Søndag')
-		include dagenskaffeboks.jade

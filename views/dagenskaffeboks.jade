@@ -1,25 +1,28 @@
-div#dagenskaffeboks.dagenskaffeboks.rectangle
-	div.dagenskaffeboksRad
-		label.mediumWidth.dagenskaffebokslabel Kaffe
-		p#kaffenavn Friele - Frokost Kaffe (Malt)
-	div.dagenskaffeboksRad
-		label.mediumWidth.dagenskaffebokslabel Brygger
-		p#kaffeliter Jerre
-	div.dagenskaffeboksRad
-		label.mediumWidth.dagenskaffebokslabel Liter
-		p#kaffeliter 1.25
-	div.dagenskaffeboksRad
-		label.mediumWidth.dagenskaffebokslabel Skjeer
-		p#kaffeskjeer 7
-	div.horizontalLine.largeWidth
-	div#karakterer
-		div#karakterermal.dagenskaffeboks.hidden
+div#dagenskaffeboks.popup.popuprectangle
+	div.relative.dagenskaffeboks
+		img#closepopup.closeIcon(src="images/cross.png", alt="Close button")
+		div.kaffeboks
 			div.dagenskaffeboksRad
 				label.mediumWidth.dagenskaffebokslabel Kaffe
-				p#kaffe Friele - Frokost Kaffe (Malt)
+				p#kaffenavn Friele - Frokost Kaffe (Malt)
 			div.dagenskaffeboksRad
-				label.mediumWidth.dagenskaffebokslabel Bruker
-				p#bruker Jerre
+				label.mediumWidth.dagenskaffebokslabel Brygger
+				p#kaffeliter Jerre
 			div.dagenskaffeboksRad
-				label.mediumWidth.dagenskaffebokslabel Karakter
-				p#karakter 4
+				label.mediumWidth.dagenskaffebokslabel Liter
+				p#kaffeliter 1.25
+			div.dagenskaffeboksRad
+				label.mediumWidth.dagenskaffebokslabel Skjeer
+				p#kaffeskjeer 7
+		div.horizontalLine
+		div#karakterer.karakterliste
+			div#karakterermal.dagenskaffeboks.hidden.karakterboks
+				div.dagenskaffeboksRad
+					label.mediumWidth.dagenskaffebokslabel Kaffe
+					p#kaffe Friele - Frokost Kaffe (Malt)
+				div.dagenskaffeboksRad
+					label.mediumWidth.dagenskaffebokslabel Bruker
+					p#bruker Jerre
+				div.dagenskaffeboksRad
+					label.mediumWidth.dagenskaffebokslabel Karakter
+					p#karakter 4

@@ -4,8 +4,17 @@ $(document).ready(function(){
 	$('#navkalendervisning').css('color', 'sandybrown');
 	
 	var array = null;
+	hidePopup();
 	
-	$.get('/kalenderelement', function(data, textStatus, jqXHR){
+	$('#closepopup').click(function(){
+		hidePopup();
+	});
+	
+	$.get('/kalenderelement', {year : parseInt($('#yearP').text()), month : parseInt($('#monthP').text())}, function(data, textStatus, jqXHR){
+		var year = parseInt($('#yearP').text());
+		var month = parseInt($('#monthP').text());
+		console.log('year: ' + year);
+		console.log('month: ' + month);
 		array = data.dagensbrygg;
 	});
 			
@@ -15,6 +24,7 @@ $(document).ready(function(){
 		if (array) {
 			setBrygg(array[clicked]);
 			setKarakterer(array[clicked].karakterer);
+			showPopup();
 		}
 	});
 	
@@ -47,7 +57,9 @@ function setBrygg(brygg) {
 }
 
 function setKarakterer(karakterer) {
-	$('#karakterelement').remove();
+	console.log("karakterer");
+	console.log($('#karakterer').children('#karakterelement'));
+	$('#karakterer').children('#karakterelement').remove();
 	for (var i = 0; i < karakterer.length; i++) {
 		var karakter = karakterer[i];
 		var copy = $('#karakterermal').clone();
@@ -63,6 +75,14 @@ function setKarakterer(karakterer) {
 				$(this).text(karakter.karakter);
 			}
 		});
-		copy.appendTo($('#karakterer'));
+		$('#karakterer').append(copy);
 	}
+}
+
+function hidePopup() {
+	$('#dagenskaffeboks').hide();
+}
+
+function showPopup() {
+	$('#dagenskaffeboks').show();
 }
