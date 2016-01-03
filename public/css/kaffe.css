@@ -81,7 +81,7 @@ label {
 
 input {
 	border: none;
-	background-color: #FEDBA0;
+	background-color: transparent;
 	border-radius: 0;
 	align-content: flex-end;
 	box-shadow: none;
