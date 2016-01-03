@@ -9,26 +9,38 @@ html
 	body.container
 		h1 Den store kaffesiden
 		include nav.jade
-		h2 Desember
-		table#kaffekalender.kalender
-			tr
-				th Mandag
-				th Tirsdag
-				th Onsdag
-				th Torsdag
-				th Fredag
-				th Lørdag
-				th Søndag
-			- var n = 0
-			while n < 6
-				tr
-					- var i = n * 7
-					- var max = n * 7 + 7
-					while i < max
-						td 
-							p #{dager[i]}
-							if dagensbrygg[i] != null
-								p(id=i) #{dagensbrygg[i].kaffe_navn}
-						- var bogus1 = i++
-				- var bogus2 = n++
+		form#kalenderform(action="kalendervisning", method="GET")
+			input#year(type="number", name="year", style="display: none")
+			input#month(type="number", name="month", style="display: none")
+			input#submitMonth(type="submit", style="display: none")
+		div.calendarNavigation
+			img#prevMonth.calendarIcon.navbutton(src="images/arrow_left.png", alt="Previous month", style="transform: rotate(0deg)")
+			h2.mediumWidth.centered #{month}
+			img#nextMonth.calendarIcon.navbutton(src="images/arrow_left.png", alt="Next month", style="transform : rotate(180deg)")
+		p#yearP(style="display: none") #{fullYear}
+		p#monthP(style="display: none") #{fullMonth}
+		div.calendar
+			mixin calendarDayColumn(weekdayNr, weekdayName)
+				- var pos = weekdayNr 
+				div.calendarDayOfWeek
+					p.calendarHeader= weekdayName
+					- var dayOfWeek = weekdayNr
+					while dayOfWeek < 42
+						div.calendarElement
+							if dager[dayOfWeek].isThisMonth
+								p.calendarDate.inlineblock #{dager[dayOfWeek].dayOfWeek}
+							else
+								p.calendarDate.shadowed #{dager[dayOfWeek].dayOfWeek}
+							if dagensbrygg[dayOfWeek] != null
+								img.calendarIcon(id=pos, src="images/coffee_bean.png", alt="Coffe bean")
+								p.inlineblock.calendarElementContent(id=pos) #{dagensbrygg[dayOfWeek].kaffe_navn}
+						- pos = pos + 7
+						- var dayOfWeek = dayOfWeek + 7
+			+calendarDayColumn(0, 'Mandag')
+			+calendarDayColumn(1, 'Tirsdag')
+			+calendarDayColumn(2, 'Onsdag')
+			+calendarDayColumn(3, 'Torsdag')
+			+calendarDayColumn(4, 'Fredag')
+			+calendarDayColumn(5, 'Lørdag')
+			+calendarDayColumn(6, 'Søndag')
 		include dagenskaffeboks.jade

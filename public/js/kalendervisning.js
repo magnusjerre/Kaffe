@@ -17,6 +17,26 @@ $(document).ready(function(){
 			setKarakterer(array[clicked].karakterer);
 		}
 	});
+	
+	$('#prevMonth').click(function(){
+		var year = parseInt($('#yearP').text());
+		var month = parseInt($('#monthP').text());
+		var newDate = new Date(year, month, 0);
+		$('#year').val(newDate.getFullYear());
+		$('#month').val(newDate.getMonth());
+		console.log($('#year').val());
+		console.log($('#month').val());
+		$('#submitMonth').trigger('click');
+	});
+	
+	$('#nextMonth').click(function(){
+		var year = parseInt($('#yearP').text());
+		var month = parseInt($('#monthP').text());
+		var newDate = new Date(year, month + 1);
+		$('#year').val(newDate.getFullYear());
+		$('#month').val(newDate.getMonth());
+		$('#submitMonth').trigger('click');
+	});
 });
 
 function setBrygg(brygg) {
@@ -27,16 +47,22 @@ function setBrygg(brygg) {
 }
 
 function setKarakterer(karakterer) {
-	$('tr#data').remove();
+	$('#karakterelement').remove();
 	for (var i = 0; i < karakterer.length; i++) {
-			var karakter = karakterer[i];
-			var tr = $('<tr id="data"></tr>');
-			var tdkarakter = '<td>' + karakter.karakter + '</td>';
-			var tdbrukernavn = '<td>' + karakter.bruker_navn + '</td>';
-			var tdgjetting = '<td>' + karakter.gjetting + '</td>';
-			tr.append(tdkarakter);
-			tr.append(tdbrukernavn);
-			tr.append(tdgjetting);
-			$('#karakterer').append(tr); 
+		var karakter = karakterer[i];
+		var copy = $('#karakterermal').clone();
+		copy.attr('id', 'karakterelement');
+		copy.removeClass('hidden');
+		copy.find('p').each(function(){
+			var id = $(this).attr('id');
+			if (id == 'kaffe') {
+				$(this).text(karakter.gjetting);
+			} else if (id == 'bruker') {
+				$(this).text(karakter.bruker_navn);
+			} else if (id == 'karakter') {
+				$(this).text(karakter.karakter);
+			}
+		});
+		copy.appendTo($('#karakterer'));
 	}
 }
