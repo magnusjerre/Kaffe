@@ -60,14 +60,16 @@ table {
 }
 
 th {
-	font-size: 1.1em;
-	padding-top: 1em;
-	padding-left: 0.5em;
-	padding-right: 0.5em;
+	font-size: 1em;
+	padding: 0 0.5em 0 0.5em;
 }
 
 td {
-	padding: 0.5em 0.5em 0.5em 0.5em;
+	padding: 0.2em 0.5em 0.2em 0.5em;
+}
+
+tr:nth-child(2n) {
+	background-color: #fedba0;
 }
 
 label {
@@ -466,4 +468,23 @@ table.kalender tr td {
 	width: 16px;
 	height: 16px;
 	align-self: flex-end;
+}
+
+.kaffelisteProdusentRectangle {
+	background-color: #ffefbe;
+	box-shadow: 0 0 20px saddlebrown;
+	width: 25em;
+	border: none;
+	border-radius: 0;
+	padding: 5px;
+	margin: 1em auto 0 auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.kaffelisteKaffetabell {
+	text-align: left;
+	width: 100%;
 }
