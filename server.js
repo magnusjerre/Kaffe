@@ -26,7 +26,6 @@ kaffedb.connect();
 //Routes
 var rIndex = require(path.join(__dirname, 'routes/index.js'));
 var rAbout = require(path.join(__dirname, 'routes/about.js'));
-var rDagenskaffeHistorikk = require(path.join(__dirname, 'routes/dagenskaffeHistorikk.js'));
 var rDagenskaffeKalenderVisning = require(path.join(__dirname, 'routes/dagenskaffeKalenderVisning.js'));
 var rAllKaffe = require(path.join(__dirname, 'routes/allKaffe.js'));
 var rNyKaffe = require(path.join(__dirname, 'routes/nyKaffe.js'));
@@ -38,9 +37,6 @@ app.post('/giKarakter', rIndex.giKarakter);
 app.post('/registrerNyDagensKaffe', rIndex.registrerNyDagensKaffe);
 
 app.get('/about', rAbout.about);
-
-rDagenskaffeHistorikk.setKaffedb(kaffedb);
-app.get('/listDagensKaffe', rDagenskaffeHistorikk.dagenskaffeHistorikk);
 
 rDagenskaffeKalenderVisning.setKaffedb(kaffedb);
 app.get('/kalendervisning', rDagenskaffeKalenderVisning.kalendervisning);
