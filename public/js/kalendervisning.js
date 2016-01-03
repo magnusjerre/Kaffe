@@ -67,13 +67,20 @@ function setKarakterer(karakterer) {
 		copy.removeClass('hidden');
 		copy.find('p').each(function(){
 			var id = $(this).attr('id');
+			console.log('id: ' + id);
 			if (id == 'kaffe') {
 				$(this).text(karakter.gjetting);
 			} else if (id == 'bruker') {
 				$(this).text(karakter.bruker_navn);
-			} else if (id == 'karakter') {
-				$(this).text(karakter.karakter);
+			// } else if (id == 'karakterSkala') {
+			// 	// $(this).text(karakter.karakter);
+			// 	console.log("heheh");
+			// 	fillKarakterKalender(karakter.karakter, $(this));
 			}
+		});
+		copy.find('#karakterSkala').each(function(){
+			console.log("heheh");
+			fillKarakterKalender(karakter.karakter, $(this));
 		});
 		$('#karakterer').append(copy);
 	}
@@ -85,4 +92,37 @@ function hidePopup() {
 
 function showPopup() {
 	$('#dagenskaffeboks').show();
+}
+
+function fillKarakterKalender(karakterVerdi, karakterSkala) {
+	// var karakterSkala = $('#karakterSkala');
+	karakterSkala.children().each(function(){
+		$(this).children().removeClass('beanSelected');
+	});
+	
+	var numberOfBeans = Math.floor(karakterVerdi);
+	var beans = karakterSkala.children(':lt(' + numberOfBeans + ')');
+	beans.each(function(){
+		$(this).children().each(function(){
+			$(this).addClass('beanSelected');
+		});
+	});
+	if (numberOfBeans <= karakterVerdi) {	//Legge til den siste halve bønnen
+		halfBeanAtKarakterKalender(karakterVerdi, karakterSkala).addClass('beanSelected');
+	}
+}
+
+function halfBeanAtKarakterKalender(karakter, karakterSkala) {
+	var temp = 0.5;
+	var halfBean = null;
+	karakterSkala.children().each(function(){
+		$(this).children().each(function(){
+			if (karakter == temp) {
+				halfBean = $(this);
+			}
+			temp += 0.5;
+		});
+	});
+	
+	return halfBean;
 }
