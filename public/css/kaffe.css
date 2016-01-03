@@ -462,12 +462,6 @@ table.kalender tr td {
 	background-color: #ffefbe;
 }
 
-.karakterliste {
-	max-height: 18em;
-	/*height: 18em;*/
-	overflow: scroll;
-}
-
 .closeIcon {
 	width: 16px;
 	height: 16px;
