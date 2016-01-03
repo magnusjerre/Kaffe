@@ -269,6 +269,10 @@ table.kalender tr td {
 	width: 4em;
 }
 
+.tinyWidth {
+	width: 1em;
+}
+
 .maxWidth {
 	width: 45em;
 }
