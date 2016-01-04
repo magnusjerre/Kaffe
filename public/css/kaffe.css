@@ -492,3 +492,10 @@ table.kalender tr td {
 	text-align: left;
 	width: 100%;
 }
+
+.gjetteboks {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-content: center;
+}

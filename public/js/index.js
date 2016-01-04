@@ -13,6 +13,15 @@ $(document).ready(function(){
 	
 	var skjult = true;
 	
+	$('#gjetteboks').find('#gjettekarakterskala #karakterSkala').each(function(){
+		console.log(this);
+		fillKarakter(parseFloat($('#gjettekarakter').text()), $(this));
+	});
+	
+	$('#closepopup').click(function(){
+		hidePopup();
+	});
+	
 	$('#resultatKaffenavn, #resultatBrygger, #resultatLiter, #resultatSkjeer').click(function(){
 		if (skjult) {
 			skjult = false;
@@ -23,10 +32,6 @@ $(document).ready(function(){
 		}
 	});
 	
-    $('#lukkgjettriktig').click(function(){
-        $('#gjetteresultat').hide();
-    });
-	
 	$('#navhome').css('background-color', 'saddlebrown');
 	$('#navhome').css('color', 'sandybrown');
 	
@@ -35,7 +40,7 @@ $(document).ready(function(){
 			var decimal = ($(this).index() + 1) / 2;
 			var n = $(this).parent().index();
 			tempKarakter = n + decimal;
-			fillKarakter(tempKarakter);
+			fillKarakter(tempKarakter, $('#karakterSkalaInput'));
 		},
 		function() {
 			if (!clickedKarakter) {
@@ -44,7 +49,7 @@ $(document).ready(function(){
 				});
 				tempKarakter = 0;
 			} else {
-				fillKarakter(karakter);
+				fillKarakter(karakter, $('#karakterSkalaInput'));
 			}
 		}
 	);
@@ -91,8 +96,8 @@ $(document).ready(function(){
 	
 });
 
-function fillKarakter(karakterVerdi) {
-	var karakterSkala = $('#karakterSkala');
+function fillKarakter(karakterVerdi, karakterSkala) {
+	// var karakterSkala = $('#karakterSkala');
 	karakterSkala.children().each(function(){
 		$(this).children().removeClass('beanSelected');
 	});
@@ -105,14 +110,15 @@ function fillKarakter(karakterVerdi) {
 		});
 	});
 	if (numberOfBeans <= karakterVerdi) {	//Legge til den siste halve bønnen
-		halfBeanAtKarakter(karakterVerdi).addClass('beanSelected');
+		halfBeanAtKarakter(karakterVerdi, karakterSkala).addClass('beanSelected');
 	}
 }
 
-function halfBeanAtKarakter(karakter) {
+function halfBeanAtKarakter(karakter, karakterSkala) {
 	var temp = 0.5;
 	var halfBean = null;
-	$('#karakterSkala').children().each(function(){
+	karakterSkala.children().each(function(){
+	// $('#karakterSkalaInput').children().each(function(){
 		$(this).children().each(function(){
 			if (karakter == temp) {
 				halfBean = $(this);
@@ -122,4 +128,8 @@ function halfBeanAtKarakter(karakter) {
 	});
 	
 	return halfBean;
+}
+
+function hidePopup() {
+	$('#gjetteboks').hide();
 }

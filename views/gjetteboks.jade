@@ -1,0 +1,25 @@
+div#gjetteboks.popup.popuprectangle
+	div.relative.dagenskaffeboks
+		img#closepopup.closeIcon(src="images/cross.png", alt="Close button")
+		div.kaffeboks.gjetteboks
+			if gjetting.kaffeId == dagensbrygg.kaffeId
+				h2.centered Riktig!
+				div.dagenskaffeboksRad
+					label.mediumWidth.dagenskaffebokslabel Dagens kaffe er
+					p #{dagensbrygg.kaffe_navn}
+			else
+				h2.centered Feil...
+				div.dagenskaffeboksRad
+						label.mediumWidth.dagenskaffebokslabel Dagens kaffe er
+						p #{dagensbrygg.kaffe_navn}
+				br
+				div.horizontalLine
+				br
+				div.dagenskaffeboksRad
+					label.mediumWidth.dagenskaffebokslabel Du gjettet
+					p #{gjetting.kaffeSammendrag}
+				div.dagenskaffeboksRad
+					label.mediumWidth.dagenskaffebokslabel Karakter
+					p.hidden#gjettekarakter #{gjetting.karakter}
+					div#gjettekarakterskala
+						include karakterskala.jade

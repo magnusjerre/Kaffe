@@ -10,7 +10,7 @@ html
 		h1 Den store kaffesiden
 		include nav.jade
 		if gjetting && dagensbrygg && dagensbrygg.kaffe_navn != "Ukjent"
-			include gjetteresultat.jade
+			include gjetteboks.jade
 		div.subcontainer
 			if dagensbrygg == null || dagensbrygg.kaffe_navn == "Ukjent"
 				div.rightAligned.verticalLineRight.halfWidth#nydagenskaffe
@@ -53,7 +53,7 @@ html
 					label.mediumsmallWidth(for="karakter") Karakter
 					div(style="width:0; height: 1em; display: inline-block; overflow: hidden")
 						input(type="number", id="karakter", name="karakter", min="0.5", step="0.5", required)
-					div.karakterSkala.mediumWidth#karakterSkala
+					div.karakterSkala.mediumWidth#karakterSkalaInput
 						div.bean
 							img.beanHalf(src="images/coffe_bean_left.png", alt="Coffe bean")
 							img.beanHalf(src="images/coffe_bean_right.png", alt="Coffe bean")
