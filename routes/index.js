@@ -25,8 +25,8 @@ exports.index = function(req, res){
             
             if (req.query.brukernavn && req.query.karakter && req.query.kaffeNavn && req.query.kaffeId) {
 				console.log("gjetteid: " + req.query.kaffeId.valueOf());
-				console.log("dagensId: " + model.dagensbrygg.kaffeId.valueOf());
-				var korrektSvar = req.query.kaffeId.valueOf() == model.dagensbrygg.kaffeId.valueOf();
+				console.log("dagensId: " + model.dagensbrygg.kaffeId);
+				var korrektSvar = req.query.kaffeId.valueOf() == model.dagensbrygg.kaffeId;
 				console.log("korrektSvar: " + korrektSvar);
                 model.gjetting = {
                     "brukernavn" : req.query.brukernavn,
