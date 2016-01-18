@@ -16,6 +16,9 @@ exports.index = function(req, res){
                 console.log("ERROR: There was a problem retrieving the list of possible coffes: " + kdErr);
                 return;
             }
+			console.log("dkResult");
+			console.log(dkResult);
+			console.log(JSON.stringify(dkResult, null, 2));
             
             var model = {
                 "dagensbrygg" : dkResult,
