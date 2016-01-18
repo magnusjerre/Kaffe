@@ -24,11 +24,16 @@ exports.index = function(req, res){
             }
             
             if (req.query.brukernavn && req.query.karakter && req.query.kaffeNavn && req.query.kaffeId) {
+				var korrektSvar = req.query.kaffeId.valueOf() == dkResult.kaffeId.valueOf();
+				console.log("gjetteid: " + req.query.kaffeId.valueOf());
+				console.log("dagensId: " + dkResult.kaffeId.valueOf());
+				console.log("korrektSvar: " + korrektSvar);
                 model.gjetting = {
                     "brukernavn" : req.query.brukernavn,
                     "karakter" : req.query.karakter,
                     "kaffeSammendrag" : req.query.kaffeNavn,
-					"kaffeId" : req.query.kaffeId
+					"kaffeId" : req.query.kaffeId,
+					"korrektSvar" : korrektSvar
                 }
             }
             

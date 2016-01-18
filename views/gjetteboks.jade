@@ -2,7 +2,7 @@ div#gjetteboks.popup.popuprectangle
 	div.relative.dagenskaffeboks
 		img#closepopup.closeIcon(src="images/cross.png", alt="Close button")
 		div.kaffeboks.gjetteboks
-			if gjetting.kaffeId == dagensbrygg.kaffeId
+			if gjetting.korrektSvar
 				h2.centered Riktig!
 				div.dagenskaffeboksRad
 					label.mediumWidth.dagenskaffebokslabel Dagens kaffe er
