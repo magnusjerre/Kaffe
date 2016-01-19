@@ -78,8 +78,9 @@ exports.giKarakter = function(req, res){
 		gjetting : req.body.kaffeNavn,
 		kaffeId : req.body.kaffeId
 	}
-	kaffedb.insertDagensKarakter(doc, function(){     
-        res.redirect('/?brukernavn=' + doc.bruker_navn + '&karakter=' + doc.karakter + '&kaffeNavn=' + doc.gjetting + '&kaffeId=' + doc.kaffeId);
+	kaffedb.insertDagensKarakter(doc, function(){
+		var query =  '/?brukernavn=' + encodeURIComponent(doc.bruker_navn) + '&karakter=' + encodeURIComponent(doc.karakter) + '&kaffeNavn=' + encodeURIComponent(doc.gjetting) + '&kaffeId=' + encodeURIComponent(doc.kaffeId);
+        res.redirect(query);
 	});
 }
 
