@@ -80,6 +80,7 @@ exports.insertDagensKarakter = function(args, cb) {
 		} else if (result == null) {
 			doc = {
 				"_id" : new Date(),
+				kaffeId : "Ukjent",
 				kaffe_navn : "Ukjent",
 				brygger : "Ukjent",
 				liter : 0,
@@ -123,16 +124,15 @@ exports.insertDagenskaffe = function(args, cb) {
 		if (error) {
 			cb(error, result);
 		} else if (result == null) {
-			console.log("result == null");
-			console.log("args");
-			printJSON(args);
+			console.log("Ingen kaffe er registrert, dette gjelder for 'Ukjent' også.");
+			console.log("Registrerer kaffe med id: " + args.kaffeId + ", og navn: " + args.kaffe_navn);
 			collection.insertOne(args, {}, function(error2, result2){
 				if (!error) {
 					cb(result2);
 				}
 			});
 		} else {
-			console.log("result == else");
+			console.log("Karakter er allerede registrert, finner derfor 'Ukjent' kaffe");
 			var idagstart = iDagStart();
 	
 			var idagslutt = iDagSlutt();
@@ -142,6 +142,7 @@ exports.insertDagenskaffe = function(args, cb) {
 				}, 
 				{
 					$set : {
+						"kaffeId" : args.kaffeId,
 						"kaffe_navn" : args.kaffe_navn,
 						"brygger" : args.brygger,
 						"liter" : args.liter,
@@ -149,9 +150,10 @@ exports.insertDagenskaffe = function(args, cb) {
 					}
 				},
 				{
+					"returnOriginal" : false
 				}, 
 				function(error2, result2){
-					console.log("finished with findOneAndUpdate inside insertDagensKaffe");
+					console.log("'Ukjent' endret til kaffe med id: " + result2.value.kaffeId + ", og navn: " + result2.value.kaffe_navn);
 					cb(error2, result2);
 			});
 		}

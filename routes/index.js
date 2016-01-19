@@ -5,9 +5,7 @@ exports.setKaffedb = function(db) {
 
 exports.index = function(req, res){
     kaffedb.getDagensKaffe(function(dkError, dkResult){ //dk = dagenskaffe
-        console.log("getDagensKAffe");
         kaffedb.listKafferDropdown(function(kdErr, kdRes){
-            console.log("listKafferDropdown");
             if (dkError) {
                 console.log("ERROR: There was a problem retrieving 'dagenskaffe': " + dkError);
                 return;
@@ -16,43 +14,61 @@ exports.index = function(req, res){
                 console.log("ERROR: There was a problem retrieving the list of possible coffes: " + kdErr);
                 return;
             }
-			console.log("dkResult");
-			console.log(dkResult);
-			console.log(JSON.stringify(dkResult, null, 2));
             
             var model = {
                 "dagensbrygg" : dkResult,
                 "dropdownkaffer" : kdRes,
-                "gjetting" : null
+                "gjetting" : {
+					"visGjetteBoks" : false,
+					"korrektSvar" : false,
+                    "brukernavn" : null,
+                    "karakter" : null,
+                    "kaffeSammendrag" : null,
+					"kaffeId" : null
+                }
             }
+			
+			if (dagenskaffeErRegistrert(model)) {
+				console.log("Dagens registrerte kaffeid: " + dkResult.kaffeId);
+			} else {
+				console.log("Dagenskaffe er ikke registrert.");
+			}
             
             if (req.query.brukernavn && req.query.karakter && req.query.kaffeNavn && req.query.kaffeId) {
-				console.log("gjetteid: " + req.query.kaffeId.valueOf());
-				console.log("dagensId: " + model.dagensbrygg.kaffeId);
-				var korrektSvar = req.query.kaffeId.valueOf() == model.dagensbrygg.kaffeId;
-				console.log("korrektSvar: " + korrektSvar);
+				var visGjetteBoks = false, korrektSvar = false;
+				if (dagenskaffeErRegistrert(model)) {
+					visGjetteBoks = true;
+					korrektSvar = req.query.kaffeId.valueOf() == model.dagensbrygg.kaffeId.valueOf();
+				}
+				
                 model.gjetting = {
+					"visGjetteBoks" : visGjetteBoks,
+					"korrektSvar" : korrektSvar,
                     "brukernavn" : req.query.brukernavn,
                     "karakter" : req.query.karakter,
                     "kaffeSammendrag" : req.query.kaffeNavn,
-					"kaffeId" : req.query.kaffeId,
-					"korrektSvar" : korrektSvar
+					"kaffeId" : req.query.kaffeId
                 }
-            }
-            
-            if (model.dagensbrygg == null) {
-                console.log("har ikke registrert noen kaffe for i dag og det er heller ikke registrert noen karakterer");
-            } else {
-                if (model.dagensbrygg.kaffe_navn == "Ukjent") {
-                    console.log("Ingen kaffe har blitt registrert i dag, men en eller flere karakterer har det");
-                } else {
-                    console.log("Dagens kaffe har blitt registrert i dag");
-                }
+				
+				console.log("Gjettet kaffe med kaffeId:  " + model.gjetting.kaffeId);
+				console.log("Bruker med navn '" + model.gjetting.brukernavn + "' gjettet på dagenskaffe.");
+				console.log("visGjetteBoks: " + model.gjetting.visGjetteBoks + ", korrektSvar: " + model.gjetting.korrektSvar);
             }
             
 			res.render('index', model);
         });
     });    
+}
+
+function dagenskaffeErRegistrert(model) {
+	if (model.dagensbrygg == null) {
+		return false;
+	}
+	if (model.dagensbrygg.kaffe_navn != null 
+		&& model.dagensbrygg.kaffe_navn.valueOf() == 'Ukjent') {
+		return false;
+	}
+	return typeof model.dagensbrygg.kaffeId != 'undefined' &&  model.dagensbrygg.kaffeId != null;
 }
 
 exports.giKarakter = function(req, res){
