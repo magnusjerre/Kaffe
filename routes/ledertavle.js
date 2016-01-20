@@ -4,10 +4,27 @@ exports.setKaffedb = function(db) {
 }
 
 var ledertavle = function(req, res) {
-	getLedertavleForPeriode(new Date(2016, 0, 1), new Date(2016, 0, 20), function(ledertavle) {
+	var dager = getDenneUken();
+	getLedertavleForPeriode(dager.startDato, dager.sluttDato, function(ledertavle) {
 		var model = { 'ledertavle' : ledertavle };
 		res.render('ledertavle', model);
 	});
+}
+
+function getDenneUken() {
+	var today = new Date();
+	var weekDay = today.getDay();
+	var diff = 0;
+	if (weekDay == 0) {
+		diff = -6;
+	} else if (weekDay != 1) {
+		diff = weekDay - 1;
+	}
+	var firstDayOfWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - diff);
+	return {
+		startDato : firstDayOfWeek, 
+		sluttDato : new Date(firstDayOfWeek.getFullYear(), firstDayOfWeek.getMonth(), firstDayOfWeek.getDate() + 6) 
+		}; 
 }
 
 exports.ledertavle = ledertavle;
@@ -81,7 +98,7 @@ var GjetteStatistikk = function() {
 			sum += parseInt(this.karakterer[i]);
 		}
 		var average = sum / this.karakterer.length;
-		return average;
+		return Math.round(average * 100) / 100;
 	}
 	this.calcProsent = function() {
 		return Math.round((this.antallRiktige / this.antallTotalt) * 100) / 100;
