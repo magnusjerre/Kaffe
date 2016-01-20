@@ -5,10 +5,37 @@ exports.setKaffedb = function(db) {
 
 var ledertavle = function(req, res) {
 	var dager = getDenneUken();
+	var tittel = 'Denne uken';
+	if (req.query.periode) {
+		if (req.query.periode.valueOf() == 'måned'.valueOf()) {
+			dager = getDenneManeden();
+			tittel = 'Denne måneden';
+		} else if (req.query.periode.valueOf() == 'evigheten'.valueOf()) {
+			dager = getEvigheten();
+			tittel = 'Evigheten';
+		}
+	}
+	
 	getLedertavleForPeriode(dager.startDato, dager.sluttDato, function(ledertavle) {
-		var model = { 'ledertavle' : ledertavle };
+		var model = { 'tittel' : tittel, 'ledertavle' : ledertavle };
 		res.render('ledertavle', model);
 	});
+}
+
+exports.ledertavle = ledertavle;
+
+function getEvigheten() {
+	var today = new Date();
+	today = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 23, 59, 59, 99);
+	var epoc = new Date(2015, 10, 1);
+	return { startDato : epoc, sluttDato : today };
+}
+
+function getDenneManeden() {
+	var today = new Date();
+	var firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+	var lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+	return { startDato : firstDayOfMonth, sluttDato : lastDayOfMonth };
 }
 
 function getDenneUken() {
@@ -26,8 +53,6 @@ function getDenneUken() {
 		sluttDato : new Date(firstDayOfWeek.getFullYear(), firstDayOfWeek.getMonth(), firstDayOfWeek.getDate() + 6) 
 		}; 
 }
-
-exports.ledertavle = ledertavle;
 
 function getLedertavleForPeriode(startDato, sluttDato, callback) {
 	kaffedb.getDagensKafferForPeriode(startDato, sluttDato, function(error, docs){

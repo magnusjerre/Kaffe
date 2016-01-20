@@ -5,11 +5,16 @@ html
 		link(rel="stylesheet", type="text/css", href="css/kaffe.css")
 		script(src="js/jquery-2.1.4.min.js", type="text/javascript")
 		script(src="js/jQueryRotate.js", type="text/javascript")
+		script(src="js/ledertavle.js", type="text/javascript")
 	body.container
 		h1 Den store kaffesiden
 		include nav.jade
+		div.ledertavleNav
+			a#navUke(href="/ledertavle") Denne uken
+			a#navManed(href="/ledertavle?periode=måned") Denne måneden
+			a#navEvigheten(href="/ledertavle?periode=evigheten") Evigheten
 		div.rectangle.kaffelisteProdusentRectangle.kaffelisteWide
-			h2 Denne uken
+			h2#tittel #{tittel}
 			table.kaffelisteKaffetabell
 				tr
 					th Brukernavn
