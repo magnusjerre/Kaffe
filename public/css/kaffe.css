@@ -499,3 +499,7 @@ table.kalender tr td {
 	justify-content: flex-start;
 	align-content: center;
 }
+
+.kaffelisteWide {
+	width: 30em;
+}

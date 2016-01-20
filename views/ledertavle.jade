@@ -8,3 +8,19 @@ html
 	body.container
 		h1 Den store kaffesiden
 		include nav.jade
+		div.rectangle.kaffelisteProdusentRectangle.kaffelisteWide
+			h2 Denne uken
+			table.kaffelisteKaffetabell
+				tr
+					th Brukernavn
+					th Riktige
+					th Totalt
+					th Prosent
+					th Snittkarakter
+				each element in ledertavle
+					tr
+						td #{element.brukernavn}
+						td #{element.antallRiktige}
+						td #{element.antallTotalt}
+						td #{element.calcProsent()}
+						td #{element.calcAverageKarakter()}

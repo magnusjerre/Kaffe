@@ -4,33 +4,40 @@ exports.setKaffedb = function(db) {
 }
 
 var ledertavle = function(req, res) {
-	getLedertavleForPeriode(new Date(2016, 0, 1), new Date(2016, 0, 20));
-	res.render('ledertavle');
+	getLedertavleForPeriode(new Date(2016, 0, 1), new Date(2016, 0, 20), function(ledertavle) {
+		var model = { 'ledertavle' : ledertavle };
+		res.render('ledertavle', model);
+	});
 }
 
 exports.ledertavle = ledertavle;
 
-function getLedertavleForPeriode(startDato, sluttDato) {
-	console.log("hallo");
+function getLedertavleForPeriode(startDato, sluttDato, callback) {
 	kaffedb.getDagensKafferForPeriode(startDato, sluttDato, function(error, docs){
 		if (error) {
 			console.log(error);
 			return null;
 		}
-		console.log("ledertavle");
-		var ledertavle = mapDagensKaffePaaNavn(docs);
-		var a = "hei";
+		
+		var ledertavle = mapTilArray(mapDagensKaffePaaBrukernavn(docs)).sort(sorterPaaAntallRiktige);
+		callback(ledertavle);
 	});
 }
 
-function mapDagensKaffePaaNavn(docs) {
+function mapTilArray(map) {
+	var array = [];
+	for (var k in map) {
+		array.push(map[k]);
+	}
+	return array;
+}
+
+function mapDagensKaffePaaBrukernavn(docs) {
 	var map = {};
 	
 	for (var i = 0; i < docs.length; i++) {
 		var dagensKaffe = docs[i];
-		for (var j = 0; j < dagensKaffe.karkaterer.length; j++) {
-			console.log("dagensKaffe: " + dagensKaffe);
-			console.log("karakterer: " + dagensKaffe.karakterer);
+		for (var j = 0; j < dagensKaffe.karakterer.length; j++) {
 			addPair(map, dagensKaffe.kaffeId, dagensKaffe.karakterer[j]);
 		}
 	}
@@ -38,23 +45,27 @@ function mapDagensKaffePaaNavn(docs) {
 }
 
 var addPair = function(map, korrektSvar, karakter) {
-	console.log("addPair: map[" + (karakter.brukernavn) + "]");
-	if (map[karakter.brukernavn] == undefined) {
-		map[karakter.brukernavn] = new GjetteStatistikk();	
+	var brukernavn = karakter.bruker_navn;
+	if (map[brukernavn] == undefined) {
+		map[brukernavn] = new GjetteStatistikk();	
 	}
-	var korrektSvar = false;
+	var korrekt = false;
 	if (karakter.kaffeId != null && korrektSvar != null) {
-		korrektSvar = karakter.kafffeId.valueOf() == korrektSvar.valueOf();
+		korrekt = karakter.kaffeId.valueOf() == korrektSvar.valueOf();
 	}
-	map[karakter.brukernavn].addSvar(korrektSvar);
-	map[karakter.brukernavn].addKarakter(karakter.karakter);
-	map[karkater.brukernavn].print();
+	map[brukernavn].setBrukernavn(brukernavn);
+	map[brukernavn].addSvar(korrekt);
+	map[brukernavn].addKarakter(karakter.karakter);
 }
 
 var GjetteStatistikk = function() {
+	this.brukernavn = null;
 	this.antallRiktige = 0;
 	this.antallTotalt = 0;
 	this.karakterer = [];
+	this.setBrukernavn = function(brukernavn) {
+		this.brukernavn = brukernavn;
+	}
 	this.addSvar = function(korrekt) {
 		if (korrekt) {
 			this.antallRiktige++;
@@ -64,7 +75,22 @@ var GjetteStatistikk = function() {
 	this.addKarakter = function(karakterVerdi) {
 		this.karakterer.push(karakterVerdi);
 	}
+	this.calcAverageKarakter = function() {
+		var sum = 0;
+		for (var i = 0; i < this.karakterer.length; i++) {
+			sum += this.karakterer[i];
+		}
+		var average = sum / this.karakterer.length;
+		return average;
+	}
+	this.calcProsent = function() {
+		return Math.round((this.antallRiktige / this.antallTotalt) * 100) / 100;
+	}
 	this.print = function() {
 		console.log('antallRiktige: ' + this.antallRiktige + ', antallTotalt: ' + this.antallTotalt + ', karakterer: ' + this.karakterer);
 	}
+}
+
+function sorterPaaAntallRiktige(a, b) {
+	return a.antallRiktige - b.antallRiktige;
 }
