@@ -78,7 +78,7 @@ var GjetteStatistikk = function() {
 	this.calcAverageKarakter = function() {
 		var sum = 0;
 		for (var i = 0; i < this.karakterer.length; i++) {
-			sum += this.karakterer[i];
+			sum += parseInt(this.karakterer[i]);
 		}
 		var average = sum / this.karakterer.length;
 		return average;
@@ -92,5 +92,5 @@ var GjetteStatistikk = function() {
 }
 
 function sorterPaaAntallRiktige(a, b) {
-	return a.antallRiktige - b.antallRiktige;
+	return b.antallRiktige - a.antallRiktige;
 }
