@@ -37,6 +37,13 @@ exports.getKaffeMedNavn = function(navn, cb) {
 	);
 }
 
+var getDagensKafferForPeriode = function(startDato, sluttDato, callback) {
+	dagensKaffe().find({ '_id' : { $gte : startDato, $lte : sluttDato }}).toArray(function(error, docs) {
+		callback(error, docs);
+	});
+}
+exports.getDagensKafferForPeriode = getDagensKafferForPeriode;
+
 var getDagensKaffe = function(callback) {
 	var idagstart = iDagStart();
 	var idagslutt = iDagSlutt();

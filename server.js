@@ -30,6 +30,7 @@ var rDagenskaffeKalenderVisning = require(path.join(__dirname, 'routes/dagenskaf
 var rAllKaffe = require(path.join(__dirname, 'routes/allKaffe.js'));
 var rNyKaffe = require(path.join(__dirname, 'routes/nyKaffe.js'));
 var rKaffeKart = require(path.join(__dirname, 'routes/kaffeKart.js'));
+var rLedertavle = require(path.join(__dirname, 'routes/ledertavle.js'));
 
 rIndex.setKaffedb(kaffedb);
 app.get('/', rIndex.index);
@@ -53,3 +54,6 @@ app.post('/registrerNyKaffeSort', rNyKaffe.registrerNyKaffe);
 rKaffeKart.setKaffedb(kaffedb);
 app.get('/kaffeKart', rKaffeKart.kaffeKart);
 app.get('/kaffeKartJson', rKaffeKart.kaffeKartJSON);
+
+rLedertavle.setKaffedb(kaffedb);
+app.get('/ledertavle', rLedertavle.ledertavle);
