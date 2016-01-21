@@ -1,0 +1,16 @@
+div.rectangle.kaffelisteProdusentRectangle.kaffelisteWide
+	h2#tittel #{tittel}
+	table.kaffelisteKaffetabell
+		tr
+			th#brukernavn Brukernavn
+			th#column1 Riktige
+			th#column2 Totalt
+			th#column3 Prosent
+			th#column4 Snittkarakter
+		each element in ledertavle
+			tr
+				td #{element.brukernavn}
+				td #{element.antallRiktige}
+				td #{element.antallTotalt}
+				td #{element.calcProsent()}
+				td #{element.calcAverageKarakter()}

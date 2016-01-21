@@ -13,19 +13,8 @@ html
 			a#navUke(href="/ledertavle") Denne uken
 			a#navManed(href="/ledertavle?periode=måned") Denne måneden
 			a#navEvigheten(href="/ledertavle?periode=evigheten") Evigheten
-		div.rectangle.kaffelisteProdusentRectangle.kaffelisteWide
-			h2#tittel #{tittel}
-			table.kaffelisteKaffetabell
-				tr
-					th Brukernavn
-					th Riktige
-					th Totalt
-					th Prosent
-					th Snittkarakter
-				each element in ledertavle
-					tr
-						td #{element.brukernavn}
-						td #{element.antallRiktige}
-						td #{element.antallTotalt}
-						td #{element.calcProsent()}
-						td #{element.calcAverageKarakter()}
+			a#navBrygg(href="/ledertavle?periode=brygg") Brygg
+		if erBrygg
+			include ledertavleBrygging.jade
+		else
+			include ledertavleGjetting.jade

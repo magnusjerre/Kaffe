@@ -6,6 +6,7 @@ exports.setKaffedb = function(db) {
 var ledertavle = function(req, res) {
 	var dager = getDenneUken();
 	var tittel = 'Denne uken';
+	var erBrygg = false;
 	if (req.query.periode) {
 		if (req.query.periode.valueOf() == 'måned'.valueOf()) {
 			dager = getDenneManeden();
@@ -13,11 +14,15 @@ var ledertavle = function(req, res) {
 		} else if (req.query.periode.valueOf() == 'evigheten'.valueOf()) {
 			dager = getEvigheten();
 			tittel = 'Evigheten';
+		} else if (req.query.periode.valueOf() == 'brygg'.valueOf()) {
+			dager = getEvigheten();
+			tittel = 'Brygg';
+			erBrygg = true;
 		}
 	}
 	
 	getLedertavleForPeriode(dager.startDato, dager.sluttDato, function(ledertavle) {
-		var model = { 'tittel' : tittel, 'ledertavle' : ledertavle };
+		var model = { 'tittel' : tittel, 'ledertavle' : ledertavle, 'erBrygg' : erBrygg };
 		res.render('ledertavle', model);
 	});
 }
@@ -80,24 +85,35 @@ function mapDagensKaffePaaBrukernavn(docs) {
 	for (var i = 0; i < docs.length; i++) {
 		var dagensKaffe = docs[i];
 		for (var j = 0; j < dagensKaffe.karakterer.length; j++) {
-			addPair(map, dagensKaffe.kaffeId, dagensKaffe.karakterer[j]);
+			addPair(map, dagensKaffe, dagensKaffe.karakterer[j]);
 		}
 	}
 	return map;
 }
 
-var addPair = function(map, korrektSvar, karakter) {
+var addPair = function(map, dagensBrygg, karakter) {
 	var brukernavn = karakter.bruker_navn;
 	if (map[brukernavn] == undefined) {
-		map[brukernavn] = new GjetteStatistikk();	
+		map[brukernavn] = new GjetteStatistikk();
+		map[brukernavn].setBrukernavn(brukernavn);	
 	}
-	var korrekt = false;
-	if (karakter.kaffeId != null && korrektSvar != null) {
-		korrekt = karakter.kaffeId.valueOf() == korrektSvar.valueOf();
+	if (erBrygger(dagensBrygg.brygger, karakter.bruker_navn)) {
+		map[brukernavn].addBrygg(dagensBrygg.karakterer);
+	} else {
+		var korrekt = false;
+		if (karakter.kaffeId != null && dagensBrygg.kaffeId != null) {
+			korrekt = karakter.kaffeId.valueOf() == dagensBrygg.kaffeId.valueOf();
+		}
+		map[brukernavn].addSvar(korrekt);
+		map[brukernavn].addKarakter(karakter.karakter);
 	}
-	map[brukernavn].setBrukernavn(brukernavn);
-	map[brukernavn].addSvar(korrekt);
-	map[brukernavn].addKarakter(karakter.karakter);
+}
+
+function erBrygger(kaffeBrygger, karakterBrygger) {
+	if (kaffeBrygger == null || karakterBrygger == null) {
+		return false;
+	}
+	return kaffeBrygger.valueOf() == karakterBrygger.valueOf();
 }
 
 var GjetteStatistikk = function() {
@@ -105,8 +121,16 @@ var GjetteStatistikk = function() {
 	this.antallRiktige = 0;
 	this.antallTotalt = 0;
 	this.karakterer = [];
+	this.antallBrygg = 0;
+	this.bryggKarakterer = [];
 	this.setBrukernavn = function(brukernavn) {
 		this.brukernavn = brukernavn;
+	}
+	this.addBrygg = function(karakterArray) {
+		this.antallBrygg++;
+		for (var i = 0; i < karakterArray.length; i++) {
+			this.bryggKarakterer.push(karakterArray[i].karakter);
+		}
 	}
 	this.addSvar = function(korrekt) {
 		if (korrekt) {
@@ -130,6 +154,14 @@ var GjetteStatistikk = function() {
 	}
 	this.print = function() {
 		console.log('antallRiktige: ' + this.antallRiktige + ', antallTotalt: ' + this.antallTotalt + ', karakterer: ' + this.karakterer);
+	}
+	this.calcAverageBryggKarakter = function() {
+		var sum = 0;
+		for (var i = 0; i < this.bryggKarakterer.length; i++) {
+			sum += parseInt(this.bryggKarakterer[i]);
+		}
+		var average = sum / this.bryggKarakterer.length;
+		return Math.round(average * 100) / 100;
 	}
 }
 

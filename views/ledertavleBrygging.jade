@@ -1,0 +1,12 @@
+div.rectangle.kaffelisteProdusentRectangle.kaffelisteWide
+	h2#tittel #{tittel}
+	table.kaffelisteKaffetabell
+		tr
+			th#brukernavn Brukernavn
+			th#column1 Antall brygg
+			th#column2 Snittkarakter
+		each element in ledertavle
+			tr
+				td #{element.brukernavn}
+				td #{element.antallBrygg}
+				td #{element.calcAverageBryggKarakter()}
