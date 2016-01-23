@@ -19,7 +19,7 @@ html
 						label(for="kaffeId") Kaffe
 						input(type="text", id="kaffeNavn", name="kaffeNavn", style="display:none")
 						-var i = 1
-						select#kaffeId(name="kaffeId")
+						select#kaffeId.halfWidth(name="kaffeId")
 							each element in dropdownkaffer
 								if i == 1
 									option(selected="selected", disabled="disabled") Velg kaffe
@@ -50,7 +50,7 @@ html
 					label.inlineblock.mediumsmallWidth(for="kaffeId") Kaffe
 					input(id="kaffeNavn", type="text", name="kaffeNavn", style="display: none")
 					- var i = 1
-					select#kaffeId(name="kaffeId")
+					select#kaffeId.halfWidth(name="kaffeId")
 						each element in dropdownkaffer
 							if i == 1
 								option(selected="selected", disabled="disabled") Velg kaffe
