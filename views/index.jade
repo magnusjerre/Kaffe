@@ -18,8 +18,12 @@ html
 					form(id="nyDagenskaffeForm", action="registrerNyDagensKaffe", method="POST")
 						label(for="kaffeId") Kaffe
 						input(type="text", id="kaffeNavn", name="kaffeNavn", style="display:none")
+						-var i = 1
 						select#kaffeId(name="kaffeId")
 							each element in dropdownkaffer
+								if i == 1
+									option(selected="selected", disabled="disabled") Velg kaffe
+									- i = i + 1
 								option(value="#{element._id}") #{element.produsent} - #{element.navn} (#{element.type}) 
 						label(for="brygger") Kaffemaker
 						input.rightAlign.largeWidth(type="text", id="brygger", name="brygger", placeholder="jerre...", required)
@@ -45,8 +49,12 @@ html
 				form(id="nyKarakterForm", action="giKarakter", method="POST")
 					label.inlineblock.mediumsmallWidth(for="kaffeId") Kaffe
 					input(id="kaffeNavn", type="text", name="kaffeNavn", style="display: none")
+					- var i = 1
 					select#kaffeId(name="kaffeId")
 						each element in dropdownkaffer
+							if i == 1
+								option(selected="selected", disabled="disabled") Velg kaffe
+								- i = i + 1
 							option(value="#{element._id}") #{element.produsent} - #{element.navn} (#{element.type}) 
 					label.mediumsmallWidth(for="bruker_navn") Bruker
 					input.largeWidth(type="text", id="bruker_navn", name="bruker_navn", placeholder="jerre...", required)

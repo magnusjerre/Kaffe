@@ -250,7 +250,7 @@ table.kalender tr td {
 }
 
 .halfWidth {
-	width: 25em;
+	width: 20em;
 }
 
 .largeWidth {
@@ -520,4 +520,8 @@ div.ledertavleNav a {
 
 div.ledertavleNav a:hover {
 	background-color: sandybrown;
+}
+
+.black {
+	color: black;
 }

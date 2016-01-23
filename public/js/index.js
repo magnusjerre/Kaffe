@@ -13,6 +13,14 @@ $(document).ready(function(){
 	
 	var skjult = true;
 	
+	$('form#nyDagenskaffeForm > select#kaffeId').change(function(){
+		$(this).addClass('black');
+	});
+	
+	$('form#nyKarakterForm > select#kaffeId').change(function(){
+		$(this).addClass('black');
+	});
+	
 	$('#gjetteboks').find('#gjettekarakterskala #karakterSkala').each(function(){
 		console.log(this);
 		fillKarakter(parseFloat($('#gjettekarakter').text()), $(this));
