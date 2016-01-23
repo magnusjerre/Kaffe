@@ -372,6 +372,10 @@ table.kalender tr td {
 	background-color: #ffefbe;
 }
 
+.calendarElement:hover {
+	background-color: sandybrown;
+}
+
 .calendarDate {
 	font-size: 0.75em;
 	text-align: right;
@@ -393,6 +397,7 @@ table.kalender tr td {
 	font-style: italic;
 	margin: auto;
 	padding: 2px;
+	cursor: default;
 }
 
 .shadowed {

@@ -17,11 +17,10 @@ $(document).ready(function(){
 		console.log('month: ' + month);
 		array = data.dagensbrygg;
 	});
-			
-	$('p').click(function(){
-		console.log("clicked p#" + $(this).attr("id"));
-		var clicked = $(this).attr("id");
-		if (array) {
+	
+	$('div.calendarElement').on('click', function(){
+		var clicked = $(this).children('p.calendarElementContent').attr('id');
+		if (array && clicked) {
 			setBrygg(array[clicked]);
 			setKarakterer(array[clicked].karakterer);
 			showPopup();
