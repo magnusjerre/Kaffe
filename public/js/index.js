@@ -1,8 +1,9 @@
 $(document).ready(function(){
 	
-	var karakter = 0, tempKarakter = 0;
-	var clickedKarakter = false;
+	//var karakter = 0, tempKarakter = 0;
+	//var clickedKarakter = false;
 	var submitKaffe = false;
+	var clickedKarakterskala = [];
 	
 	var resKaffenavn = $('#resultatKaffenavn').text()
 	var resBrygger = $('#resultatBrygger').text();
@@ -12,6 +13,60 @@ $(document).ready(function(){
 	hideResultat();
 	
 	var skjult = true;
+	
+	
+	$('div[name=bryggliste]').children().each(function(){
+		console.log($(this));
+		bindToBryggContainer($(this).index(), $(this));
+	});
+	
+	function bindToBryggContainer(index, container) {
+		container.find('a.v2registrerNavElement').click(function(){clickNavElement($(this));});
+		clickedKarakterskala.push({
+			clicked: false,
+			karakter: 0,
+			tempKarakter: 0
+		});
+		console.log("index: " + index + ", clicked..length: " + clickedKarakterskala.length);
+		bindKarakterSkalaHover(container.find('div.karakterSkala'));
+		bindKarakterClick(index, container.find('div.karakterSkala'));
+
+	}
+	
+	$('#ekstrabrygg').click(function(){
+		var mal = $('div[name=bryggcontainermal]').children().first();
+		console.log(mal);
+		var nyContainer = mal.clone();
+		nyContainer.appendTo($('div[name=bryggliste]'));
+		bindToBryggContainer(nyContainer);
+	});
+	
+	function clickNavElement(clicked) {
+		clicked.removeClass('v2registrerNavValgt v2registrerNavIkkeValgt');
+		clicked.addClass('v2registrerNavValgt');
+		var otherNavElement = clicked.siblings().first();
+		otherNavElement.removeClass('v2registrerNavValgt v2registrerNavIkkeValgt');
+		otherNavElement.addClass('v2registrerNavIkkeValgt');
+		var clickedName = clicked.text();
+		var otherNavElementName = otherNavElement.text();
+		clicked.parent().siblings('div[name="' + otherNavElementName + '"]').slideUp(function(){
+			clicked.parent().siblings('div[name="' + clickedName + '"]').slideDown();
+		});
+	}
+	/*
+	$('a.v2registrerNavElement').click(function(){
+		var clicked = $(this);
+		clicked.removeClass('v2registrerNavValgt v2registrerNavIkkeValgt');
+		clicked.addClass('v2registrerNavValgt');
+		var otherNavElement = clicked.siblings().first();
+		otherNavElement.removeClass('v2registrerNavValgt v2registrerNavIkkeValgt');
+		otherNavElement.addClass('v2registrerNavIkkeValgt');
+		var clickedName = clicked.text();
+		var otherNavElementName = otherNavElement.text();
+		clicked.parent().siblings('div[name="' + otherNavElementName + '"]').slideUp(function(){
+			clicked.parent().siblings('div[name="' + clickedName + '"]').slideDown();
+		});
+	});*/
 	
 	$('form#nyDagenskaffeForm > select#kaffeId').change(function(){
 		$(this).addClass('black');
@@ -43,12 +98,38 @@ $(document).ready(function(){
 	$('#navhome').css('background-color', 'saddlebrown');
 	$('#navhome').css('color', 'sandybrown');
 	
+	function bindKarakterSkalaHover(karakterDiv) {
+		var beanHalfs = karakterDiv.find('.beanHalf');
+		var ksElement = clickedKarakterskala[karakterDiv.parent().parent().parent().index()];
+		beanHalfs.hover(
+			function() {
+				var decimal = ($(this).index() + 1) / 2;
+				var n = $(this).parent().index();
+				ksElement.tempKarakter = n + decimal;
+				var rootDiv = $(this).parent().parent();
+				fillKarakter(ksElement.tempKarakter, karakterDiv);
+			},
+			function() {
+				if (!ksElement.clicked) {
+					$(this).parent().parent().children().each(function(){
+						$(this).children().removeClass('beanSelected');
+					});
+					ksElement.tempKarakter = 0;
+				} else {
+					var rootDiv = $(this).parent().parent();
+					fillKarakter(ksElement.karakter, karakterDiv);
+				}
+			}
+		);
+	}
+	/*
 	$('.beanHalf').hover(
 		function() {
 			var decimal = ($(this).index() + 1) / 2;
 			var n = $(this).parent().index();
 			tempKarakter = n + decimal;
-			fillKarakter(tempKarakter, $('#karakterSkalaInput'));
+			var rootDiv = $(this).parent().parent();
+			fillKarakter(tempKarakter, rootDiv);
 		},
 		function() {
 			if (!clickedKarakter) {
@@ -57,17 +138,27 @@ $(document).ready(function(){
 				});
 				tempKarakter = 0;
 			} else {
-				fillKarakter(karakter, $('#karakterSkalaInput'));
+				var rootDiv = $(this).parent().parent();
+				fillKarakter(karakter, rootDiv);
 			}
 		}
-	);
+	);*/
 	
+	function bindKarakterClick(childNumber, karakterSkala) {
+		var beanHalfs = karakterSkala.find('.beanHalf');
+		console.log("karakterSkala");
+		console.log(karakterSkala.parent().parent().parent());
+		var ksElement = clickedKarakterskala[karakterSkala.parent().parent().parent().index()];
+		ksElement.clicked = true;
+		$('#karakter').val(ksElement.karakter);
+	}
+	/*
 	$('.beanHalf').click(function(){
 		clickedKarakter = true;
 		karakter = tempKarakter;
 		$('#karakter').val(karakter);
-	});
-	
+	});*/
+	/*
 	$('#submit').click(function(){
 		if (submitKaffe) {
 			var label = $('#nyDagenskaffeForm #kaffeId option:selected').text();
@@ -78,15 +169,15 @@ $(document).ready(function(){
 			$('#nyKarakterForm > #kaffeNavn').val(label);
 			$('#submitKarakter').trigger("click");
 		}
-	});
-	
+	});*/
+	/*
 	$('#brygger').keyup(function(){
 		submitKaffe = true;
 	});
 	
 	$('#bruker_navn').keyup(function(){
 		submitKaffe = false;
-	});
+	});*/
 	
 	function showResultat() {
 		$('#resultatKaffenavn').text(resKaffenavn);

@@ -9,73 +9,36 @@ html
 	body.container
 		h1 Den store kaffesiden
 		include nav.jade
-		if gjetting.visGjetteBoks
+		//if gjetting.visGjetteBoks
 			include gjetteboks.jade
-		div.subcontainer
-			if dagensbrygg == null || dagensbrygg.kaffe_navn == "Ukjent"
-				div.rightAligned.verticalLineRight.halfWidth#nydagenskaffe
-					h2 Dagens kaffe
-					form(id="nyDagenskaffeForm", action="registrerNyDagensKaffe", method="POST")
-						label(for="kaffeId") Kaffe
-						input(type="text", id="kaffeNavn", name="kaffeNavn", style="display:none")
-						-var i = 1
-						select#kaffeId.halfWidth(name="kaffeId")
-							each element in dropdownkaffer
-								if i == 1
-									option(selected="selected", disabled="disabled") Velg kaffe
-									- i = i + 1
-								option(value="#{element._id}") #{element.produsent} - #{element.navn} (#{element.type}) 
-						label(for="brygger") Kaffemaker
-						input.rightAlign.largeWidth(type="text", id="brygger", name="brygger", placeholder="jerre...", required)
-						label(for="liter") Liter
-						input.smallWidth.rightAlign(type="number", id="liter", name="liter", min="0.1", step="0.05", placeholder="1.25", required)
-						label(for="skjeer") Skjeer
-						input.smallWidth.rightAlign(type="number", id="skjeer", name="skjeer", min="0.25", step="0.25", placeholder="5.5", required)
-						input(id="submitNyDagenskaffe", type="submit", style="display: none")
-			else
-				div.rightAligned.verticalLineRight.halfWidth#nydagenskaffe
-					h2 Dagens kaffe
-					form(id="nyDagenskaffeForm", action="registrerNyDagensKaffe", method="POST")
-						label(for="kaffenavn") Kaffe
-						p#resultatKaffenavn.dagensresultat(name="kaffenavn") #{dagensbrygg.kaffe_navn}
-						label(for="brygger") Brygger
-						p#resultatBrygger.dagensresultat(name="brygger") #{dagensbrygg.brygger}
-						label(for="liter") Liter
-						p#resultatLiter.dagensresultat(name="liter") #{dagensbrygg.liter}
-						label(for="skjeer") Skjeer
-						p#resultatSkjeer.dagensresultat(name="skjeer") #{dagensbrygg.skjeer}
-			div.halfWidth.leftAligned
-				h2 Ny karakter
-				form(id="nyKarakterForm", action="giKarakter", method="POST")
-					label.inlineblock.mediumsmallWidth(for="kaffeId") Kaffe
-					input(id="kaffeNavn", type="text", name="kaffeNavn", style="display: none")
-					- var i = 1
-					select#kaffeId.halfWidth(name="kaffeId")
-						each element in dropdownkaffer
-							if i == 1
-								option(selected="selected", disabled="disabled") Velg kaffe
-								- i = i + 1
-							option(value="#{element._id}") #{element.produsent} - #{element.navn} (#{element.type}) 
-					label.mediumsmallWidth(for="bruker_navn") Bruker
-					input.largeWidth(type="text", id="bruker_navn", name="bruker_navn", placeholder="jerre...", required)
-					label.mediumsmallWidth(for="karakter") Karakter
-					div(style="width:0; height: 1em; display: inline-block; overflow: hidden")
-						input(type="number", id="karakter", name="karakter", min="0.5", step="0.5", required)
-					div.karakterSkala.mediumWidth#karakterSkalaInput
-						div.bean
-							img.beanHalf(src="images/coffe_bean_left.png", alt="Coffe bean")
-							img.beanHalf(src="images/coffe_bean_right.png", alt="Coffe bean")
-						div.bean
-							img.beanHalf(src="images/coffe_bean_left.png", alt="Coffe bean")
-							img.beanHalf(src="images/coffe_bean_right.png", alt="Coffe bean")
-						div.bean
-							img.beanHalf(src="images/coffe_bean_left.png", alt="Coffe bean")
-							img.beanHalf(src="images/coffe_bean_right.png", alt="Coffe bean")
-						div.bean
-							img.beanHalf(src="images/coffe_bean_left.png", alt="Coffe bean")
-							img.beanHalf(src="images/coffe_bean_right.png", alt="Coffe bean")
-						div.bean
-							img.beanHalf(src="images/coffe_bean_left.png", alt="Coffe bean")
-							img.beanHalf(src="images/coffe_bean_right.png", alt="Coffe bean")
-					input(id="submitKarakter", type="submit", style="display: none")
-		input(id="submit", type="button", value="Registrer", class="submitButton")
+		//div.v2centerContainer
+		div.hidden(name="bryggcontainermal")
+			div.v2bryggContainer
+				div.v2registrerNav
+						a.v2registrerNavElement.v2registrerNavValgt Brygg
+						a.v2registrerNavElement.v2registrerNavIkkeValgt Karakter
+					div(name="Brygg")
+						include registrering/nyttBrygg.jade
+					div.hidden(name="Karakter")
+						include registrering/nyKarakter.jade
+		div.container(name="bryggliste")
+			each val in [1,2]
+				if harRegistrertBrygg
+					div.v2bryggContainer
+						div.v2registrerNav
+							a.v2registrerNavElement.v2registrerNavIkkeValgt Brygg
+							a.v2registrerNavElement.v2registrerNavValgt Karakter
+						div.hidden(name="Brygg")
+							include registrering/nyttBrygg.jade
+						div(name="Karakter")
+							include registrering/nyKarakter.jade
+				else
+					div.v2bryggContainer
+						div.v2registrerNav
+							a.v2registrerNavElement.v2registrerNavValgt Brygg
+							a.v2registrerNavElement.v2registrerNavIkkeValgt Karakter
+						div(name="Brygg")
+							include registrering/nyttBrygg.jade
+						div.hidden(name="Karakter")
+							include registrering/nyKarakter.jade
+		image#ekstrabrygg.v2ekstraBrygg(src="images/pluss.png", alt="Ekstra brygg")

@@ -21,6 +21,7 @@ html {
 
 p {
 	margin: 0;
+	padding: 5px; 
 }
 
 nav {
@@ -50,6 +51,10 @@ h2 {
 	color: saddlebrown;
 }
 
+h3 {
+	padding: 0.5em;
+}
+
 nav {
 	flex-grow: 1;
 	flex-shrink: 1;	
@@ -73,20 +78,22 @@ tr:nth-child(2n) {
 }
 
 label {
-	display: block;
-	margin: 1em 0.5em 0 0.5em;
+	/*display: block;
+	margin: 1em 0.5em 0 0.5em;*/
 	font-weight: bold;
 	color: saddlebrown;
+	padding: 5px 5px 5px 0;
 }
 
 input {
 	border: none;
-	background-color: transparent;
+	background-color: #fedba0;
 	border-radius: 0;
 	align-content: flex-end;
 	box-shadow: none;
 	padding-left: 0.25em;
 	padding-right: 0.25em;
+	margin: 0.25em 0 0.25em 0;
 	font-style: normal;
 }
 
@@ -300,13 +307,13 @@ table.kalender tr td {
 	padding-right: 0.5em;
 	border-right: 6px solid transparent;
 	height: 1em;
+	margin: auto 0;
 }
 
 .bean {
 	display: inline-block;
 	position: relative;
-	margin: 0 auto 0 auto;
-	padding: 2px 0 2px 0;
+	margin: auto;
 	transform: rotate(15deg);
 	-webkit-transform: rotate(15deg);
 }
@@ -524,4 +531,134 @@ div.ledertavleNav a:hover {
 
 .black {
 	color: black;
+}
+
+.v2bryggContainer {
+	padding: 1em;
+}
+
+.v2centerContainer {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.v2horizontalContainer {
+	display: flex;
+	justify-content: center;
+}
+
+.v2registrerInnhold {
+	display: flex;
+	flex-direction: column;	
+	align-content: flex-start;
+	background-color: #ffefbe;
+	padding: 1em;
+	width: 20em;
+	border: 2px solid black;
+}
+
+.v2innhold {
+	display: flex;
+	flex-direction: row;
+	align-content: flex-start;
+}
+
+.v2innholdInput {
+	flex-grow: 2;
+}
+
+.v2registrerNav {
+	display: flex;
+	justify-content: center;	
+	margin: 0 auto -2px auto;
+}
+
+.v2registrerNav a {
+	padding: 0.25em;
+}
+
+.v2registrerNavValgt {
+	position: relative;
+	z-index: 10;
+	background-color: #ffefbe;
+	border: 2px solid black;
+	border-bottom: 2px solid #ffefbe;
+}
+
+.v2registrerNavIkkeValgt {
+	background-color: #FEDBA0;
+	border: 2px solid transparent;
+}
+
+.v2registrerNavIkkeValgt:hover {
+	background-color: sandybrown;
+	cursor: pointer;
+}
+
+.v2registrerNavElement {
+	width: 4em;
+	text-align: center;
+}
+
+.v2valgtNavElement {
+	position: relative;
+	z-index: 10;
+	background-color: #ffefbe;
+	border: 2px solid black;
+	border-bottom: 2px solid #ffefbe;
+}
+.v2submit {
+	padding: 0.5em 1em 0.5em 1em;
+	margin: -2px auto 0 auto;
+	background-color: #ffefbe;
+	border: 2px solid black;
+	border-top: 2px solid #ffefbe;
+	position: relative;
+	cursor: pointer;
+}
+
+.v2submit:hover {
+	background-color: sandybrown;
+	text-shadow: 0px 0px 4px saddlebrown;
+	border: 2px solid black;
+	animation-name: move;
+	animation-duration: 0.2s;
+}
+
+@keyframes move {
+	0% {top: 0;}
+	50% {top: 2px; border: 2px solid #333333; }
+	100% {top: 0;}
+}
+
+.v2submit:active {
+	background-color: saddlebrown;
+	color: sandybrown;
+}
+
+.v2submit:focus {
+	background-color: saddlebrown;
+	border: 2px solid black;
+	color: sandybrown;
+}
+
+.v2ekstraBrygg {
+	background-color: #ffefbe;
+	border: 2px solid black;
+	padding: 0.25em;
+	width: 2em;
+	margin: 1em;
+	cursor: pointer;
+}
+
+.v2ekstraBrygg:hover {
+	position: relative;
+	background-color: sandybrown;
+	animation-name: move;
+	animation-duration: 0.2s;
+}
+
+.v2ekstraBrygg:active {
+	background-color: saddlebrown;
 }

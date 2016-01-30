@@ -1,5 +1,5 @@
 var path = require('path');
-var kaffedb = require(path.join(__dirname, 'kaffedb.js'));
+//var kaffedb = require(path.join(__dirname, 'kaffedb.js'));
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
@@ -21,7 +21,7 @@ app.listen(port, function(){
 });
 
 //Setup database
-kaffedb.connect();
+//kaffedb.connect();
 
 //Routes
 var rIndex = require(path.join(__dirname, 'routes/index.js'));
@@ -32,8 +32,9 @@ var rNyKaffe = require(path.join(__dirname, 'routes/nyKaffe.js'));
 var rKaffeKart = require(path.join(__dirname, 'routes/kaffeKart.js'));
 var rLedertavle = require(path.join(__dirname, 'routes/ledertavle.js'));
 
-rIndex.setKaffedb(kaffedb);
+//rIndex.setKaffedb(kaffedb);
 app.get('/', rIndex.index);
+/*
 app.post('/giKarakter', rIndex.giKarakter);
 app.post('/registrerNyDagensKaffe', rIndex.registrerNyDagensKaffe);
 
@@ -56,4 +57,4 @@ app.get('/kaffeKart', rKaffeKart.kaffeKart);
 app.get('/kaffeKartJson', rKaffeKart.kaffeKartJSON);
 
 rLedertavle.setKaffedb(kaffedb);
-app.get('/ledertavle', rLedertavle.ledertavle);
+app.get('/ledertavle', rLedertavle.ledertavle);*/

@@ -1,0 +1,15 @@
+form.v2centerContainer(action="giKarakter", method="POST")
+	div.v2registrerInnhold
+		input(name="bryggnavn", type="hidden")
+		div.v2innhold
+			label Kaffe:
+			select(name="kaffeid")
+					option(selected="selected", disabled="disabled") Velg kaffe
+					option() Friele - Frokost kaffe (Malt)
+		div.v2innhold
+			label Bruker:
+			input.v2innholdInput(name="bruker", placeholder="Jerre")
+		div.v2innhold
+			label Karakter:
+			include ../karakterskala.jade
+	input.v2submit(type="submit", value="Registrer")
