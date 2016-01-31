@@ -2,8 +2,8 @@ $(document).ready(function(){
 	
 	//var karakter = 0, tempKarakter = 0;
 	//var clickedKarakter = false;
-	var submitKaffe = false;
-	var clickedKarakterskala = [];
+	// var submitKaffe = false;
+	// var clickedKarakterskala = [];
 	
 	var resKaffenavn = $('#resultatKaffenavn').text()
 	var resBrygger = $('#resultatBrygger').text();
@@ -22,14 +22,12 @@ $(document).ready(function(){
 	
 	function bindToBryggContainer(index, container) {
 		container.find('a.v2registrerNavElement').click(function(){clickNavElement($(this));});
-		clickedKarakterskala.push({
-			clicked: false,
-			karakter: 0,
-			tempKarakter: 0
+		// clickedKarakterskala.push(ksElement);
+		// bindKarakterSkalaHover(container.find('div.karakterSkala'), ksElement);
+		// bindKarakterClick(container.find('div.karakterSkala'), ksElement);
+		container.find('div.karakterSkala').children().each(function(){
+			bindHover($(this));
 		});
-		console.log("index: " + index + ", clicked..length: " + clickedKarakterskala.length);
-		bindKarakterSkalaHover(container.find('div.karakterSkala'));
-		bindKarakterClick(index, container.find('div.karakterSkala'));
 
 	}
 	
@@ -76,10 +74,10 @@ $(document).ready(function(){
 		$(this).addClass('black');
 	});
 	
-	$('#gjetteboks').find('#gjettekarakterskala #karakterSkala').each(function(){
-		console.log(this);
-		fillKarakter(parseFloat($('#gjettekarakter').text()), $(this));
-	});
+	// $('#gjetteboks').find('#gjettekarakterskala #karakterSkala').each(function(){
+	// 	console.log(this);
+	// 	fillKarakter(parseFloat($('#gjettekarakter').text()), $(this));
+	// });
 	
 	$('#closepopup').click(function(){
 		hidePopup();
@@ -98,30 +96,48 @@ $(document).ready(function(){
 	$('#navhome').css('background-color', 'saddlebrown');
 	$('#navhome').css('color', 'sandybrown');
 	
-	function bindKarakterSkalaHover(karakterDiv) {
-		var beanHalfs = karakterDiv.find('.beanHalf');
-		var ksElement = clickedKarakterskala[karakterDiv.parent().parent().parent().index()];
+	/*
+	function bindKarakterSkalaHover(karakterSkalaDiv, ksElement) {
+		var beanHalfs = karakterSkalaDiv.find('.beanHalf');
+		console.log("beanHalfs");
+		console.log(beanHalfs);
 		beanHalfs.hover(
 			function() {
 				var decimal = ($(this).index() + 1) / 2;
 				var n = $(this).parent().index();
+				console.log("n: " + n + ", decimal: " + decimal);
 				ksElement.tempKarakter = n + decimal;
-				var rootDiv = $(this).parent().parent();
-				fillKarakter(ksElement.tempKarakter, karakterDiv);
+				fillKarakter(ksElement.tempKarakter, karakterSkalaDiv);
 			},
 			function() {
 				if (!ksElement.clicked) {
-					$(this).parent().parent().children().each(function(){
+					$(this).parent().parent().children('div').each(function(){
 						$(this).children().removeClass('beanSelected');
 					});
 					ksElement.tempKarakter = 0;
 				} else {
-					var rootDiv = $(this).parent().parent();
-					fillKarakter(ksElement.karakter, karakterDiv);
+					fillKarakter(ksElement.karakter, karakterSkalaDiv);
 				}
 			}
 		);
-	}
+	}*/
+	
+	// function karkaterskalaClick() {
+		
+	// }
+	
+	// function karakterskalaHoverIn(karakterskalaDiv) {
+	// 	var hoverKarakter = ($(this).index() + 1) * (5 / 10);
+	// 	fillKarakterskalaMedKarakter(hoverKarakter, karakterskalaDiv); 
+	// }
+	
+	// function karakterskalaHoverOut(karakterskalaDiv, ksElement) {
+	// 	if (ksElement.clicked) {
+	// 		fillKarakterskalaMedKarakter(ksElement.karakter, karakterskalaDiv);
+	// 	} else {
+	// 		clearKarakterskala(karakterskalaDiv);
+	// 	}
+	// }
 	/*
 	$('.beanHalf').hover(
 		function() {
@@ -144,14 +160,14 @@ $(document).ready(function(){
 		}
 	);*/
 	
-	function bindKarakterClick(childNumber, karakterSkala) {
-		var beanHalfs = karakterSkala.find('.beanHalf');
-		console.log("karakterSkala");
-		console.log(karakterSkala.parent().parent().parent());
-		var ksElement = clickedKarakterskala[karakterSkala.parent().parent().parent().index()];
-		ksElement.clicked = true;
-		$('#karakter').val(ksElement.karakter);
-	}
+	// function bindKarakterClick(karakterSkala, ksElement) {
+	// 	var beanHalfs = karakterSkala.find('.beanHalf');
+	// 	beanHalfs.click(function(){
+	// 		ksElement.clicked = true;
+	// 		ksElement.karkater = ksElement.tempKarakter;
+	// 		$('#karakter').val(ksElement.karakter);
+	// 	});
+	// }
 	/*
 	$('.beanHalf').click(function(){
 		clickedKarakter = true;
@@ -195,39 +211,57 @@ $(document).ready(function(){
 	
 });
 
-function fillKarakter(karakterVerdi, karakterSkala) {
-	// var karakterSkala = $('#karakterSkala');
-	karakterSkala.children().each(function(){
-		$(this).children().removeClass('beanSelected');
-	});
+// function fillKarakterskalaMedKarakter(karakter, karakterskalaDiv) {
+// 	clearKarakterskala(karakterskalaDiv);
 	
-	var numberOfBeans = Math.floor(karakterVerdi);
-	var beans = karakterSkala.children(':lt(' + numberOfBeans + ')');
-	beans.each(function(){
-		$(this).children().each(function(){
-			$(this).addClass('beanSelected');
-		});
-	});
-	if (numberOfBeans <= karakterVerdi) {	//Legge til den siste halve bønnen
-		halfBeanAtKarakter(karakterVerdi, karakterSkala).addClass('beanSelected');
-	}
-}
+// 	var temp = 0;
+// 	karakterskalaDiv.find('.beanHalf').each(function(){
+// 		if (temp <= karakter) {
+// 			$(this).addClass('beanSelected');
+// 		}
+// 		temp += 0.5;
+// 	});
+// }
 
-function halfBeanAtKarakter(karakter, karakterSkala) {
-	var temp = 0.5;
-	var halfBean = null;
-	karakterSkala.children().each(function(){
-	// $('#karakterSkalaInput').children().each(function(){
-		$(this).children().each(function(){
-			if (karakter == temp) {
-				halfBean = $(this);
-			}
-			temp += 0.5;
-		});
-	});
+// function clearKarakterskala(karakterskalaDiv) {
+// 	karakterskalaDiv.find('.beanHalf').each(function(){
+// 		$(this).removeClass('beanSelected');
+// 	});
+// }
+
+// function fillKarakter(karakterVerdi, karakterSkala) {
+// 	karakterSkala.children('div').each(function(){
+// 		$(this).children().removeClass('beanSelected');
+// 	});
 	
-	return halfBean;
-}
+// 	var numberOfBeans = Math.floor(karakterVerdi);
+// 	var beans = karakterSkala.children('div:lt(' + numberOfBeans + ')');
+// 	beans.each(function(){
+// 		$(this).children().each(function(){
+// 			$(this).addClass('beanSelected');
+// 		});
+// 	});
+// 	if (numberOfBeans <= karakterVerdi) {	//Legge til den siste halve bønnen
+// 		halfBeanAtKarakter(karakterVerdi, karakterSkala).addClass('beanSelected');
+// 	}
+// }
+
+// function halfBeanAtKarakter(karakter, karakterSkala) {
+// 	console.log("karakter: " + karakter);
+// 	var temp = 0.5;
+// 	var halfBean = null;
+// 	karakterSkala.children('div').each(function(){
+// 		$(this).children().each(function(){
+// 			console.log("karakter: " + karakter + ", temp: " + temp);
+// 			if (karakter == temp) {
+// 				halfBean = $(this);
+// 			}
+// 			temp += 0.5;
+// 		});
+// 	});
+// 	console.log("temp: " + temp);
+// 	return halfBean;
+// }
 
 function hidePopup() {
 	$('#gjetteboks').hide();
