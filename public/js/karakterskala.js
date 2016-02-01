@@ -1,16 +1,6 @@
 var karakterskalaElementer = [];
 
 // Helper methods for karakterskala array
-
-// function getKSElement(halfBean, elementer) {
-// 	for (var i = 0; i < karakterskalaElementer.length; i++) {
-// 		if (karakterskalaElementer[i].karakterskala == halfBean.parent()) {
-// 			return karakterskalaElementer[i];
-// 		}
-// 	}
-// 	return undefined;
-// }
-
 function getKSElementForKarakterskala(karakterskalaDiv) {
 	for (var i = 0; i < karakterskalaElementer.length; i++) {
 		console.log(karakterskalaElementer[i].signatur == createIdentifier(karakterskalaDiv));
@@ -40,9 +30,6 @@ function createKSElement(karakterskalaDiv) {
 	};
 }
 
-function calcKarakterFromHalfBean(halfBean) {
-	return (halfBean.index() + 1) * (5 / 10);
-}
 
 function createIdentifier(karakterskalaDiv) {
 	var identifier = "";
@@ -69,17 +56,17 @@ function karakterskalaClick() {
 	fillKarakterskalaMedKarakter(clickedKarakter, $(this).parent());
 }
 
+function calcKarakterFromHalfBean(halfBean) {
+	return (halfBean.index() + 1) * (5 / 10);
+}
+
 function bindHover(halfBean) {
 	addKSElement(halfBean.parent());
 	halfBean.hover(karakterskalaHoverIn, karakterskalaHoverOut);
-	console.log("karakterskalaelementer");
-	console.log(karakterskalaElementer);
-	console.log("length: " + karakterskalaElementer.length);
 }
 
 function karakterskalaHoverIn() {
 	var hoverKarakter = calcKarakterFromHalfBean($(this));
-	console.log("karakter: " + hoverKarakter);
 	fillKarakterskalaMedKarakter(hoverKarakter, $(this).parent()); 
 }
 	
