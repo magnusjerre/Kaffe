@@ -37,6 +37,120 @@ exports.getKaffeMedNavn = function(navn, cb) {
 	);
 }
 
+var insertNyKarakter = function(dato, bryggid, karakter, callback) {
+	getBryggForDag(dato, function(error, result){
+		if (error) {
+			callback(error, result);
+		} else {
+			if (result == null) {
+				insertNyttBrygg(
+					{
+						"dato" : new Date(),
+						"kaffeid" : "Ukjent",
+						"sammendrag" : "Ukjent",
+						"bryggnavn" : "Ukjent",
+						"brygger" : "Ukjent",
+						"liter" : 0,
+						"skjeer" : 0,
+						"karakterer" : [
+							karakter
+						]
+					}, function(rnError, rnResult) {
+						callback(rnError, rnResult);
+					}
+				);
+			} else {
+				var eksisterendeBrygg = null;
+				for (var i = 0; i < result.length; i++) {
+					if (result[i]["_id"] === bryggid) {
+						eksisterendeBrygg = result[i];
+						break;
+					}
+				}
+				
+				if (eksisterendeBrygg) {
+					dagensKaffe().updateOne(
+						{
+							"_id" : result["_id"],
+							"dagensbrygg" : { $elemMatch : { "_id" : eksisterendeBrygg["_id"]} }
+						},
+						{
+							$push : { "dagensbrygg.$.karakterer" : karakter }
+						}
+					);
+				} else {
+					insertNyttBrygg(
+					{
+						"dato" : new Date(),
+						"kaffeid" : "Ukjent",
+						"sammendrag" : "Ukjent",
+						"bryggnavn" : "Ukjent",
+						"brygger" : "Ukjent",
+						"liter" : 0,
+						"skjeer" : 0,
+						"karakterer" : [
+							karakter
+						]
+					}, function(rnError, rnResult) {
+						callback(rnError, rnResult);
+					}
+				);
+				}
+			}
+		}
+	});
+}
+
+function generateObjectId() {
+	var now = new Date();
+	var seconds = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+	return ObjectId.generate(seconds);
+}
+
+var insertNyttBrygg = function(brygg, callback) {
+	brygg["_id"] = generateObjectId();
+	getBryggForDag(brygg.dato, function(error, result){
+		if (error) {
+			callback(error, result);
+		} else {
+			if (result == null) {
+				dagensKaffe().insert(createDagensBryggListe(), {}, function(iError, iResult){
+					callback(iError, iResult);
+				});
+			} else {
+				dagensKaffe().updateOne({ "_id" : result._id }, { $push : { dagensbrygg : brygg } }, {}, function(uError, uResult){
+					callback(uError, uResult);
+				});
+			}
+		}
+	});
+}
+
+function createDagensBryggListe(brygg) {
+	var dagensBryggListe = {
+		"dato" : getStartTid(brygg.dato),
+		"dagensbrygg" : [
+			brygg
+		]
+	}
+	return dagensBryggListe;
+}
+
+var getBryggForDag = function(dato, callback) {
+	dagensKaffe().findOne({"dato" : { $gte : getStartTid(dato), $lte : getSluttTid(dato)}}, function(error, result){
+		callback(error, result);
+	});
+}
+exports.getBryggForDag = getBryggForDag;
+
+function getStartTid(dato) {
+	return new Dato(dato.getFullYear(), dato.getMonth(), dato.getDato());
+}
+
+function getSluttTid(dato) {
+	return new Dato(dato.getFullYear(), dato.getMonth(), dato.getDato(), 23, 59, 59, 999);
+}
+
 var getDagensKafferForPeriode = function(startDato, sluttDato, callback) {
 	dagensKaffe().find({ '_id' : { $gte : startDato, $lte : sluttDato }}).toArray(function(error, docs) {
 		callback(error, docs);
@@ -282,7 +396,7 @@ var kaffer = function() {
 }
 
 var dagensKaffe = function () {
-	return mongo.DB.collection('dagenskaffe');
+	return mongo.DB.collection('brygg');
 }
 
 exports.dagensKaffe = dagensKaffe;

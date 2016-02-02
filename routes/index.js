@@ -4,7 +4,7 @@ exports.setKaffedb = function(db) {
 }
 
 exports.index = function(req, res){
-    /*kaffedb.getDagensKaffe(function(dkError, dkResult){ //dk = dagenskaffe
+    kaffedb.getBryggForDag(new Date(), function(dkError, dkResult){ //dk = dagenskaffe
         kaffedb.listKafferDropdown(function(kdErr, kdRes){
             if (dkError) {
                 console.log("ERROR: There was a problem retrieving 'dagenskaffe': " + dkError);
@@ -19,6 +19,7 @@ exports.index = function(req, res){
                 "dagensbrygg" : dkResult,
                 "dropdownkaffer" : kdRes,
                 "gjetting" : {
+					"bryggid" : null,
 					"visGjetteBoks" : false,
 					"korrektSvar" : false,
                     "brukernavn" : null,
@@ -57,7 +58,7 @@ exports.index = function(req, res){
             
 			res.render('index', model);
         });
-    });    */
+    });
 	res.render('index', {harRegistrertBrygg: true, nyttBrygg : true});
 }
 

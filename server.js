@@ -34,10 +34,10 @@ var rLedertavle = require(path.join(__dirname, 'routes/ledertavle.js'));
 
 //rIndex.setKaffedb(kaffedb);
 app.get('/', rIndex.index);
-/*
+
 app.post('/giKarakter', rIndex.giKarakter);
 app.post('/registrerNyDagensKaffe', rIndex.registrerNyDagensKaffe);
-
+/*
 app.get('/about', rAbout.about);
 
 rDagenskaffeKalenderVisning.setKaffedb(kaffedb);
