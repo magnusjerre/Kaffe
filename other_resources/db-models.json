@@ -1,0 +1,29 @@
+//dagensbrygg
+{
+	"_id" : string,
+	"dato" : ISODate,
+	"dagensbrygg" : array<ObjectId>
+}
+
+//Brygg
+{
+	"dato" : Date,
+	"kaffeid" : string,
+	"sammendrag" : string,
+	"bryggnavn" : string,
+	"brygger" : string,
+	"liter" : number,
+	"skjeer" : number,
+	"maskin" : boolean,
+	"lukket" : boolean,
+	"karakterer" : array<karakter>
+}
+
+//Karakter-dokumnet inni brygg
+{
+	"bruker" : string,
+	"kaffeid" : string,
+	"sammendrag" : string,
+	"karakter" : number,
+	"kommentar" : string
+}

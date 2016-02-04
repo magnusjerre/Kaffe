@@ -1,15 +1,20 @@
-form.v2centerContainer(action="giKarakter", method="POST")
+form.v2centerContainer(action="registrerKarakter", method="POST")
 	div.v2registrerInnhold
-		input(name="bryggnavn", type="hidden")
+		input(name="bryggid", type="hidden")
+		input(name="sammendrag", type="hidden")
 		div.v2innhold
 			label Kaffe:
 			select(name="kaffeid")
-					option(selected="selected", disabled="disabled") Velg kaffe
-					option() Friele - Frokost kaffe (Malt)
+				option(selected="selected", disabled="disabled") Velg kaffe
+				each kaffe in dropdownkaffer
+					option(value="#{kaffe.kaffeid}") #{kaffe.produsent} - #{kaffe.navn} (#{kaffe.type})
 		div.v2innhold
 			label Bruker:
 			input.v2innholdInput(name="bruker", placeholder="Jerre")
 		div.v2innhold
 			label Karakter:
 			include ../karakterskala.jade
+		div.v2innhold
+			label Sammendrag:
+			input.v2innholdInput(name="kommentar", placeholder="Denne var god...")
 	input.v2submit(type="submit", value="Registrer")

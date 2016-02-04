@@ -23,23 +23,14 @@ html
 					div.hidden(name="Karakter")
 						include registrering/nyKarakter.jade
 		div.container(name="bryggliste")
-			each val in [1,2]
-				if harRegistrertBrygg
-					div.v2bryggContainer
-						div.v2registrerNav
-							a.v2registrerNavElement.v2registrerNavIkkeValgt Brygg
-							a.v2registrerNavElement.v2registrerNavValgt Karakter
-						div.hidden(name="Brygg")
-							include registrering/nyttBrygg.jade
-						div(name="Karakter")
-							include registrering/nyKarakter.jade
-				else
+			each brygg in dagensbrygg
+				if !brygg.lukket
 					div.v2bryggContainer
 						div.v2registrerNav
 							a.v2registrerNavElement.v2registrerNavValgt Brygg
 							a.v2registrerNavElement.v2registrerNavIkkeValgt Karakter
-						div(name="Brygg")
+						div.hidden(name="Brygg")
 							include registrering/nyttBrygg.jade
-						div.hidden(name="Karakter")
+						div(name="Karakter")
 							include registrering/nyKarakter.jade
 		image#ekstrabrygg.v2ekstraBrygg(src="images/pluss.png", alt="Ekstra brygg")
