@@ -35,6 +35,10 @@ exports.getKaffeMedNavn = function(navn, cb) {
 		}
 	);
 }
+var getDagsbryggForPeriode = function(startDato, sluttDato, callback) {
+	bryggColl().find({"dato" : { $gte : startDato, $lte : sluttDato}}).toArray(callback);
+}
+exports.getDagsbryggForPeriode = getDagsbryggForPeriode;
 
 var getDagensKafferForPeriode = function(startDato, sluttDato, callback) {
 	dagensKaffe().find({ '_id' : { $gte : startDato, $lte : sluttDato }}).toArray(function(error, docs) {

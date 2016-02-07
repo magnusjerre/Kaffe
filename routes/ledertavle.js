@@ -60,7 +60,7 @@ function getDenneUken() {
 }
 
 function getLedertavleForPeriode(startDato, sluttDato, callback) {
-	kaffedb.getDagensKafferForPeriode(startDato, sluttDato, function(error, docs){
+	kaffedb.getDagsbryggForPeriode(startDato, sluttDato, function(error, docs){
 		if (error) {
 			console.log(error);
 			return null;
@@ -81,7 +81,6 @@ function mapTilArray(map) {
 
 function mapDagensKaffePaaBrukernavn(docs) {
 	var map = {};
-	
 	for (var i = 0; i < docs.length; i++) {
 		var dagensKaffe = docs[i];
 		for (var j = 0; j < dagensKaffe.karakterer.length; j++) {
@@ -92,12 +91,12 @@ function mapDagensKaffePaaBrukernavn(docs) {
 }
 
 var addPair = function(map, dagensBrygg, karakter) {
-	var brukernavn = karakter.bruker_navn;
+	var brukernavn = karakter.bruker;
 	if (map[brukernavn] == undefined) {
 		map[brukernavn] = new GjetteStatistikk();
 		map[brukernavn].setBrukernavn(brukernavn);	
 	}
-	if (erBrygger(dagensBrygg.brygger, karakter.bruker_navn)) {
+	if (erBrygger(dagensBrygg.brygger, karakter.bruker)) {
 		map[brukernavn].addBrygg(dagensBrygg.karakterer);
 	} else {
 		var korrekt = false;
