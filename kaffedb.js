@@ -57,6 +57,13 @@ var getDagensKaffe = function(callback) {
 }
 exports.getDagensKaffe = getDagensKaffe;
 
+var listDagsbryggForMonth = function(year, month, callback) {
+	var first = new Date(year, month	,	1, 	0, 	0, 	0, 	0);
+	var last = 	new Date(year, month + 1,	0,  23, 59, 59, 99);
+	bryggColl().find({"dato" : { $gte : first, $lte : last}}).toArray(callback);
+}
+exports.listDagsbryggForMonth = listDagsbryggForMonth;
+
 var listDagensKaffeForMonth = function(year, month, callback){
 	var first = new Date(year, month	,	1, 	0, 	0, 	0, 	0);
 	var last = 	new Date(year, month + 1,	0,  23, 59, 59, 99);

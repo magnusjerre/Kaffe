@@ -8,7 +8,7 @@ exports.kalenderElementer = function(req, res){
 	if (req.query.month && req.query.year) {
 		date = new Date(parseInt(req.query.year), parseInt(req.query.month));
 	}
-	kaffedb.listDagensKaffeForMonth(date.getFullYear(), date.getMonth(), function(error, docs){
+	kaffedb.listDagsbryggForMonth(date.getFullYear(), date.getMonth(), function(error, docs){
 		var calendar = getCalendar(date.getFullYear(), date.getMonth());
 		var model = { "dagensbrygg" : convertToCalendar2(docs, calendar) }
 		res.json(model);	
@@ -20,7 +20,7 @@ exports.kalendervisning = function(req, res){
 	if (req.query.month && req.query.year) {
 		date = new Date(parseInt(req.query.year), parseInt(req.query.month));
 	}
-	kaffedb.listDagensKaffeForMonth(date.getFullYear(), date.getMonth(), function(error, docs){
+	kaffedb.listDagsbryggForMonth(date.getFullYear(), date.getMonth(), function(error, docs){
 		var calendar = getCalendar(date.getFullYear(), date.getMonth());
 		var arr2 = convertToCalendar2(docs, calendar);
 		var model2 = {
@@ -71,8 +71,8 @@ function convertToCalendar2(kafferdocs, calendar) {
 }
 
 function insertKaffeInCalendar(kaffe, calendar, array) {
-	var month = kaffe._id.getMonth();
-	var date = kaffe._id.getDate();
+	var month = kaffe.dato.getMonth();
+	var date = kaffe.dato.getDate();
 	for (var i = 0; i < calendar.length; i++) {
 		if (calendar[i].date.getMonth() == month &&
 			calendar[i].date.getDate() == date) {
@@ -93,7 +93,7 @@ function convertToCalendar(dagenskaffer) {
 	
 	for (var i = 0; i < dagenskaffer.length; i++) {
 		var dagens = dagenskaffer[i];
-		var dag = dagens._id.getDate();
+		var dag = dagens.dato.getDate();
 		var pos = posInArray + dag - 1;	//trekker fra 1 for å satt til riktig posisjon i kalender tabellen, hvis dag 1 er på mandag, må pos være 0
 		array[pos] = dagens;
 	}

@@ -55,11 +55,6 @@ app.get('/cake', function(req, res){
 		"kommentar" : "WWW.heihei"
 	}
 	kaffedb.registrerNyttBrygg(b, "56b621bae765feb2d8fb9539", function(err, res){});
-	// kaffedb.registrerKarakter(karakter, null, function(err, res){
-	// 	console.log("heisann sveisann");
-	// 	console.log(err);
-	// 	console.log(res);
-	// });
 	res.json(karakter);
 });
 
@@ -68,23 +63,23 @@ app.post('/registrerNyttBrygg', rIndex.registrerNyttBrygg);
 app.get('/hentMuligeKaffer', rIndex.hentMuligeKaffer);
 app.get('/hentDagsbrygg', rIndex.hentDagsbrygg);
 
-// app.get('/about', rAbout.about);
+app.get('/about', rAbout.about);
 
-// rDagenskaffeKalenderVisning.setKaffedb(kaffedb);
-// app.get('/kalendervisning', rDagenskaffeKalenderVisning.kalendervisning);
-// app.get('/kalenderelement', rDagenskaffeKalenderVisning.kalenderElementer);
+rDagenskaffeKalenderVisning.setKaffedb(kaffedb);
+app.get('/kalendervisning', rDagenskaffeKalenderVisning.kalendervisning);
+app.get('/kalenderelement', rDagenskaffeKalenderVisning.kalenderElementer);
 
-// rAllKaffe.setKaffedb(kaffedb);
-// app.get('/kaffeliste', rAllKaffe.allKaffe);
-// app.post('/visskjulkaffe', rAllKaffe.visSkjulKaffe);
+rAllKaffe.setKaffedb(kaffedb);
+app.get('/kaffeliste', rAllKaffe.allKaffe);
+app.post('/visskjulkaffe', rAllKaffe.visSkjulKaffe);
 
-// rNyKaffe.setKaffedb(kaffedb);
-// app.get('/nyKaffe', rNyKaffe.nyKaffe);
-// app.post('/registrerNyKaffeSort', rNyKaffe.registrerNyKaffe);
+rNyKaffe.setKaffedb(kaffedb);
+app.get('/nyKaffe', rNyKaffe.nyKaffe);
+app.post('/registrerNyKaffeSort', rNyKaffe.registrerNyKaffe);
 
-// rKaffeKart.setKaffedb(kaffedb);
-// app.get('/kaffeKart', rKaffeKart.kaffeKart);
-// app.get('/kaffeKartJson', rKaffeKart.kaffeKartJSON);
+rKaffeKart.setKaffedb(kaffedb);
+app.get('/kaffeKart', rKaffeKart.kaffeKart);
+app.get('/kaffeKartJson', rKaffeKart.kaffeKartJSON);
 
-// rLedertavle.setKaffedb(kaffedb);
-// app.get('/ledertavle', rLedertavle.ledertavle);
+rLedertavle.setKaffedb(kaffedb);
+app.get('/ledertavle', rLedertavle.ledertavle);
