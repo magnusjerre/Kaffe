@@ -33,7 +33,7 @@ var rKaffeKart = require(path.join(__dirname, 'routes/kaffeKart.js'));
 var rLedertavle = require(path.join(__dirname, 'routes/ledertavle.js'));
 
 rIndex.setKaffedb(kaffedb);
-// app.get('/', rIndex.index);
+app.get('/', rIndex.index);
 app.get('/cake', function(req, res){
 	var b = {
 			"dato" : new Date(),
@@ -63,8 +63,10 @@ app.get('/cake', function(req, res){
 	res.json(karakter);
 });
 
-// app.post('/registrerKarakter', rIndex.registrerKarakter);
-// app.post('/registrerNyttBrygg', rIndex.registrerNyttBrygg);
+app.post('/registrerKarakter', rIndex.registrerKarakter);
+app.post('/registrerNyttBrygg', rIndex.registrerNyttBrygg);
+app.get('/hentMuligeKaffer', rIndex.hentMuligeKaffer);
+app.get('/hentDagsbrygg', rIndex.hentDagsbrygg);
 
 // app.get('/about', rAbout.about);
 

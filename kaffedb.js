@@ -234,8 +234,9 @@ var dagsbryggColl = function () {
 
 
 //----- registrering -----
+//callback: error, brygg
 var registrerNyttBrygg = function(brygg, bryggid, callback) {
-	if (bryggid) {
+	if (bryggid && bryggid.length > 0) {
 		bryggColl().findOneAndUpdate(
 			{ "_id" : ObjectId(bryggid)}, 
 			{
@@ -252,24 +253,25 @@ var registrerNyttBrygg = function(brygg, bryggid, callback) {
 				}
 			}, 
 			{}, function(err, res){
-				callback(err, res);
+				callback(err, brygg);
 			});
 	} else {
 		bryggColl().insert(brygg, function(err, res){
 			if (err) {
-				callback(err, res);
+				callback(err, brygg);
 				return;
 			}
 			//brygg vil få _id satt av db, dette synes her inni callbackfunksjonen
 			console.log("Opprettet brygg med id: " + brygg["_id"]);
-			callback(err, res);
+			callback(err, brygg);//res: {"ops": [<brygg>]}	id finnes nå i res
 		});
 	}
 }
 exports.registrerNyttBrygg = registrerNyttBrygg;
 
+//Callback: error, <karakter>, <brygg>
 var registrerKarakter = function(karakter, bryggid, callback) {
-	if (bryggid) {	//Betyr at brygget finnes fra før
+	if (bryggid && bryggid !== "ingen") {	//Betyr at brygget finnes fra før
 		bryggColl().findOne(
 			{ 
 				"_id" : ObjectId(bryggid)
@@ -277,7 +279,7 @@ var registrerKarakter = function(karakter, bryggid, callback) {
 			{},
 			function(err, brygg){
 				if (err || brygg == null) {
-					callback(err, brygg);
+					callback(err, karakter, brygg);
 					return;
 				}
 
@@ -285,7 +287,7 @@ var registrerKarakter = function(karakter, bryggid, callback) {
 				for (var i = 0; i < brygg.karakterer.length; i++) {
 					if (karakter.bruker.toLowerCase() === brygg.karakterer[i].bruker.toLowerCase()) {
 						karakterAlleredeRegistrert = true;
-						bryggColl().updateOne(
+						bryggColl().findOneAndUpdate(
 							{
 								"_id" : ObjectId(bryggid),
 								"karakterer" : { $elemMatch : { "bruker" : karakter.bruker } }
@@ -295,16 +297,14 @@ var registrerKarakter = function(karakter, bryggid, callback) {
 							},
 							{}, 
 							function(uErr, uRes){
-								callback(uErr, uRes);
+								callback(uErr, karakter, brygg);
 							}
 						);
 					}
 				}
 				
 				if (!karakterAlleredeRegistrert) {
-					pushKarakterToBrygg(karakter, bryggid, function(uErr, uRes){
-						callback(uErr, uRes);
-					});
+					pushKarakterToBrygg(karakter, bryggid, callback);
 				}
 			}
 		);
@@ -315,16 +315,15 @@ var registrerKarakter = function(karakter, bryggid, callback) {
 				callback(error, result);
 				return;
 			}
-			pushKarakterToBrygg(karakter, ukjentBrygg["_id"].toHexString(), function(pErr, pRes){
-				callback(pErr, pRes);
-			});
+			pushKarakterToBrygg(karakter, ukjentBrygg["_id"].toHexString(), callback);
 		});
 	}
 }
 exports.registrerKarakter = registrerKarakter;
 
+//Callback: error, <karakter>, <brygg>
 function pushKarakterToBrygg(karakter, bryggid, callback) {
-	bryggColl().updateOne(
+	bryggColl().findOneAndUpdate(
 		{
 			"_id" : ObjectId(bryggid)
 		},
@@ -334,7 +333,7 @@ function pushKarakterToBrygg(karakter, bryggid, callback) {
 		{
 		},
 		function(error, result){
-			callback(error, result);
+			callback(error, karakter, result.value);	//result: { "value" : <brygg>}
 		}
 	);
 }
@@ -347,6 +346,7 @@ var hentBryggForDag = function(dato, callback) {
 		callback(error, docs);
 	});
 }
+exports.hentBryggForDag = hentBryggForDag;
 //callback: error, result
 var hentBryggMedId = function(bryggid, callback) {
 	bryggColl().findOne({ "_id" : bryggid }, {}, function(error, result){

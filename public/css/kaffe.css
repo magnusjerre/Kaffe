@@ -451,11 +451,11 @@ table.kalender tr td {
 
 
 .popup {
-	position: absolute;
+	position: fixed;
 	left: 0;
 	right: 0;
 	margin: auto;
-	z-index: 1;
+	z-index: 100;
 }
 
 .popuprectangle {
@@ -662,4 +662,8 @@ div.ledertavleNav a:hover {
 
 .v2ekstraBrygg:active {
 	background-color: saddlebrown;
+}
+
+div.v2innhold > select {
+	width: 17em;
 }

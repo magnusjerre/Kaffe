@@ -1,25 +1,24 @@
-div#gjetteboks.popup.popuprectangle
+div#gjetteboks.popup.popuprectangle.hidden
 	div.relative.dagenskaffeboks
 		img#closepopup.closeIcon(src="images/cross.png", alt="Close button")
 		div.kaffeboks.gjetteboks
-			if gjetting.korrektSvar
+			div#korrektSvar(style="display: none")
 				h2.centered Riktig!
 				div.dagenskaffeboksRad
 					label.mediumWidth.dagenskaffebokslabel Dagens kaffe er
-					p #{dagensbrygg.kaffe_navn}
-			else
+					p(name="korrekt_sammendrag") Friele
+			div#feilSvar(style="display: none")
 				h2.centered Feil...
 				div.dagenskaffeboksRad
 						label.mediumWidth.dagenskaffebokslabel Dagens kaffe er
-						p #{dagensbrygg.kaffe_navn}
+						p(name="feil_korrekt_sammendrag") Friele
 				br
 				div.horizontalLine
 				br
 				div.dagenskaffeboksRad
 					label.mediumWidth.dagenskaffebokslabel Du gjettet
-					p #{gjetting.kaffeSammendrag}
+					p(name="gjettet_sammendrag") Kjieldsberg
 				div.dagenskaffeboksRad
 					label.mediumWidth.dagenskaffebokslabel Karakter
-					p.hidden#gjettekarakter #{gjetting.karakter}
-					div#gjettekarakterskala
-						include karakterskala.jade
+					p.hidden#gjettekarakter Kjieldsberg
+					include karakterskala.jade

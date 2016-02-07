@@ -1,5 +1,5 @@
 var karakterskalaElementer = [];
-
+// KSE -> KarakterSkalaElement
 // Helper methods for karakterskala array
 function getKSElementForKarakterskala(karakterskalaDiv) {
 	for (var i = 0; i < karakterskalaElementer.length; i++) {
@@ -54,6 +54,7 @@ function karakterskalaClick() {
 	ksElement.karakter = clickedKarakter;
 	ksElement.clicked = true;
 	fillKarakterskalaMedKarakter(clickedKarakter, $(this).parent());
+	$(this).siblings('input[name="karakterInput"]').val(clickedKarakter);
 }
 
 function calcKarakterFromHalfBean(halfBean) {
@@ -96,4 +97,12 @@ function clearKarakterskala(karakterskalaDiv) {
 	karakterskalaDiv.find('.beanHalf').each(function(){
 		$(this).removeClass('beanSelected');
 	});
+}
+
+function clearKarakterskalaOgVerdi(karakterskalaDiv) {
+	clearKarakterskala(karakterskalaDiv);
+	karakterskalaDiv.find('input[name="karakterInput"]').val("");
+	var kseElement = getKSElementForKarakterskala(karakterskalaDiv);
+	kseElement.clicked = false;
+	kseElement.karakter = 0; 
 }

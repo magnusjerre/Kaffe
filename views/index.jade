@@ -10,27 +10,18 @@ html
 	body.container
 		h1 Den store kaffesiden
 		include nav.jade
-		//if gjetting.visGjetteBoks
-			include gjetteboks.jade
-		//div.v2centerContainer
+		include gjetteboks.jade
 		div.hidden(name="bryggcontainermal")
 			div.v2bryggContainer
+				p(name="erRegistrert", style="display: none") false
 				div.v2registrerNav
 						a.v2registrerNavElement.v2registrerNavValgt Brygg
 						a.v2registrerNavElement.v2registrerNavIkkeValgt Karakter
-					div(name="Brygg")
+					div(name="NyttBrygg", style="display: none")
 						include registrering/nyttBrygg.jade
-					div.hidden(name="Karakter")
+					div(name="EksisterendeBrygg", style="display: none")
+						include registrering/eksisterendeBrygg.jade
+					div(name="Karakter", style="display:none")
 						include registrering/nyKarakter.jade
 		div.container(name="bryggliste")
-			each brygg in dagensbrygg
-				if !brygg.lukket
-					div.v2bryggContainer
-						div.v2registrerNav
-							a.v2registrerNavElement.v2registrerNavValgt Brygg
-							a.v2registrerNavElement.v2registrerNavIkkeValgt Karakter
-						div.hidden(name="Brygg")
-							include registrering/nyttBrygg.jade
-						div(name="Karakter")
-							include registrering/nyKarakter.jade
 		image#ekstrabrygg.v2ekstraBrygg(src="images/pluss.png", alt="Ekstra brygg")
