@@ -38,11 +38,11 @@ app.get('/cake', function(req, res){
 	var b = {
 			"dato" : new Date(),
 			"kaffeid" : "566a8327b2446e033056f20b",
-			"sammendrag" : "Friele - Chocolate Flavour (Malt)",
+			"sammendrag" : "Friele - Barista Ipanema Bourbon (Malt)",
 			"bryggnavn" : "Gang of Four",
-			"brygger" : "Jerre",
-			"liter" : 1.25,
-			"skjeer" : 5,
+			"brygger" : "Jokko",
+			"liter" : 1,
+			"skjeer" : 4,
 			"maskin" : true,
 			"lukket" : false,
 			"karakterer" : []
@@ -51,16 +51,15 @@ app.get('/cake', function(req, res){
 		"bruker" : "Jerre",
 		"kaffeid" : "566a8327b2446e033056f20b",
 		"sammendrag" : "Friele - Chocolate Flavour (Malt)",
-		"karakter" : 1,
-		"kommentar" : "Heihei på deg.."
+		"karakter" : 3,
+		"kommentar" : "WWW.heihei"
 	}
-	//kaffedb.registrerNyttBrygg(b, function(err, res){});
-	// kaffedb.registrerKarakter(karakter, "56b37a2ead232ea8c3a6379a", function(err, res){
+	kaffedb.registrerNyttBrygg(b, "56b621bae765feb2d8fb9539", function(err, res){});
+	// kaffedb.registrerKarakter(karakter, null, function(err, res){
+	// 	console.log("heisann sveisann");
+	// 	console.log(err);
 	// 	console.log(res);
 	// });
-	kaffedb.registrerKarakter(karakter, null, function(err, res){
-		console.log(res);
-	});
 	res.json(karakter);
 });
 

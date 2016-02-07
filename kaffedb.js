@@ -18,7 +18,6 @@ exports.connect = function() {
 			mongo.DB = db;
 		}
 	});
-	
 }
 
 exports.close = function() {
@@ -35,20 +34,6 @@ exports.getKaffeMedNavn = function(navn, cb) {
 			cb(err, res);			
 		}
 	);
-}
-
-function generateObjectId() {
-	var now = new Date();
-	var seconds = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
-	return ObjectId.generate(seconds);
-}
-
-function getStartTid(dato) {
-	return new Date(dato.getFullYear(), dato.getMonth(), dato.getDate());
-}
-
-function getSluttTid(dato) {
-	return new Date(dato.getFullYear(), dato.getMonth(), dato.getDate(), 23, 59, 59, 999);
 }
 
 var getDagensKafferForPeriode = function(startDato, sluttDato, callback) {
@@ -249,61 +234,83 @@ var dagsbryggColl = function () {
 
 
 //----- registrering -----
-var registrerNyttBrygg = function(brygg, callback) {
-	hentDagsbryggForDato(brygg.dato, function(error, dBrygg){
-		if (error) {
-			callback(error, dBrygg);
-			return;
-		}
-		//brygg vil få _id satt av db, dette synes her inni callbackfunksjonen
-		bryggColl().insert(brygg, function(iErr, iRes){	
-			if (iErr) {
-				callback(iErr, iRes);
+var registrerNyttBrygg = function(brygg, bryggid, callback) {
+	if (bryggid) {
+		bryggColl().findOneAndUpdate(
+			{ "_id" : ObjectId(bryggid)}, 
+			{
+				$set : {
+					"dato" : brygg.dato,
+					"kaffeid" : brygg.kaffeid,
+					"sammendrag" : brygg.sammendrag,
+					"bryggnavn" : brygg.bryggnavn,
+					"brygger" : brygg.brygger,
+					"liter" : brygg.liter,
+					"skjeer" : brygg.skjeer,
+					"maskin" : brygg.maskin,
+					"lukket" : brygg.lukket
+				}
+			}, 
+			{}, function(err, res){
+				callback(err, res);
+			});
+	} else {
+		bryggColl().insert(brygg, function(err, res){
+			if (err) {
+				callback(err, res);
 				return;
 			}
-			
+			//brygg vil få _id satt av db, dette synes her inni callbackfunksjonen
 			console.log("Opprettet brygg med id: " + brygg["_id"]);
-			if (dBrygg) {
-				dagsbryggColl().updateOne(
-					{
-						"_id" : ObjectId(dBrygg["_id"])
-					},
-					{
-						$push : { "dagensbrygg" : brygg["_id"] }
-					},
-					{
-					},
-					function(err, res) {
-						if (err) {
-							callback(err, res);
-							return;
-						}
-						console.log("Oppdaterte dagsbrygg (" + dBrygg["_id"] +") med nytt brygg (" + brygg["_id"] + ")");
-						console.log("res: " + res);
-						callback(err, res);
-					}
-				);
-			} else {
-				var dagsbrygg = makeDagsbrygg(brygg.dato, [brygg["_id"]]);
-				dagsbryggColl().insert(dagsbrygg, function(i2Err, i2Res){
-					console.log("Opprettet dagsbrygg med id: " + dagsbrygg["_id"]);
-					callback(iErr, iRes);
-				});
-			}
-			
+			callback(err, res);
 		});
-	});
+	}
 }
 exports.registrerNyttBrygg = registrerNyttBrygg;
 
 var registrerKarakter = function(karakter, bryggid, callback) {
 	if (bryggid) {	//Betyr at brygget finnes fra før
-		pushKarakterToBrygg(karakter, bryggid, function(pErr, pRes){
-			callback(pErr, pRes);
-		});
+		bryggColl().findOne(
+			{ 
+				"_id" : ObjectId(bryggid)
+			},
+			{},
+			function(err, brygg){
+				if (err || brygg == null) {
+					callback(err, brygg);
+					return;
+				}
+
+				var karakterAlleredeRegistrert = false;
+				for (var i = 0; i < brygg.karakterer.length; i++) {
+					if (karakter.bruker.toLowerCase() === brygg.karakterer[i].bruker.toLowerCase()) {
+						karakterAlleredeRegistrert = true;
+						bryggColl().updateOne(
+							{
+								"_id" : ObjectId(bryggid),
+								"karakterer" : { $elemMatch : { "bruker" : karakter.bruker } }
+							},
+							{
+								$set : { "karakterer.$.karakter" : karakter.karakter }
+							},
+							{}, 
+							function(uErr, uRes){
+								callback(uErr, uRes);
+							}
+						);
+					}
+				}
+				
+				if (!karakterAlleredeRegistrert) {
+					pushKarakterToBrygg(karakter, bryggid, function(uErr, uRes){
+						callback(uErr, uRes);
+					});
+				}
+			}
+		);
 	} else {	//karakter.kaffeid er nå null
 		var ukjentBrygg = makeDefaultBrygg();
-		registrerNyttBrygg(ukjentBrygg, function(error, result){
+		registrerNyttBrygg(ukjentBrygg, null, function(error, result){
 			if (error) {
 				callback(error, result);
 				return;
@@ -335,12 +342,12 @@ function pushKarakterToBrygg(karakter, bryggid, callback) {
 
 //----- uthenting ------
 //callback: error, result
-var hentDagsbryggForDato = function(dato, callback) {
-	dagsbryggColl().findOne({"dato" : { $gte : getStartTid(dato), $lte : getSluttTid(dato) }}, {}, function(error, result){
-		callback(error, result);
+var hentBryggForDag = function(dato, callback) {
+	bryggColl().find({ "dato" : { $gte : getStartTid(dato), $lte : getSluttTid(dato) } }).toArray(function(error, docs) {
+		callback(error, docs);
 	});
 }
-
+//callback: error, result
 var hentBryggMedId = function(bryggid, callback) {
 	bryggColl().findOne({ "_id" : bryggid }, {}, function(error, result){
 		callback(error, result);
@@ -348,6 +355,19 @@ var hentBryggMedId = function(bryggid, callback) {
 }
 
 //----- Hjelpemetoder -----
+function generateObjectId() {
+	var now = new Date();
+	var seconds = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+	return ObjectId.generate(seconds);
+}
+
+function getStartTid(dato) {
+	return new Date(dato.getFullYear(), dato.getMonth(), dato.getDate());
+}
+
+function getSluttTid(dato) {
+	return new Date(dato.getFullYear(), dato.getMonth(), dato.getDate(), 23, 59, 59, 999);
+}
 
 //klassebyggere
 function makeDagsbrygg(dato, liste) {
