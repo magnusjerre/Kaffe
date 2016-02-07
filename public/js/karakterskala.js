@@ -55,6 +55,7 @@ function karakterskalaClick() {
 	ksElement.clicked = true;
 	fillKarakterskalaMedKarakter(clickedKarakter, $(this).parent());
 	$(this).siblings('input[name="karakterInput"]').val(clickedKarakter);
+	validerHarInput($(this).parent());
 }
 
 function calcKarakterFromHalfBean(halfBean) {
@@ -105,4 +106,17 @@ function clearKarakterskalaOgVerdi(karakterskalaDiv) {
 	var kseElement = getKSElementForKarakterskala(karakterskalaDiv);
 	kseElement.clicked = false;
 	kseElement.karakter = 0; 
+}
+
+function validerHarInput(karakterskalaDiv) {
+	var ksElement = getKSElementForKarakterskala(karakterskalaDiv);
+	if (ksElement.clicked) {
+		karakterskalaDiv.siblings('span').removeClass('requiredNotOkay');
+		karakterskalaDiv.siblings('span').addClass('requiredOkay');
+		return true;
+	} else {
+		karakterskalaDiv.siblings('span').removeClass('requiredOkay');
+		karakterskalaDiv.siblings('span').addClass('requiredNotOkay');
+		return false;
+	}
 }

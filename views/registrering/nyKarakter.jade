@@ -1,15 +1,18 @@
 form.v2centerContainer(action="registrerKarakter", method="POST")
 	div.v2registrerInnhold
-		input(name="sammendrag", type="hidden")
+		input(name="sammendrag", type="hidden", required)
 		div.v2innhold
 			label Kaffe:
+			span.requiredNotOkay *
 			select(name="kaffeid")
 				option(selected="selected", disabled="disabled") Velg kaffe
 		div.v2innhold
 			label Bruker:
-			input.v2innholdInput(name="bruker", placeholder="Jerre")
+			span.requiredNotOkay *
+			input.v2innholdInput(name="bruker", placeholder="Jerre", required)
 		div.v2innhold
 			label Karakter:
+			span.requiredNotOkay *
 			include ../karakterskala.jade
 		div.v2innhold
 			label Kommentar:
