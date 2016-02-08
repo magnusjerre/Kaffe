@@ -80,7 +80,7 @@ $(document).ready(function(){
 			if (karakter.kommentar && karakter.kommentar.length > 0) {
 				clone.find('span[name="kommentar"]').text(karakter.kommentar);
 			} else {
-				clone.find('span[name="kommentar"]').remove();
+				clone.find('span[name="kommentar"]').parent().remove();
 			}
 			clone.appendTo(karaktererDiv);
 		}
