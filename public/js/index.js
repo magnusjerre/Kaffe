@@ -1,9 +1,4 @@
 $(document).ready(function(){
-	
-	// var resKaffenavn = $('#resultatKaffenavn').text()
-	// var resBrygger = $('#resultatBrygger').text();
-	// var resLiter = $('#resultatLiter').text();
-	// var resSkjeer = $('#resultatSkjeer').text();
 	var kafferDropdown = [];
 	$.get('/hentMuligeKaffer', function(data, textStatus, jqXHR){
 		kafferDropdown = data.kaffer;
@@ -129,15 +124,6 @@ $(document).ready(function(){
 		eksisterendeBryggContainer.find('p[name="skjeer"]').text("Skjult");
 		eksisterendeBryggContainer.find('p[name="maskin"]').text("Skjult");
 		
-		
-		// eksisterendeBryggContainer.find('p[name="bryggid"]').text(brygg["_id"]);
-		// eksisterendeBryggContainer.find('p[name="kaffeid"]').text(brygg.kaffeid);
-		// eksisterendeBryggContainer.find('p[name="bryggnavn"]').text(brygg.bryggnavn);
-		// eksisterendeBryggContainer.find('p[name="brygger"]').text(brygg.brygger);
-		// eksisterendeBryggContainer.find('p[name="sammendrag"]').text(brygg.sammendrag);
-		// eksisterendeBryggContainer.find('p[name="liter"]').text(brygg.liter);
-		// eksisterendeBryggContainer.find('p[name="skjeer"]').text(brygg.skjeer);
-		// eksisterendeBryggContainer.find('p[name="maskin"]').text(brygg.maskin);
 		if (brygg.bryggnavn !== 'Ukjent') {
 			bryggcontainer.find('p[name="erRegistrert"]').text("true");
 			nyttBryggcontainer.slideUp(function(){
@@ -328,38 +314,9 @@ $(document).ready(function(){
 		});
 	}
 	
-	// $('#resultatKaffenavn, #resultatBrygger, #resultatLiter, #resultatSkjeer').click(function(){
-	// 	if (skjult) {
-	// 		skjult = false;
-	// 		showResultat();
-	// 	} else {
-	// 		skjult = true;
-	// 		hideResultat();
-	// 	}
-	// });
-	
 	$('#navhome').css('background-color', 'saddlebrown');
 	$('#navhome').css('color', 'sandybrown');
-	
-	// function showResultat() {
-	// 	$('#resultatKaffenavn').text(resKaffenavn);
-	// 	$('#resultatBrygger').text(resBrygger);
-	// 	$('#resultatLiter').text(resLiter);
-	// 	$('#resultatSkjeer').text(resSkjeer);
-	// }
-	
-	// function hideResultat() {
-	// 	$('#resultatKaffenavn').text('Skjult');
-	// 	$('#resultatBrygger').text('Skjult');
-	// 	$('#resultatLiter').text('Skjult');
-	// 	$('#resultatSkjeer').text('Skjult');
-	// }
-	
 });
-
-// function hidePopup() {
-// 	$('#gjetteboks').hide();
-// }
 
 function serializeNyttBrygg(form) {
 	return {
