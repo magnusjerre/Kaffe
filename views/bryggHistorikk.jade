@@ -1,0 +1,39 @@
+div.popupAbsoloute.popuprectangleKalender
+	img.closeIcon(name="closepopup", src="images/cross.png", alt="Close button")
+	div(name="topbar").brygghistorikkTop
+		div(name="bryggNav").brygghistorikkNav
+			span.selectableBrygg(name="selectableBrygg") Gang of four
+	div(name="brygginfo", style="width: 24em")
+		div
+			label.inlineblock Bryggnavn:
+			p.inlineblock(name="bryggnavn") Gang of four
+		div
+			label.inlineblock Kaffe:
+			span(name="kaffe", style="inline") Friele - Barista Ipanema Bourbon (Bønner)
+		div.literskjeer
+			div.mellom
+				label.inlineblock Brygger:
+				p.inlineblock(name="brygger") Jerre
+			div.mellom
+				label.inlineblock Liter:
+				p.inlineblock(name="liter") 1
+			div.mellom
+				label.inlineblock Skjeer:
+				p.inlineblock(name="skjeer") 2
+		div
+			label.inlineblock Snittkarakter:
+			include karakterskala.jade
+	div(name="karakterer")
+		div.karakterboks.dagenskaffeboks(name="karakter", style="width: 24em")
+			div
+				label.inlineblock Kaffe:
+				p.inlineblock(name="kaffe", style="inline") Friele - Barista Ipanema Bourbon (Bønner)
+			div
+				label.inlineblock Bruker:
+				span(name="bruker", style="inline") Bruker
+			div
+				label.inlineblock Karakter:
+				include karakterskala.jade
+			div(name="kommentarDiv")
+				label.inlineblock Kommentar:
+				span(name="kommentar", style="inline") En eller annen lang kommentar. Denne må wrappes of ha en maks lengde. Burde kanskje være scrollbar.

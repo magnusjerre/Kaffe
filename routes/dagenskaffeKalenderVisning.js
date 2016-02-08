@@ -25,7 +25,7 @@ exports.kalendervisning = function(req, res){
 		var arr2 = convertToCalendar2(docs, calendar);
 		var model2 = {
 			"dager" : calendar,
-			"dagensbrygg" : arr2,
+			"dagsbrygg" : arr2,
 			"month" : getMonthNorwegian(date),
 			"fullYear" : date.getFullYear(),
 			"fullMonth" : date.getMonth()
@@ -61,7 +61,7 @@ function getMonthNorwegian(date) {
 		return "Desember";
 	}
 }
-
+//returnerner: [[<brygg>]]
 function convertToCalendar2(kafferdocs, calendar) {
 	var array = new Array(42);
 	for (var i = 0; i < kafferdocs.length; i++) {
@@ -76,29 +76,16 @@ function insertKaffeInCalendar(kaffe, calendar, array) {
 	for (var i = 0; i < calendar.length; i++) {
 		if (calendar[i].date.getMonth() == month &&
 			calendar[i].date.getDate() == date) {
-			array[i] = kaffe;
+				if (array[i]) {
+					array[i].dagsbrygg.push(kaffe);
+				} else {
+					array[i] = {
+						"dagsbrygg" : [kaffe]
+					}
+				}
 			break;	
 		}
 	}
-}
-
-function convertToCalendar(dagenskaffer) {
-	var array = new Array(42);
-	var firstDay = new Date();
-	firstDay = new Date(firstDay.getFullYear(), firstDay.getMonth(), 1);
-	var posInArray = firstDay.getDay() - 1;
-	if (posInArray == -1) {	// 0 == søndag, kalenderen starter på mandag
-		posInArray = 6; 
-	}
-	
-	for (var i = 0; i < dagenskaffer.length; i++) {
-		var dagens = dagenskaffer[i];
-		var dag = dagens.dato.getDate();
-		var pos = posInArray + dag - 1;	//trekker fra 1 for å satt til riktig posisjon i kalender tabellen, hvis dag 1 er på mandag, må pos være 0
-		array[pos] = dagens;
-	}
-	
-	return array;
 }
 
 var getDays = function(year, month) {

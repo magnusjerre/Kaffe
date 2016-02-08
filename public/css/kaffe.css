@@ -391,11 +391,19 @@ table.kalender tr td {
 	padding: 0 0.25em 0 0;
 }
 
+.clanderIconDiv {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+	margin: auto;
+	flex-flow: wrap;
+}
+
 .calendarIcon {
 	width: 18px;
 	height: 18px;
-	margin: 0 auto 0 auto;
-	transform: rotate(30deg);
 }
 
 .calendarElementContent {
@@ -483,7 +491,9 @@ table.kalender tr td {
 .closeIcon {
 	width: 16px;
 	height: 16px;
-	align-self: flex-end;
+	align-self: center;
+	cursor: pointer;
+	margin: 0.5em;
 }
 
 .kaffelisteProdusentRectangle {
@@ -678,4 +688,58 @@ div.v2innhold > select {
 	color: green;
 	font-weight: bold;
 	padding: 5px 5px 5px 0;
+}
+
+.brygghistorikkTop {
+	width: 24em;
+	align-content: center;
+	display: flex;
+}
+
+.brygghistorikkNav {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	margin: 0 auto 0 auto;
+}
+
+.selectableBrygg {
+	padding: 0.5em;
+	background-color: #ffefbe;
+	margin: 0.1em;
+	cursor: pointer;
+	white-space: nowrap;
+	max-width: 8em;
+	height: 1.5em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.literskjeer {
+	display: flex;
+	justify-content: flex-start;
+	flex-wrap: wrap;
+}
+
+.mellom {
+	margin-right: 1em;
+}
+
+.popupAbsoloute {
+	position: absolute;
+	left: 0;
+	right: 0;
+	margin: auto;
+	z-index: 100;
+}
+
+.popuprectangleKalender {
+	width: 25em;
+	padding: 0.5em;
+	background-color: #FEDBA0;
+	box-shadow: 0 0 20px saddlebrown;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
 }
