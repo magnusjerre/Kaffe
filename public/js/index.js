@@ -29,7 +29,6 @@ $(document).ready(function(){
 		if (brygg != null) {
 			eksisterendeBryggContainer.find('p[name="bryggid"]').text(brygg["_id"]);
 			eksisterendeBryggContainer.find('p[name="kaffeid"]').text(brygg.kaffeid);
-			eksisterendeBryggContainer.find('p[name="bryggnavn"]').text(brygg.bryggnavn);
 			eksisterendeBryggContainer.find('p[name="brygger"]').text(brygg.brygger);
 			eksisterendeBryggContainer.find('p[name="sammendrag"]').text(brygg.sammendrag);
 			eksisterendeBryggContainer.find('p[name="liter"]').text(brygg.liter);
@@ -42,7 +41,6 @@ $(document).ready(function(){
 		var brygg = hentBrygg(models, bryggid);
 		eksisterendeBryggContainer.find('p[name="bryggid"]').text(brygg["_id"]);
 		eksisterendeBryggContainer.find('p[name="kaffeid"]').text(brygg.kaffeid);
-		eksisterendeBryggContainer.find('p[name="bryggnavn"]').text("Skjult");
 		eksisterendeBryggContainer.find('p[name="brygger"]').text("Skjult");
 		eksisterendeBryggContainer.find('p[name="sammendrag"]').text("Skjult");
 		eksisterendeBryggContainer.find('p[name="liter"]').text("Skjult");
@@ -66,14 +64,6 @@ $(document).ready(function(){
 		var nyttBryggcontainer = bryggcontainer.find('div[name="NyttBrygg"]');
 		var eksisterendeBryggContainer = bryggcontainer.find('div[name="EksisterendeBrygg"]');
 		
-		eksisterendeBryggContainer.find('p[name="bryggnavn"]').click(function(){
-				var bryggid = $(this).parent().siblings('p[name="bryggid"]').text();
-				if ($(this).text() === "Skjult") {
-					visDagsbrygg(bryggid, eksisterendeBryggContainer)
-				} else {
-					skjulDagsbrygg(bryggid, eksisterendeBryggContainer);
-				}
-			});
 		eksisterendeBryggContainer.find('p[name="brygger"]').click(function(){
 				var bryggid = $(this).parent().siblings('p[name="bryggid"]').text();
 				if ($(this).text() === "Skjult") {
@@ -117,7 +107,7 @@ $(document).ready(function(){
 		
 		eksisterendeBryggContainer.find('p[name="bryggid"]').text(brygg["_id"]);
 		eksisterendeBryggContainer.find('p[name="kaffeid"]').text(brygg.kaffeid);
-		eksisterendeBryggContainer.find('p[name="bryggnavn"]').text("Skjult");
+		eksisterendeBryggContainer.find('p[name="bryggnavn"]').text(brygg.bryggnavn);
 		eksisterendeBryggContainer.find('p[name="brygger"]').text("Skjult");
 		eksisterendeBryggContainer.find('p[name="sammendrag"]').text("Skjult");
 		eksisterendeBryggContainer.find('p[name="liter"]').text("Skjult");
