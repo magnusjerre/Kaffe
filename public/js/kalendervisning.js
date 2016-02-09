@@ -62,12 +62,14 @@ $(document).ready(function(){
 		brygginfoDiv.find('span[name="kaffe"]').text(brygg.sammendrag);
 		brygginfoDiv.find('p[name="brygger"]').text(brygg.brygger);
 		brygginfoDiv.find('p[name="liter"]').text(brygg.liter);
-		brygginfoDiv.find('p[name="skjeer"]').text(brygg.liter);
+		brygginfoDiv.find('p[name="skjeer"]').text(brygg.skjeer);
 		var snittkarakter = 0;
 		for (var i = 0; i < brygg.karakterer.length; i++) {
-			snittkarakter += brygg.karakterer[i].karakter;
+			snittkarakter += parseInt(brygg.karakterer[i].karakter);
 		}
+		console.log("snittkaraktersum: " + snittkarakter + ", antallKarakterer: " + brygg.karakterer.length);
 		snittkarakter /= brygg.karakterer.length;
+		console.log("snittkarakter: " + snittkarakter);
 		fillKarakterskalaMedKarakter(snittkarakter, brygginfoDiv.find('div.karakterSkala'));
 		
 		var karakterDiv = brygghistorikkmal.find('div[name="karakter"]');
@@ -106,82 +108,3 @@ $(document).ready(function(){
 		$('#submitMonth').trigger('click');
 	});
 });
-
-// function setBrygg(brygg) {
-// 	$('#kaffenavn').html(brygg.kaffe_navn);
-// 	$('#kaffeliter').html(brygg.liter);
-// 	$('#kaffeskjeer').html(brygg.skjeer);
-// 	$('#kaffemaker').html(brygg.brygger);
-// }
-
-// function setKarakterer(karakterer) {
-// 	console.log("karakterer");
-// 	console.log($('#karakterer').children('#karakterelement'));
-// 	$('#karakterer').children('#karakterelement').remove();
-// 	for (var i = 0; i < karakterer.length; i++) {
-// 		var karakter = karakterer[i];
-// 		var copy = $('#karakterermal').clone();
-// 		copy.attr('id', 'karakterelement');
-// 		copy.removeClass('hidden');
-// 		copy.find('p').each(function(){
-// 			var id = $(this).attr('id');
-// 			console.log('id: ' + id);
-// 			if (id == 'kaffe') {
-// 				$(this).text(karakter.gjetting);
-// 			} else if (id == 'bruker') {
-// 				$(this).text(karakter.bruker_navn);
-// 			// } else if (id == 'karakterSkala') {
-// 			// 	// $(this).text(karakter.karakter);
-// 			// 	console.log("heheh");
-// 			// 	fillKarakterKalender(karakter.karakter, $(this));
-// 			}
-// 		});
-// 		copy.find('#karakterSkala').each(function(){
-// 			console.log("heheh");
-// 			fillKarakterKalender(karakter.karakter, $(this));
-// 		});
-// 		$('#karakterer').append(copy);
-// 	}
-// }
-
-// function hidePopup() {
-// 	$('#dagenskaffeboks').hide();
-// }
-
-// function showPopup() {
-// 	// $('#dagenskaffeboks').show();
-// 	$('#bryggHistorikkboks').show();
-// }
-
-// function fillKarakterKalender(karakterVerdi, karakterSkala) {
-// 	// var karakterSkala = $('#karakterSkala');
-// 	karakterSkala.children().each(function(){
-// 		$(this).children().removeClass('beanSelected');
-// 	});
-	
-// 	var numberOfBeans = Math.floor(karakterVerdi);
-// 	var beans = karakterSkala.children(':lt(' + numberOfBeans + ')');
-// 	beans.each(function(){
-// 		$(this).children().each(function(){
-// 			$(this).addClass('beanSelected');
-// 		});
-// 	});
-// 	if (numberOfBeans <= karakterVerdi) {	//Legge til den siste halve bønnen
-// 		halfBeanAtKarakterKalender(karakterVerdi, karakterSkala).addClass('beanSelected');
-// 	}
-// }
-
-// function halfBeanAtKarakterKalender(karakter, karakterSkala) {
-// 	var temp = 0.5;
-// 	var halfBean = null;
-// 	karakterSkala.children().each(function(){
-// 		$(this).children().each(function(){
-// 			if (karakter == temp) {
-// 				halfBean = $(this);
-// 			}
-// 			temp += 0.5;
-// 		});
-// 	});
-	
-// 	return halfBean;
-// }
