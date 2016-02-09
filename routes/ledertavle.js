@@ -100,8 +100,8 @@ var addPair = function(map, dagensBrygg, karakter) {
 		map[brukernavn].addBrygg(dagensBrygg.karakterer);
 	} else {
 		var korrekt = false;
-		if (karakter.kaffeId != null && dagensBrygg.kaffeId != null) {
-			korrekt = karakter.kaffeId.valueOf() == dagensBrygg.kaffeId.valueOf();
+		if (karakter.kaffeid != null && dagensBrygg.kaffeid != null) {
+			korrekt = karakter.kaffeid.valueOf() == dagensBrygg.kaffeid.valueOf();
 		}
 		map[brukernavn].addSvar(korrekt);
 		map[brukernavn].addKarakter(karakter.karakter);
@@ -149,7 +149,7 @@ var GjetteStatistikk = function() {
 		return Math.round(average * 100) / 100;
 	}
 	this.calcProsent = function() {
-		return Math.round((this.antallRiktige / this.antallTotalt) * 100) / 100;
+		return Math.round((this.antallRiktige / this.antallTotalt) * 100);
 	}
 	this.print = function() {
 		console.log('antallRiktige: ' + this.antallRiktige + ', antallTotalt: ' + this.antallTotalt + ', karakterer: ' + this.karakterer);
