@@ -323,11 +323,13 @@ table.kalender tr td {
 	padding: 0;
 	width: 0.6em;
 	height: 1.2em;
-	-webkit-filter: grayscale() brightness(2);
+	-webkit-filter: grayscale(100%) brightness(2);
+    filter: grayscale(100%) brightness(2);
 }
 
 .beanSelected {
 	-webkit-filter: grayscale(0%);
+    filter: grayscale(0%);
 }
 
 .dagensresultat {	
