@@ -745,3 +745,10 @@ div.v2innhold > select {
 	justify-content: flex-start;
 	align-items: center;
 }
+
+.ikkevalgtKafffe {
+    background-color: #ffefbe;
+}
+.valgtKaffe {
+    background-color: saddlebrown;
+}

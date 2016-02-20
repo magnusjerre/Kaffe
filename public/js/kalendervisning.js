@@ -39,14 +39,17 @@ $(document).ready(function(){
 				var navClone = bryggnav.clone();
 				navClone.text(dagsbrygg[i].bryggnavn);
 				navClone.attr('bind-pos', i);
-				navClone.insertAfter(bryggnav);
+				navClone.insertBefore(bryggnav);
 				navClone.click(function(){
 					var pos = parseInt($(this).attr('bind-pos'));
+                    $(this).siblings().removeClass('valgtKaffe').addClass('ikkevalgtKaffe');
+                    $(this).addClass('valgtKaffe');
 					fyllBrygghistorikkMedBrygg(clone, selectedDagsbrygg[pos], brygghistorikkmal);
 				});
 			}
 		}
 		bryggnav.remove();
+        clone.find('div[name="bryggNav"]').children().first().addClass('valgtKaffe');
 		fyllBrygghistorikkMedBrygg(clone, dagsbrygg[0], brygghistorikkmal);
 		clone.insertAfter(brygghistorikkmal);
 		clone.slideDown();
