@@ -659,7 +659,7 @@ nav a {
 }
 
 .v2innhold > select {
-	width: 7em;
+	width: 100%;
 }
 
 .brygglistecontainer {
