@@ -800,6 +800,18 @@ nav a {
     .v2innhold {
         flex-direction: column;
     }
+	
+	nav {
+		width: 100%;
+	}
+	
+	.clamp {
+		width: 100%;
+	}
+	
+	.brygglistecontainer {
+		width: 100%;
+	}
     
     .bryggcontainer {
         margin: 1em 0;
@@ -812,7 +824,7 @@ nav a {
 	}
 	
 	.calendar {
-		width: 90%;
+		width: 100%;
 	}
 	
 	.calendarDayOfWeek {
