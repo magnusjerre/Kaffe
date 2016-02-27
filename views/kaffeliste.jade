@@ -8,18 +8,19 @@ html
 	body.container
 		h1 Den store kaffesiden
 		include nav.jade
-		each produsent in produsenter
-			div.rectangle.kaffelisteProdusentRectangle
-				h2 #{produsent["_id"]}
-				table.kaffelisteKaffetabell
-					tr
-						th Kaffenavn
-						th Type
-						th Land
-						th Vis
-					each kaffe in produsent.kaffe
+		div.brygglistecontainer
+			each produsent in produsenter
+				div.tabellContainer
+					h3.tabellHeader #{produsent["_id"]}
+					table.tabellListe
 						tr
-							td #{kaffe.navn}
-							td #{kaffe.type}
-							td #{kaffe.land}
-							td.centered.tinyWidth #[input(id=kaffe._id, type="checkbox", checked=kaffe.vis)]
+							th Kaffenavn
+							th Type
+							th Land
+							th Vis
+						each kaffe in produsent.kaffe
+							tr
+								td #{kaffe.navn}
+								td #{kaffe.type}
+								td #{kaffe.land}
+								td.centered.tinyWidth #[input(id=kaffe._id, type="checkbox", checked=kaffe.vis)]
