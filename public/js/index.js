@@ -20,7 +20,7 @@ $(document).ready(function(){
 		nyContainer.appendTo($('div[name=bryggliste]'));
 		console.log(nyContainer);
 		populerDagsBrygg(brygg, nyContainer);
-		nyContainer.slideDown();
+		nyContainer.slideDown('fast');
 		bindToBryggContainer(nyContainer);
 	}
 	
@@ -65,7 +65,9 @@ $(document).ready(function(){
 		var eksisterendeBryggContainer = bryggcontainer.find('div[name="EksisterendeBrygg"]');
 		
 		eksisterendeBryggContainer.find('p[name="brygger"]').click(function(){
+            console.log("trykker på brygger");
 				var bryggid = $(this).parent().siblings('p[name="bryggid"]').text();
+                
 				if ($(this).text() === "Skjult") {
 					visDagsbrygg(bryggid, eksisterendeBryggContainer)
 				} else {
@@ -117,11 +119,11 @@ $(document).ready(function(){
 		if (brygg.bryggnavn !== 'Ukjent') {
 			bryggcontainer.find('p[name="erRegistrert"]').text("true");
 			nyttBryggcontainer.slideUp(function(){
-				eksisterendeBryggContainer.slideDown();
+				eksisterendeBryggContainer.slideDown('fast');
 			});
 		} else {
 			eksisterendeBryggContainer.slideUp(function(){
-				nyttBryggcontainer.slideDown();
+				nyttBryggcontainer.slideDown('fast');
 			});
 		}
 	}
@@ -143,13 +145,13 @@ $(document).ready(function(){
 		var registrerNyttBryggForm = container.find('form[action="registrerNyttBrygg"]');
 		var registrerKarakterForm = container.find('form[action="registrerKarakter"]');
 		
-		container.find('a.v2registrerNavElement').click(function(){clickNavElement($(this));});
+        container.find('div.bryggcontainerNav').children().click(function(){clickNavElement($(this));})
 		container.find('div.karakterSkala').children().each(function(){
 			bindHover($(this));
 			bindClick($(this));
 		});
-		registrerNyttBryggForm.find('button').click(registrerBryggClick);
-		registrerKarakterForm.find('button').click(registrerKarakterClick);
+		registrerNyttBryggForm.siblings('button').click(registrerBryggClick);
+		registrerKarakterForm.siblings('button').click(registrerKarakterClick);
 		var kaffeSelect = container.find('select');
 		if (kaffeSelect.children().length == 1) {
 			for (var i = 0; i < kafferDropdown.length; i++) {
@@ -186,17 +188,17 @@ $(document).ready(function(){
 		var nyContainer = mal.clone();
 		nyContainer.hide();
 		nyContainer.appendTo($('div[name=bryggliste]'));
-		nyContainer.slideDown();
+		nyContainer.slideDown('fast');
 		bindToBryggContainer(nyContainer);
 		nyContainer.find('div[name="NyttBrygg"]').show();
 	});
 	//Funker nå
 	function clickNavElement(clicked) {
-		clicked.removeClass('v2registrerNavValgt v2registrerNavIkkeValgt');
-		clicked.addClass('v2registrerNavValgt');
+		clicked.removeClass('bryggcontainerNavValgt bryggcontainerNavIkkeValgt');
+		clicked.addClass('bryggcontainerNavValgt');
 		var otherNavElement = clicked.siblings().first();
-		otherNavElement.removeClass('v2registrerNavValgt v2registrerNavIkkeValgt');
-		otherNavElement.addClass('v2registrerNavIkkeValgt');
+		otherNavElement.removeClass('bryggcontainerNavValgt bryggcontainerNavIkkeValgt')
+		otherNavElement.addClass('bryggcontainerNavIkkeValgt')
 		var clickedName = clicked.text();
 		var bryggcontainer = clicked.parent().parent();
 		var eksBryggDiv = bryggcontainer.find('div[name="EksisterendeBrygg"]');
@@ -206,25 +208,25 @@ $(document).ready(function(){
 		if (clickedName === 'Karakter') {
 			if (erRegistrertText === 'true') {
 				nyttBryggDiv.hide();
-				eksBryggDiv.slideUp(function(){
-					karakterDiv.slideDown();
+				eksBryggDiv.slideUp('fast', function(){
+					karakterDiv.slideDown('fast');
 				});
 			} else {
 				eksBryggDiv.hide();
-				nyttBryggDiv.slideUp(function(){
-					karakterDiv.slideDown();
+				nyttBryggDiv.slideUp('fast', function(){
+					karakterDiv.slideDown('fast');
 				});
 			}
 		} else {
 			if (erRegistrertText === "true") {
 				nyttBryggDiv.hide();
-				karakterDiv.slideUp(function(){
-					eksBryggDiv.slideDown();
+				karakterDiv.slideUp('fast', function(){
+					eksBryggDiv.slideDown('fast');
 				});
 			} else {
 				eksBryggDiv.hide();
-				karakterDiv.slideUp(function(){
-					nyttBryggDiv.slideDown();
+				karakterDiv.slideUp('fast', function(){
+					nyttBryggDiv.slideDown('fast');
 				});
 			}
 			
@@ -232,10 +234,9 @@ $(document).ready(function(){
 	}
 	
 	function registrerBryggClick() {
-		if (validateForm($(this).parent())) {
-			var serializedForm = serializeNyttBrygg($(this).parent());
-			
-			var container = $(this).parent().parent().parent();
+		if (validateForm($(this).siblings('form'))) {
+			var serializedForm = serializeNyttBrygg($(this).siblings('form'));
+			var container = $(this).parent().parent();
 			$.post('/registrerNyttBrygg', serializedForm, function(bryggdata, textStatus, jqXHR){
 				populerDagsBrygg(bryggdata, container);
 				models.push(bryggdata);
@@ -246,9 +247,9 @@ $(document).ready(function(){
 	}
 	
 	function registrerKarakterClick() {
-		if (validateForm($(this).parent())) {
-			var serializedForm = serializeKarakter($(this).parent());
-			var karakterForm = $(this).parent();
+		if (validateForm($(this).siblings('form'))) {
+			var serializedForm = serializeKarakter($(this).siblings('form'));
+			var karakterForm = $(this).siblings('form');
 			var bryggcontainer = karakterForm.parent().parent();
 			$.post('/registrerKarakter', serializedForm, function(data, textStatus, jqXHR){
 				karakterForm.find('input[name="sammendrag"]').val("");
@@ -356,8 +357,8 @@ function validateForm(form) {
 function validateInput(input) {
 	if (input.attr('required') === "required") {
 		if (input.val() === "") {
-			input.siblings('span').removeClass('requiredOkay');
-			input.siblings('span').addClass('requiredNotOkay');
+			input.siblings('label').children('span').removeClass('requiredOkay');
+			input.siblings('label').children('span').addClass('requiredNotOkay');
 			return false;
 		} else {
 			
@@ -367,18 +368,18 @@ function validateInput(input) {
 			
 				var numberVal = parseFloat(input.val());
 				if (numberVal < minN || maxN < numberVal) {
-					input.siblings('span').removeClass('requiredOkay');
-					input.siblings('span').addClass('requiredNotOkay');
+					input.siblings('label').children('span').removeClass('requiredOkay');
+					input.siblings('label').children('span').addClass('requiredNotOkay');
 					return false;
 				} else {
-					input.siblings('span').removeClass('requiredNotOkay');
-					input.siblings('span').addClass('requiredOkay');
+					input.siblings('label').children('span').removeClass('requiredNotOkay');
+					input.siblings('label').children('span').addClass('requiredOkay');
 					return true;
 				}
 			}
 			
-			input.siblings('span').removeClass('requiredNotOkay');
-			input.siblings('span').addClass('requiredOkay');
+			input.siblings('label').children('span').removeClass('requiredNotOkay');
+			input.siblings('label').children('span').addClass('requiredOkay');
 			return true;
 		}
 	}
@@ -388,12 +389,12 @@ function validateInput(input) {
 function validateSelect(select) {
 	var selected = select.find('option:selected').first();
 	if (selected.attr('disabled') === 'disabled') {
-		select.siblings('span').removeClass('requiredOkay');
-		select.siblings('span').addClass('requiredNotOkay');
+		select.siblings('label').children('span').removeClass('requiredOkay');
+		select.siblings('label').children('span').addClass('requiredNotOkay');
 		return false;
 	} else {
-		select.siblings('span').removeClass('requiredNotOkay');
-		select.siblings('span').addClass('requiredOkay');
+		select.siblings('label').children('span').removeClass('requiredNotOkay');
+		select.siblings('label').children('span').addClass('requiredOkay');
 		return true;
 	}
 }

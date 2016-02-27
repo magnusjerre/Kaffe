@@ -1,22 +1,21 @@
-form.v2centerContainer(action="eksisterendeBrygg", method="POST")
-	div.v2registrerInnhold
-		p(name="bryggid", style="display: none") ingen
-		p(name="kaffeid", style="display: none") ingen
-		div.v2innhold
-			label Bryggnavn:
-			p(name="bryggnavn") Gang of four
-		div.v2innhold
-			label Brygger:
-			p(name="brygger") Jerre
-		div.v2innhold
-			label Kaffe:
-			p(name="sammendrag") Friele - Frokost kaffe (Malt)
-		div.v2innhold
-			label Liter:
-			p(name="liter") 1.25
-		div.v2innhold
-			label Skjeer:
-			p(name="skjeer") 5.5
-		div.v2innhold(style="display: none")
-			label Maskin:
-			p(name="maskin") ja
+form.centerContainer(action="eksisterendeBrygg", method="POST")
+	p(name="bryggid", style="display: none") ingen
+	p(name="kaffeid", style="display: none") ingen
+	div.v2innhold
+		label Bryggnavn:
+		p(name="bryggnavn") Gang of four
+	div.v2innhold
+		label Brygger:
+		p(name="brygger") Jerre
+	div.v2innhold
+		label Kaffe:
+		p(name="sammendrag") Friele - Frokost kaffe (Malt)
+	div.v2innhold
+		label Liter:
+		p(name="liter") 1.25
+	div.v2innhold
+		label Skjeer:
+		p(name="skjeer") 5.5
+	div.v2innhold(style="display: none")
+		label Maskin:
+		p(name="maskin") ja

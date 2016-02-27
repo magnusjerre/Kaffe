@@ -12,16 +12,16 @@ html
 		include nav.jade
 		include gjetteboks.jade
 		div.hidden(name="bryggcontainermal")
-			div.v2bryggContainer
+			div.bryggcontainer
 				p(name="erRegistrert", style="display: none") false
-				div.v2registrerNav
-						a.v2registrerNavElement.v2registrerNavValgt Brygg
-						a.v2registrerNavElement.v2registrerNavIkkeValgt Karakter
-					div(name="NyttBrygg", style="display: none")
-						include registrering/nyttBrygg.jade
-					div(name="EksisterendeBrygg", style="display: none")
-						include registrering/eksisterendeBrygg.jade
-					div(name="Karakter", style="display:none")
-						include registrering/nyKarakter.jade
-		div.container(name="bryggliste")
+				div.bryggcontainerNav
+					a.bryggcontainerNavValgt Brygg
+					a.bryggcontainerNavIkkeValgt Karakter
+				div(name="NyttBrygg", style="display: none")
+					include registrering/nyttBrygg.jade
+				div(name="EksisterendeBrygg", style="display: none")
+					include registrering/eksisterendeBrygg.jade
+				div(name="Karakter", style="display:none")
+					include registrering/nyKarakter.jade
+		div.brygglistecontainer(name="bryggliste")
 		image#ekstrabrygg.v2ekstraBrygg(src="images/pluss.png", alt="Ekstra brygg")

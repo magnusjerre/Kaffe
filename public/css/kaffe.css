@@ -284,23 +284,6 @@ table.kalender tr td {
 	width: 45em;
 }
 
-.clamp {
-	margin-top: 0.5em;
-	width: 45em;
-	height: 1em;
-	
-	border-right: 3px solid saddlebrown;
-	margin-right: 10px;
-	padding-right: 10px; 
-	
-	border-left: 3px solid saddlebrown;
-	margin-left: 10px;
-	padding-right: 10px;
-	
-	text-align: center;
-	border-top: 3px solid saddlebrown;
-}
-
 .karakterSkala {
 	vertical-align: sub;
 	display: inline-block;
@@ -545,116 +528,6 @@ div.ledertavleNav a:hover {
 	color: black;
 }
 
-.v2bryggContainer {
-	padding: 1em;
-}
-
-.v2centerContainer {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-}
-
-.v2horizontalContainer {
-	display: flex;
-	justify-content: center;
-}
-
-.v2registrerInnhold {
-	display: flex;
-	flex-direction: column;	
-	align-content: flex-start;
-	background-color: #ffefbe;
-	padding: 1em;
-	width: 20em;
-	border: 2px solid black;
-}
-
-.v2innhold {
-	display: flex;
-	flex-direction: row;
-	align-content: flex-start;
-}
-
-.v2innholdInput {
-	flex-grow: 2;
-}
-
-.v2registrerNav {
-	display: flex;
-	justify-content: center;	
-	margin: 0 auto -2px auto;
-}
-
-.v2registrerNav a {
-	padding: 0.25em;
-}
-
-.v2registrerNavValgt {
-	position: relative;
-	z-index: 10;
-	background-color: #ffefbe;
-	border: 2px solid black;
-	border-bottom: 2px solid #ffefbe;
-}
-
-.v2registrerNavIkkeValgt {
-	background-color: #FEDBA0;
-	border: 2px solid transparent;
-}
-
-.v2registrerNavIkkeValgt:hover {
-	background-color: sandybrown;
-	cursor: pointer;
-}
-
-.v2registrerNavElement {
-	width: 4em;
-	text-align: center;
-}
-
-.v2valgtNavElement {
-	position: relative;
-	z-index: 10;
-	background-color: #ffefbe;
-	border: 2px solid black;
-	border-bottom: 2px solid #ffefbe;
-}
-.v2submit {
-	padding: 0.5em 1em 0.5em 1em;
-	margin: -2px auto 0 auto;
-	background-color: #ffefbe;
-	border: 2px solid black;
-	border-top: 2px solid #ffefbe;
-	position: relative;
-	cursor: pointer;
-}
-
-.v2submit:hover {
-	background-color: sandybrown;
-	text-shadow: 0px 0px 4px saddlebrown;
-	border: 2px solid black;
-	animation-name: move;
-	animation-duration: 0.2s;
-}
-
-@keyframes move {
-	0% {top: 0;}
-	50% {top: 2px; border: 2px solid #333333; }
-	100% {top: 0;}
-}
-
-.v2submit:active {
-	background-color: saddlebrown;
-	color: sandybrown;
-}
-
-.v2submit:focus {
-	background-color: saddlebrown;
-	border: 2px solid black;
-	color: sandybrown;
-}
-
 .v2ekstraBrygg {
 	background-color: #ffefbe;
 	border: 2px solid black;
@@ -668,16 +541,10 @@ div.ledertavleNav a:hover {
 .v2ekstraBrygg:hover {
 	position: relative;
 	background-color: sandybrown;
-	animation-name: move;
-	animation-duration: 0.2s;
 }
 
 .v2ekstraBrygg:active {
 	background-color: saddlebrown;
-}
-
-div.v2innhold > select {
-	width: 17em;
 }
 
 .requiredNotOkay {
@@ -751,4 +618,163 @@ div.v2innhold > select {
 }
 .valgtKaffe {
     background-color: saddlebrown;
+}
+
+.clamp {
+    margin-top: 0.5em;
+    width: 90%;
+    height: 1em;
+
+    text-align: center;
+    border-top: 3px solid saddlebrown;
+    border-right: none;
+    border-left: none;
+}
+nav {
+    display: flex;
+    font-size: 20px;
+    justify-content: center;
+    width: 90%;
+    flex-wrap: wrap;
+}
+nav a {
+    padding: 0.5em;
+    margin: 0;
+}
+
+.container {
+    width: 100%;
+}
+
+div.v2innhold > select {
+	/*width: 4em;*/
+	/*width: 17em;*/
+}
+
+.v2innholdInput {
+	flex-grow: 2;
+}
+
+.v2innhold {
+	display: flex;
+    flex-direction: row;
+    padding: 0.25em 1em;
+}
+
+.v2innhold > label {
+    padding-bottom: 0.25em;
+}
+
+.brygglistecontainer {
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+	align-items: flex-start;
+}
+
+.bryggcontainer {
+    margin: 1em;
+    font-size: 20px;
+    width: 500px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-content: space-between;
+    background-color: #ffefbe;
+}
+
+.bryggcontainerNav {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.bryggcontainerNav > a {
+    width: 50%;
+    text-align: center;
+	padding: 0.25em 0;
+}
+
+.bryggcontainerNavValgt {
+    color: saddlebrown;
+	font-weight: bold;
+}
+
+.bryggcontainerNavIkkeValgt {
+    color: gray;
+	font-weight: bold;
+    background-color: #FEDBA0;
+}
+
+.bryggcontainerNavIkkeValgt:hover {
+    color: sandybrown;
+	background-color: saddlebrown;
+    cursor: pointer;
+}
+
+.centerContainer {
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+	align-items: stretch;
+    width: 100%;
+}
+
+.bryggsubmit {
+    font-size: inherit;
+	font-weight: bold;
+	color: saddlebrown;
+    width: 100%;
+    padding: 0.5em 0 0.5em 0;
+    margin: 0 auto 0 auto;
+    background-color: #ffefbe;
+    border: none;
+    position: relative;
+    cursor: pointer;
+}
+
+.bryggsubmit:hover {
+    background-color: saddlebrown;
+	color: sandybrown;
+    border: none;
+}
+
+@media (min-resolution: 120dpi) {
+    nav {
+        font-size: 40px;
+    }
+    .v2registrerInnhold {
+        width: 100%;
+        font-size: 40px;
+    }
+    
+    .container {
+        width: 100%;
+    }
+    
+    .v2innhold {
+        flex-direction: column;
+    }
+    
+    .bryggcontainer {
+        margin: 1em 0;
+        font-size: 40px;
+        width: 100%;
+    }
+    
+    .bryggcontainerNav {
+        font-size: 40px; 
+    }
+    
+    .bryggcontainerInnhold {	
+        padding: 1em;
+    }
+    
+    .v2ekstraBrygg {
+        width: 4em;
+        height: 4em;
+    }
 }

@@ -111,12 +111,12 @@ function clearKarakterskalaOgVerdi(karakterskalaDiv) {
 function validerHarInput(karakterskalaDiv) {
 	var ksElement = getKSElementForKarakterskala(karakterskalaDiv);
 	if (ksElement.clicked) {
-		karakterskalaDiv.siblings('span').removeClass('requiredNotOkay');
-		karakterskalaDiv.siblings('span').addClass('requiredOkay');
+		karakterskalaDiv.siblings('label').children('span').removeClass('requiredNotOkay');
+		karakterskalaDiv.siblings('label').children('span').addClass('requiredOkay');
 		return true;
 	} else {
-		karakterskalaDiv.siblings('span').removeClass('requiredOkay');
-		karakterskalaDiv.siblings('span').addClass('requiredNotOkay');
+		karakterskalaDiv.siblings('label').children('span').removeClass('requiredOkay');
+		karakterskalaDiv.siblings('label').children('span').addClass('requiredNotOkay');
 		return false;
 	}
 }
