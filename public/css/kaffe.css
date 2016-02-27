@@ -332,17 +332,22 @@ table.kalender tr td {
 	align-content: flex-start;
 	justify-content: center;
 	flex-flow: wrap;
+	width: 43.25em;
 }
 
 .calendarDayOfWeek {
 	display: flex;
 	flex-direction: column;
+	width: 14.2857%;
 }
 
 .calendarHeader {
 	text-align: center;
-	width: 6em;
+	overflow: hidden;
+	text-overflow: ellipsis;
 	padding: 2px;
+	color: saddlebrown;
+	font-weight: bold;
 }
 
 .calendarElement {
@@ -351,7 +356,6 @@ table.kalender tr td {
 	justify-content: space-between;
 	align-content: flex-start;
 	
-	width: 6em;
 	height: 4.5em;
 	margin: 1px;
 	padding: 2px;
@@ -368,6 +372,8 @@ table.kalender tr td {
 	margin: 0.5em 0.25em 0 auto;
 	margin: 0;
 	padding: 0 0.25em 0 0;
+	color: saddlebrown;
+	font-weight: bold;
 }
 
 .clanderIconDiv {
@@ -378,11 +384,12 @@ table.kalender tr td {
 	align-content: center;
 	margin: auto;
 	flex-flow: wrap;
+	overflow: hidden;
 }
 
 .calendarIcon {
-	width: 18px;
-	height: 18px;
+	width: 1em;
+	height: 1em;
 }
 
 .calendarElementContent {
@@ -396,6 +403,7 @@ table.kalender tr td {
 
 .shadowed {
 	color: gray;
+	font-weight: normal;
 }
 
 .calendarNavigation {
@@ -468,8 +476,8 @@ table.kalender tr td {
 }
 
 .closeIcon {
-	width: 16px;
-	height: 16px;
+	width: 1em;
+	height: 1em;
 	align-self: center;
 	cursor: pointer;
 	margin: 0.5em;
@@ -775,6 +783,12 @@ nav a {
     }
 }
 
+@media (max-width: 768px) {
+	.calendar {
+		width: 90%;
+	}
+}
+
 @media (min-resolution: 120dpi) {
 	body {
 		font-size: 40px;
@@ -796,5 +810,18 @@ nav a {
 	.tabellContainer {
 		width: 100%;
 		margin: 1em 0;
+	}
+	
+	.calendar {
+		width: 90%;
+	}
+	
+	.calendarDayOfWeek {
+		width: 14.2857%;
+	}
+	
+	.calendarHeader {
+		font-size: 0.75em;
+		text-align: center;
 	}
 }
