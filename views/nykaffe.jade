@@ -8,29 +8,30 @@ html
 	body.container
 		h1 Den store kaffesiden
 		include nav.jade
-		div.rectangle.kaffelisteProdusentRectangle
-			h2 Legg til ny kaffesort
-			form(action="registrerNyKaffeSort", method="POST")
-				div.v2innhold
-					label(for="kaffe_navn", style="display: block") Kaffenavn:
-					input.v2innholdInput#kaffe_navn(type="text", name="kaffe_navn", placeholder="Frokostkaffe Original")
-				div.v2innhold 
-					label(for="kaffe_type", style="display: block") Kaffetype:
-					input.v2innholdInput#kaffe_type(type="text", name="kaffe_type", placeholder="Bønner, Malt...")
-				div.v2innhold
-					label(for="produsent", style="display: block") Produsent:
-					input.v2innholdInput#produsent(type="text", name="produsent", placeholder="Friele")
-				div.v2innhold
-					label(for="land", style="display: block") Land:
-					input.v2innholdInput#land(type="text", name="land", placeholder="Brasil")
-				div.v2innhold
-					label(for="lat", style="display: block") Latitude:
-					input.v2innholdInput#lat(type="number", name="lat", placeholder="-8.61", step="0.01")
-				div.v2innhold
-					label(for="land", style="display: block") Longitude:
-					input.v2innholdInput#lgt(type="number", name="lgt", placeholder="-50.35", step="0.01")
-				div.v2innhold
-					label(for="url", style="display: block") Url:
-					input.v2innholdInput#url(type="text", name="url", placeholder="http://shop.friele.no/epages/Frieleshop.sf/no_NO/?ObjectPath=/Shops/Friele/Products/012324")
-					br
-				input.submitButton(type="submit", value="Legg til kaffe")
+		div.brygglistecontainer
+			div.bryggcontainer
+				h3.tabellHeader Legg til ny kaffesort
+				form.centerContainer(action="registrerNyKaffeSort", method="POST")
+					div.v2innhold
+						label(for="kaffe_navn", style="display: block") Kaffenavn:
+						input.v2innholdInput#kaffe_navn(type="text", name="kaffe_navn", placeholder="Frokostkaffe Original")
+					div.v2innhold 
+						label(for="kaffe_type", style="display: block") Kaffetype:
+						input.v2innholdInput#kaffe_type(type="text", name="kaffe_type", placeholder="Bønner, Malt...")
+					div.v2innhold
+						label(for="produsent", style="display: block") Produsent:
+						input.v2innholdInput#produsent(type="text", name="produsent", placeholder="Friele")
+					div.v2innhold
+						label(for="land", style="display: block") Land:
+						input.v2innholdInput#land(type="text", name="land", placeholder="Brasil")
+					div.v2innhold
+						label(for="lat", style="display: block") Latitude:
+						input.v2innholdInput#lat(type="number", name="lat", placeholder="-8.61", step="0.01")
+					div.v2innhold
+						label(for="land", style="display: block") Longitude:
+						input.v2innholdInput#lgt(type="number", name="lgt", placeholder="-50.35", step="0.01")
+					div.v2innhold
+						label(for="url", style="display: block") Url:
+						input.v2innholdInput#url(type="text", name="url", placeholder="http://shop.friele.no/epages/Frieleshop.sf/no_NO/?ObjectPath=/Shops/Friele/Products/012324")
+						br
+					input.bryggsubmit(type="submit", value="Legg til kaffe")

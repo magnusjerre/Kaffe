@@ -673,7 +673,6 @@ nav a {
     justify-content: space-between;
     flex-direction: column;
     align-content: space-between;
-    background-color: #ffefbe;
 }
 
 .bryggcontainerNav {
@@ -692,12 +691,12 @@ nav a {
 .bryggcontainerNavValgt {
     color: saddlebrown;
 	font-weight: bold;
+	background-color: #ffefbe;
 }
 
 .bryggcontainerNavIkkeValgt {
     color: gray;
 	font-weight: bold;
-    background-color: #FEDBA0;
 }
 
 .bryggcontainerNavIkkeValgt:hover {
@@ -712,6 +711,8 @@ nav a {
     align-content: flex-start;
 	align-items: stretch;
     width: 100%;
+	background-color: #ffefbe;
+	padding: 0.5em 0 0 0;
 }
 
 .bryggsubmit {
