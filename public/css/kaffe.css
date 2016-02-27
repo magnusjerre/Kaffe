@@ -40,7 +40,10 @@ h2 {
 }
 
 h3 {
-	padding: 0.5em;
+	font-size: 1em;
+	font-weight: bold;
+	text-align: center;
+	padding: 0.25em;
 }
 
 nav {
@@ -54,7 +57,9 @@ table {
 
 th {
 	font-size: 1em;
+	color: saddlebrown;
 	padding: 0 0.5em 0 0.5em;
+	text-align: left;
 }
 
 td {
@@ -487,6 +492,7 @@ table.kalender tr td {
 .kaffelisteKaffetabell {
 	text-align: left;
 	width: 100%;
+	background-color: #ffefbe;
 }
 
 .gjetteboks {
@@ -660,7 +666,7 @@ nav a {
 }
 
 .bryggcontainer {
-    margin: 1em;
+    margin: 0.5em;
 	font-size: 1em;
 	width: 25em;
     display: flex;
@@ -727,6 +733,41 @@ nav a {
     border: none;
 }
 
+.listecontainer {
+	width: 90%;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-content: flex-start;
+	flex-wrap: wrap;
+}
+
+.tabellContainer {
+	width: 25em;
+	margin: 0.5em; 
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-content: flex-start;
+}
+
+.tabellHeader {
+	background-color: #ffefbe;
+	color: saddlebrown;
+	width: 50%;
+}
+
+.tabellListe {
+	width: 100%;
+	background-color: #ffefbe;
+	padding: 1em;
+}
+
+.checkImage {
+	width: 1em;
+	height: 1em;
+}
+
 @media (max-width: 460px) {
 	.v2innhold {
         flex-direction: column;
@@ -750,4 +791,9 @@ nav a {
         margin: 1em 0;
         width: 100%;
     }
+	
+	.tabellContainer {
+		width: 100%;
+		margin: 1em 0;
+	}
 }

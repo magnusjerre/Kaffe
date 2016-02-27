@@ -9,12 +9,38 @@ html
 	body.container
 		h1 Den store kaffesiden
 		include nav.jade
-		div.ledertavleNav
-			a#navUke(href="/ledertavle") Denne uken
-			a#navManed(href="/ledertavle?periode=måned") Denne måneden
-			a#navEvigheten(href="/ledertavle?periode=evigheten") Evigheten
-			a#navBrygg(href="/ledertavle?periode=brygg") Brygg
-		if erBrygg
-			include ledertavleBrygging.jade
-		else
-			include ledertavleGjetting.jade
+		mixin gjetting(tittel, ledertavle)
+			div.tabellContainer
+				h3#tittel.tabellHeader #{tittel}
+				table.tabellListe
+					tr
+						th#brukernavn Bruker
+						th#column1 #[img.checkImage(src="images/check.png", alt="check")]
+						th#column2 Tot.
+						th#column3 %
+						th#column4 Snitt
+					each element in ledertavle
+						tr
+							td #{element.brukernavn}
+							td #{element.antallRiktige}
+							td #{element.antallTotalt}
+							td #{element.calcProsent()}
+							td #{element.calcAverageKarakter()}
+		mixin brygg(ledertavle)
+			div.tabellContainer
+				h3#tittel.tabellHeader Brygg
+				table.tabellListe
+					tr
+						th#brukernavn Bruker
+						th#column1 Tot. brygg
+						th#column2 Snittkarakter
+					each element in ledertavle
+						tr
+							td #{element.brukernavn}
+							td #{element.antallBrygg}
+							td #{element.calcAverageBryggKarakter()}
+		div.brygglistecontainer
+			+gjetting("Denne uken", ledertavleUke)
+			+gjetting("Denne måneden", ledertableManed)
+			+gjetting("Evigheten", ledertavleEvigheten)
+			+brygg(ledertavleEvigheten)

@@ -4,26 +4,20 @@ exports.setKaffedb = function(db) {
 }
 
 var ledertavle = function(req, res) {
-	var dager = getDenneUken();
-	var tittel = 'Denne uken';
-	var erBrygg = false;
-	if (req.query.periode) {
-		if (req.query.periode.valueOf() == 'måned'.valueOf()) {
-			dager = getDenneManeden();
-			tittel = 'Denne måneden';
-		} else if (req.query.periode.valueOf() == 'evigheten'.valueOf()) {
-			dager = getEvigheten();
-			tittel = 'Evigheten';
-		} else if (req.query.periode.valueOf() == 'brygg'.valueOf()) {
-			dager = getEvigheten();
-			tittel = 'Brygg';
-			erBrygg = true;
-		}
-	}
-	
-	getLedertavleForPeriode(dager.startDato, dager.sluttDato, function(ledertavle) {
-		var model = { 'tittel' : tittel, 'ledertavle' : ledertavle, 'erBrygg' : erBrygg };
-		res.render('ledertavle', model);
+	var periodeEvighet = getEvigheten();
+	var periodeManed = getDenneManeden();
+	var periodeUke = getDenneUken();
+	getLedertavleForPeriode(periodeEvighet.startDato, periodeEvighet.sluttDato, function(ledertavleEvigheten){
+		getLedertavleForPeriode(periodeManed.startDato, periodeManed.sluttDato, function(ledertavleManed){
+			getLedertavleForPeriode(periodeUke.startDato, periodeUke.sluttDato, function(ledertavleUke){
+				var model = {
+					"ledertavleUke": ledertavleUke,
+					"ledertableManed": ledertavleManed,
+					"ledertavleEvigheten": ledertavleEvigheten
+				}
+				res.render('ledertavle', model);
+			});
+		});
 	});
 }
 
