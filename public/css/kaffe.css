@@ -24,24 +24,12 @@ p {
 	padding: 5px; 
 }
 
-nav {
-	margin: 1em 1em 0 1em;
-}
-nav a {
-	margin: 0;
-	padding: 0.5em 0.5em 0.5em 0.5em;
-	background-color: transparent;
-}
-
-nav a:hover {
-	background-color: sandybrown;
-}
-
 h1 {
 	margin: 0.5em;
 	font-size: 2em;
 	font-weight: bolder;
 	text-transform: uppercase;
+	text-align: center;
 }
 
 h2 {
@@ -133,6 +121,7 @@ submit {
 	flex-direction: column;
 	justify-content: flex-start;
 	align-items: center;
+	width: 100%;
 }
 
 .subcontainer {
@@ -632,7 +621,7 @@ div.ledertavleNav a:hover {
 }
 nav {
     display: flex;
-    font-size: 20px;
+	font-size: 1em;
     justify-content: center;
     width: 90%;
     flex-wrap: wrap;
@@ -640,15 +629,6 @@ nav {
 nav a {
     padding: 0.5em;
     margin: 0;
-}
-
-.container {
-    width: 100%;
-}
-
-div.v2innhold > select {
-	/*width: 4em;*/
-	/*width: 17em;*/
 }
 
 .v2innholdInput {
@@ -665,6 +645,10 @@ div.v2innhold > select {
     padding-bottom: 0.25em;
 }
 
+.v2innhold > select {
+	width: 7em;
+}
+
 .brygglistecontainer {
     width: 90%;
     display: flex;
@@ -672,12 +656,13 @@ div.v2innhold > select {
     flex-wrap: wrap;
     justify-content: center;
 	align-items: flex-start;
+	font-size: 1em;
 }
 
 .bryggcontainer {
     margin: 1em;
-    font-size: 20px;
-    width: 500px;
+	font-size: 1em;
+	width: 25em;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
@@ -689,7 +674,7 @@ div.v2innhold > select {
     width: 100%;
     display: flex;
     justify-content: center;
-    font-size: 20px;
+	font-size: 1em;
 }
 
 .bryggcontainerNav > a {
@@ -742,18 +727,20 @@ div.v2innhold > select {
     border: none;
 }
 
+@media (max-width: 460px) {
+	.v2innhold {
+        flex-direction: column;
+    }
+}
+
 @media (min-resolution: 120dpi) {
-    nav {
-        font-size: 40px;
-    }
-    .v2registrerInnhold {
-        width: 100%;
-        font-size: 40px;
-    }
-    
-    .container {
-        width: 100%;
-    }
+	body {
+		font-size: 40px;
+	}
+	
+	h1 {
+		font-size: 1.5em;
+	}
     
     .v2innhold {
         flex-direction: column;
@@ -761,20 +748,6 @@ div.v2innhold > select {
     
     .bryggcontainer {
         margin: 1em 0;
-        font-size: 40px;
         width: 100%;
-    }
-    
-    .bryggcontainerNav {
-        font-size: 40px; 
-    }
-    
-    .bryggcontainerInnhold {	
-        padding: 1em;
-    }
-    
-    .v2ekstraBrygg {
-        width: 4em;
-        height: 4em;
     }
 }
