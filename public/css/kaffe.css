@@ -786,7 +786,7 @@ nav a {
 	}
 }
 
-@media (min-resolution: 120dpi) or (min-device-pixel-ratio: 2) or (-webkit-min-device-pixel-ratio: 2) {
+@media (min-resolution: 120dpi), (min-device-pixel-ratio: 2), (-webkit-min-device-pixel-ratio: 2) {
 	body {
 		font-size: 40px;
 	}
