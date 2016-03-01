@@ -64,68 +64,70 @@ $(document).ready(function(){
 		var nyttBryggcontainer = bryggcontainer.find('div[name="NyttBrygg"]');
 		var eksisterendeBryggContainer = bryggcontainer.find('div[name="EksisterendeBrygg"]');
 		
-		eksisterendeBryggContainer.find('p[name="brygger"]').click(function(){
-            console.log("trykker på brygger");
-				var bryggid = $(this).parent().siblings('p[name="bryggid"]').text();
-                
-				if ($(this).text() === "Skjult") {
-					visDagsbrygg(bryggid, eksisterendeBryggContainer)
-				} else {
-					skjulDagsbrygg(bryggid, eksisterendeBryggContainer);
-				}
+		if (brygg.bryggnavn === "Ukjent") {
+			nyttBryggcontainer.find('input[name="bryggid"]').val(brygg["_id"]);
+			eksisterendeBryggContainer.slideUp(function(){
+				nyttBryggcontainer.slideDown('fast');
 			});
-		eksisterendeBryggContainer.find('p[name="sammendrag"]').click(function(){
-				var bryggid = $(this).parent().siblings('p[name="bryggid"]').text();
-				if ($(this).text() === "Skjult") {
-					visDagsbrygg(bryggid, eksisterendeBryggContainer)
-				} else {
-					skjulDagsbrygg(bryggid, eksisterendeBryggContainer);
-				}
-			});
-		eksisterendeBryggContainer.find('p[name="liter"]').click(function(){
-				var bryggid = $(this).parent().siblings('p[name="bryggid"]').text();
-				if ($(this).text() === "Skjult") {
-					visDagsbrygg(bryggid, eksisterendeBryggContainer)
-				} else {
-					skjulDagsbrygg(bryggid, eksisterendeBryggContainer);
-				}
-			});
-		eksisterendeBryggContainer.find('p[name="skjeer"]').click(function(){
-				var bryggid = $(this).parent().siblings('p[name="bryggid"]').text();
-				if ($(this).text() === "Skjult") {
-					visDagsbrygg(bryggid, eksisterendeBryggContainer)
-				} else {
-					skjulDagsbrygg(bryggid, eksisterendeBryggContainer);
-				}
-			});
-		eksisterendeBryggContainer.find('p[name="maskin"]').click(function(){
-				var bryggid = $(this).parent().siblings('p[name="bryggid"]').text();
-				if ($(this).text() === "Skjult") {
-					visDagsbrygg(bryggid, eksisterendeBryggContainer)
-				} else {
-					skjulDagsbrygg(bryggid, eksisterendeBryggContainer);
-				}
-			});
-		
-		eksisterendeBryggContainer.find('p[name="bryggid"]').text(brygg["_id"]);
-		eksisterendeBryggContainer.find('p[name="kaffeid"]').text(brygg.kaffeid);
-		eksisterendeBryggContainer.find('p[name="bryggnavn"]').text(brygg.bryggnavn);
-		eksisterendeBryggContainer.find('p[name="brygger"]').text("Skjult");
-		eksisterendeBryggContainer.find('p[name="sammendrag"]').text("Skjult");
-		eksisterendeBryggContainer.find('p[name="liter"]').text("Skjult");
-		eksisterendeBryggContainer.find('p[name="skjeer"]').text("Skjult");
-		eksisterendeBryggContainer.find('p[name="maskin"]').text("Skjult");
-		
-		if (brygg.bryggnavn !== 'Ukjent') {
+		} else {
+			eksisterendeBryggContainer.find('p[name="brygger"]').click(function(){
+				console.log("trykker på brygger");
+					var bryggid = $(this).parent().siblings('p[name="bryggid"]').text();
+					
+					if ($(this).text() === "Skjult") {
+						visDagsbrygg(bryggid, eksisterendeBryggContainer)
+					} else {
+						skjulDagsbrygg(bryggid, eksisterendeBryggContainer);
+					}
+				});
+			eksisterendeBryggContainer.find('p[name="sammendrag"]').click(function(){
+					var bryggid = $(this).parent().siblings('p[name="bryggid"]').text();
+					if ($(this).text() === "Skjult") {
+						visDagsbrygg(bryggid, eksisterendeBryggContainer)
+					} else {
+						skjulDagsbrygg(bryggid, eksisterendeBryggContainer);
+					}
+				});
+			eksisterendeBryggContainer.find('p[name="liter"]').click(function(){
+					var bryggid = $(this).parent().siblings('p[name="bryggid"]').text();
+					if ($(this).text() === "Skjult") {
+						visDagsbrygg(bryggid, eksisterendeBryggContainer)
+					} else {
+						skjulDagsbrygg(bryggid, eksisterendeBryggContainer);
+					}
+				});
+			eksisterendeBryggContainer.find('p[name="skjeer"]').click(function(){
+					var bryggid = $(this).parent().siblings('p[name="bryggid"]').text();
+					if ($(this).text() === "Skjult") {
+						visDagsbrygg(bryggid, eksisterendeBryggContainer)
+					} else {
+						skjulDagsbrygg(bryggid, eksisterendeBryggContainer);
+					}
+				});
+			eksisterendeBryggContainer.find('p[name="maskin"]').click(function(){
+					var bryggid = $(this).parent().siblings('p[name="bryggid"]').text();
+					if ($(this).text() === "Skjult") {
+						visDagsbrygg(bryggid, eksisterendeBryggContainer)
+					} else {
+						skjulDagsbrygg(bryggid, eksisterendeBryggContainer);
+					}
+				});
+			
+			eksisterendeBryggContainer.find('p[name="bryggid"]').text(brygg["_id"]);
+			eksisterendeBryggContainer.find('p[name="kaffeid"]').text(brygg.kaffeid);
+			eksisterendeBryggContainer.find('p[name="bryggnavn"]').text(brygg.bryggnavn);
+			eksisterendeBryggContainer.find('p[name="brygger"]').text("Skjult");
+			eksisterendeBryggContainer.find('p[name="sammendrag"]').text("Skjult");
+			eksisterendeBryggContainer.find('p[name="liter"]').text("Skjult");
+			eksisterendeBryggContainer.find('p[name="skjeer"]').text("Skjult");
+			eksisterendeBryggContainer.find('p[name="maskin"]').text("Skjult");
+			
 			bryggcontainer.find('p[name="erRegistrert"]').text("true");
 			nyttBryggcontainer.slideUp(function(){
 				eksisterendeBryggContainer.slideDown('fast');
 			});
-		} else {
-			eksisterendeBryggContainer.slideUp(function(){
-				nyttBryggcontainer.slideDown('fast');
-			});
 		}
+		
 	}
 	
 	$.get('/hentDagsbrygg', function(data, textStatus, jqXHR){
