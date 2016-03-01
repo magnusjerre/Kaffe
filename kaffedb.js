@@ -264,6 +264,7 @@ var registrerNyttBrygg = function(brygg, bryggid, callback) {
 				}
 			}, 
 			{}, function(err, res){
+				brygg["_id"] = ObjectId(bryggid);
 				callback(err, brygg);
 			});
 	} else {
