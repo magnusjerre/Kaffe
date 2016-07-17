@@ -7,21 +7,52 @@ var ledertavle = function(req, res) {
 	var periodeEvighet = getEvigheten();
 	var periodeManed = getDenneManeden();
 	var periodeUke = getDenneUken();
-	getLedertavleForPeriode(periodeEvighet.startDato, periodeEvighet.sluttDato, function(ledertavleEvigheten){
-		getLedertavleForPeriode(periodeManed.startDato, periodeManed.sluttDato, function(ledertavleManed){
-			getLedertavleForPeriode(periodeUke.startDato, periodeUke.sluttDato, function(ledertavleUke){
-				var model = {
-					"ledertavleUke": ledertavleUke,
-					"ledertableManed": ledertavleManed,
-					"ledertavleEvigheten": ledertavleEvigheten
-				}
-				res.render('ledertavle', model);
-			});
-		});
+
+	var nFinishedLedertavler = 0;
+	var model = {
+		"ledertavleUke": [],
+		"ledertableManed": [],
+		"ledertavleEvigheten": []
+	}
+
+	kaffedb.getDagsbryggForPeriode(periodeUke.startDato, periodeUke.sluttDato, function(error, bryggArray) {
+		leggTilLedertavle("ledertavleUke", bryggArray, model);
+		nFinishedLedertavler++;
+		tryRendering(nFinishedLedertavler, model, res);
+	});
+
+ 	kaffedb.getDagsbryggForPeriode(periodeManed.startDato, periodeManed.sluttDato, function(error, bryggArray) {
+		leggTilLedertavle("ledertavleManed", bryggArray, model);
+		nFinishedLedertavler++;
+		tryRendering(nFinishedLedertavler, model, res);
+	});
+
+	kaffedb.getDagsbryggForPeriode(periodeEvighet.startDato, periodeEvighet.sluttDato, function(error, bryggArray) {
+		leggTilLedertavle("ledertavleEvigheten", bryggArray, model);
+		nFinishedLedertavler++;
+		tryRendering(nFinishedLedertavler, model, res);
 	});
 }
-
 exports.ledertavle = ledertavle;
+
+function tryRendering(nFinishedLedertavler, model, res) {
+	if (nFinishedLedertavler == 3) {
+		res.render('ledertavle', model);
+	}
+}
+
+function leggTilLedertavle(ledertavlenavn, bryggArray, model) {
+	var ledertavle = mapTilArray(mapBryggPaaBrukernavn(bryggArray)).sort(sorterPaaAntallRiktige);
+	model[ledertavlenavn] = ledertavle;
+}
+
+function filterByDate(bryggArray, startDato, sluttDato) {
+	var output = [];
+	for (var i = 0; i < bryggArray.length; i++) {
+		var brygg = bryggArray[i];
+	}
+	return output;
+}
 
 function getEvigheten() {
 	var today = new Date();
@@ -53,18 +84,6 @@ function getDenneUken() {
 		}; 
 }
 
-function getLedertavleForPeriode(startDato, sluttDato, callback) {
-	kaffedb.getDagsbryggForPeriode(startDato, sluttDato, function(error, docs){
-		if (error) {
-			console.log(error);
-			return null;
-		}
-		
-		var ledertavle = mapTilArray(mapDagensKaffePaaBrukernavn(docs)).sort(sorterPaaAntallRiktige);
-		callback(ledertavle);
-	});
-}
-
 function mapTilArray(map) {
 	var array = [];
 	for (var k in map) {
@@ -73,15 +92,47 @@ function mapTilArray(map) {
 	return array;
 }
 
-function mapDagensKaffePaaBrukernavn(docs) {
+function mapBryggPaaBrukernavn(bryggArray) {
 	var map = {};
-	for (var i = 0; i < docs.length; i++) {
-		var dagensKaffe = docs[i];
-		for (var j = 0; j < dagensKaffe.karakterer.length; j++) {
-			addPair(map, dagensKaffe, dagensKaffe.karakterer[j]);
-		}
+	for (var i = 0; i < bryggArray.length; i++) {
+		var brygg = bryggArray[i];
+		addBrygg(brygg, map);
+		// for (var j = 0; j < brygg.karakterer.length; j++) {
+		// 	addPair(map, brygg, brygg.karakterer[j]);
+		// }
 	}
 	return map;
+}
+
+function mapifyBrukernavn(brukernavn) {
+	return brukernavn.trim().toLowerCase();
+}
+
+function addBrygg(brygg, map) {
+	var mapifiedBrukernavn = mapifyBrukernavn(brygg.brygger);
+	var statistikk = getGjettestatistikk(mapifiedBrukernavn, map);
+	statistikk.brukernavn = brygg.brygger;
+
+	map[mapifiedBrukernavn].addBrygg(brygg.karakterer);
+	for (var i = 0; i < brygg.karakterer.length; i++) {
+		var karakter = brygg.karakterer[i];
+		var gjetterBrukernavn = mapifyBrukernavn(karakter.bruker);
+		if (gjetterBrukernavn != mapifiedBrukernavn) {
+			var erSvarKorrekt = karakter.kaffeid.valueOf() == brygg.kaffeid.valueOf();
+			var statistikk2 = getGjettestatistikk(gjetterBrukernavn, map);
+			statistikk2.brukernavn = karakter.bruker;
+			statistikk2.addSvar(erSvarKorrekt);
+			statistikk2.addKarakter(karakter.karakter)
+		}
+	}
+
+}
+
+function getGjettestatistikk(name, map) {
+	if (map[name] == undefined) {
+		map[name] = new GjetteStatistikk();
+	}
+	return map[name];
 }
 
 var addPair = function(map, dagensBrygg, karakter) {
@@ -113,12 +164,9 @@ var GjetteStatistikk = function() {
 	this.brukernavn = null;
 	this.antallRiktige = 0;
 	this.antallTotalt = 0;
-	this.karakterer = [];
+	this.karakterer = [];	//karakterer som man gir
 	this.antallBrygg = 0;
-	this.bryggKarakterer = [];
-	this.setBrukernavn = function(brukernavn) {
-		this.brukernavn = brukernavn;
-	}
+	this.bryggKarakterer = [];	//karakterer man får
 	this.addBrygg = function(karakterArray) {
 		this.antallBrygg++;
 		for (var i = 0; i < karakterArray.length; i++) {
