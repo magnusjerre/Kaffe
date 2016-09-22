@@ -242,6 +242,19 @@ $(document).ready(function(){
 			$.post('/registrerNyttBrygg', serializedForm, function(bryggdata, textStatus, jqXHR){
 				populerDagsBrygg(bryggdata, container);
 				models.push(bryggdata);
+				$.ajax({
+					type: 'POST',
+					url: 'https://hooks.slack.com/services/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',
+					crossDomain: true,
+					data: '{"text":"Nytt brygg er klart! Bryggnavn: ' + bryggdata.bryggnavn +'"}',
+					dataType: 'json',
+					success: function(responseData, textStatus, jqXHR) {
+						console.log("Successfully posted to slack")
+					},
+					error: function (responseData, textStatus, errorThrown) {
+						console.log(responseData)
+					}
+				});
 			}, 'json');
 		} else {
 			alert("Mangler input på felter");
