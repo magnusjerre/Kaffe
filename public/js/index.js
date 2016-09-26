@@ -246,7 +246,7 @@ $(document).ready(function(){
 					type: 'POST',
 					url: 'https://hooks.slack.com/services/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',
 					crossDomain: true,
-					data: '{"text":"Nytt brygg er klart! Bryggnavn: ' + bryggdata.bryggnavn +'"}',
+					data: '{"text":"Nytt brygg er klart! *' + bryggdata.bryggnavn +'*\nVurder den på www.jerre.no"}',
 					dataType: 'json',
 					success: function(responseData, textStatus, jqXHR) {
 						console.log("Successfully posted to slack")
